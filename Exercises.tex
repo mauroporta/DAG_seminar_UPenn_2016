@@ -16,12 +16,14 @@
 \usepackage[all,cmtip]{xy} % utilities
 \usepackage[utf8]{inputenc} % input encoding
 \usepackage[T1]{fontenc} % font encoding
+\usepackage{lmodern}
 \definecolor{linkcolor}{HTML}{005050}
 \usepackage[centering,vscale=0.7,hscale=0.7]{geometry}
 \usepackage[hidelinks]{hyperref}
 \usepackage[capitalize]{cleveref}
 \usepackage{graphicx}
 \usepackage{xparse}
+\usepackage{url}
 
 %\makeevenhead{headings}{\thepage}{}{\leftmark}
 %\setlrmarginsandblock{3cm}{3.5cm}{*}
@@ -107,15 +109,81 @@
 	has a unique solution.
 \end{exercise}
 
+\noindent
+\textbf{Solution}
+
+\noindent
+The nerve of a category $\cC$ is:
+\[	(N\cC)_n = \{ (f_1, \dots, f_n) | \text{ composable morphisms} \}.	\]
+The face maps are:
+\[	d_j (f_1, \dots, f_n) = \left\{ \begin{array} {ll}
+(f_1, \dots, f_{n-1}), & j=0 \\
+(f_1, \dots, f_j \circ f_{j-1}, \dots, f_n), & 0<j<n \\
+(f_2, \dots, f_n), & j=n.
+\end{array} \right.	\]
+The degeneracy $s_j$ is obtained by inserting an identity map in the $j^{\text{th}}$ slot.
+
+A functor $F : \cC \to \cD$, induces a simplicial map:
+\begin{align*}
+N(F)_n : (N\cC)_n &\to (N\cD)_n \\
+(f_1, \dots, f_n) &\mapsto \big(F(f_1), \dots, F(f_n)\big).
+\end{align*}
+If two functors $F, F'$ induce simplicial maps $N(F) = N(F')$ which agree, then $F(f) = F'(f)$ for every morphism $f$. Hence
+$N$ is faithful. Given a simplicial map $G : N\cC \to N\cD$, we define a functor $F : \cC \to \cD$ to be $G_0$ on objects
+and $G_1$ on morphisms. We show that $F$ respects composition. Let $f_1, f_2$ be two composable morphisms in $\cC$ and denote by $x$
+the 2-simplex $(f_1, f_2)$. Then:
+\[	F(f_2 \circ f_1) = G(d_1 x) = d_1 G(x) = F(f_2) \circ F(f_1).	\]
+This proves that $N$ is also full.
+
+We move on to the essential image. Let $K$ be the nerve of a category. The data of a map $\Lambda^n_i \to K$ is the same
+as the data of maps $y_j : \Delta^{n-1} \to K$ for $j\neq i$, which are compatible along their faces. By Yoneda, this is the
+same as simplices $\{y_j \in K_{n-1} \}_{j\neq i}$ compatible along faces. Given this data, we define the horn filler
+$x \in K_n$ by:
+\[	x = \left( (d_0)^{n-2}y_{n-1}, (d_0)^{n-3}d_n y_{n-1}, \dots, d_0(d_n)^{n-3}y_{n-1}, (d_n)^{n-2} y_0 \right).	\]
+The simplicial identities ensure that $d_j x = y_j$ for $j \neq i$. \footnote{Note that it's essential that both $y_0$ and $y_{n-1}$
+are available to use in the definition of $x$, i.e. that $\Lambda^n_i$ is an inner horn.} Using the compatibility
+of the $y_j$ along faces, $x$ is the unique solution to the lifting problem.
+
+Conversely, given a $K$ which has unique solutions to all lifting problems of inner horns, we define a category $\cC$ such
+that $K \cong \cC$. Let $K_0$ be the objects of $\cC$, and for $X,Y \in K_0$, define:
+\[	\Hom(X,Y) := \{f \in K_1 | d_1f = X, d_0f = Y \}.	\]
+Given $f_1 : X \to Y$ and $f_2 : Y \to Z$, define a lifting problem by mapping the 1-simplices $0 \to 1$ and $1\to 2$ in
+$\Lambda^2_1$ to $f_1$ and $f_2$, respectively. We define $f_2 \circ f_1$ to be $d_1$ of the unique lift. Associativity
+of this composition follows from the unique filling of the horn $\Lambda^3_1$; we don't give the details here.
+
 \begin{exercise}
 	Let $S, S'$ be sets, seen as discrete simplicial set.
 	Show that any morphism $f \colon S \to S'$ is a Kan fibration, and that $f$ is a trivial Kan fibration if and only if $f$ is a bijection.
 \end{exercise}
 
+\noindent
+\textbf{Solution}
+
+\noindent
+Since $S$ and $S'$ are sets, all $k$-simplices are of the form $s^k x$, for $x$ a 0-simplex. Given a lifting problem:
+	\[ \begin{tikzcd}
+		\Lambda^n_i \arrow{r} \arrow[hook]{d} & S\arrow{d}{f} \\
+		\Delta^n \arrow[dashed]{ur} \arrow{r} & S'
+	\end{tikzcd} \]
+all $k$-simplices of $\Lambda^n_i$, for $k>0$, must map to degenerate $k$-simplices in $S$. Hence $\Lambda^n_i$ maps to a
+point $s\in S$. Similarly, $\Delta^n$ maps to $f(s)$. The constant map from $\Delta^n$ to $s$ is then the unique 
+solution to the lifting problem. It follows that $f$ is a Kan fibration, and moreover that all sets $S$ are $\infty$-groupoids.
+
+By definition, $f$ is a weak equivalence if it induces a weak equivalence on geometric realizations. $|S|$ and $|S'|$ are discrete
+topological spaces, therefore $|f|$ is a weak equivalence iff it is a bijection.
+
 \begin{exercise}
 	Let $G$ and $H$ be simplicial groups and let $f \colon G \to H$ be a surjective group homomorphism.
 	Show that $f$ is a Kan fibration.
 \end{exercise}
+
+\noindent
+\textbf{Solution}
+There is an algorithm for constructing fillers on nLab.
+\footnote{\url{https://ncatlab.org/nlab/show/simplicial+group}}
+We don't have any intuition for it, so we should work on building that.
+
+The algorithm produces unique fillers for all horns, so in particular simplicial groups are $\infty$-groupoids.
 
 \begin{exercise}
 	Let $\partial \Delta^2$ be the smallest full subsimplicial set of $\Delta^2$ spanned by its non-degenerate edges $\Delta^1 \to \Delta^2$.
@@ -140,6 +208,11 @@
 \begin{exercise}
 	Show that every Kan complexes and $1$-categories are $\infty$-categories (quasicategories).
 \end{exercise}
+
+\noindent
+\textbf{Solution}
+Kan complexes have fillers for all horns. 1-categories have unique fillers for all inner horns. In particular, both have
+fillers for all inner horns, which is the definition of $\infty$-categories.
 
 \begin{exercise} \label{ex:equivalences_S_infty}
 	A morphism $f \colon X \to Y$ in an $\infty$-category $\cC$ is said to be an equivalence if its image in $\rh(\cC)$ is an isomorphism.
