@@ -2,7 +2,7 @@
 %The other issue is that some packages, such as microtype, produce different output under pdflatex. By default the arXiv goes from dvi to ps to pdf, so if you need pdflatex you have to set the \pdfoutput flag in the TeX file.
 \newif\ifpersonal
 \newif\ifarxiv
-%\personaltrue % comment to remove personal notes
+\personaltrue % comment to remove personal notes
 \arxivtrue % comment to display shortened version for journal submissions
 \RequirePackage[l2tabu, orthodox]{nag} %detect whether obsolete packages are used
 \documentclass[10pt,a4paper,reqno,oneside]{book} %reqno places equation numbers on the right
@@ -90,8 +90,6 @@
 	is essentially surjective but not fully faithful.
 \end{exercise}
 
-\personal{Hint: For fully faithfulness look at morphisms $\cO_{\mathbb P^1_k} \to \cO_{\mathbb P^1_k}(-2)[1]$. Locally they are always zero, but globally they are not. The point is that the nullhomotopies don't glue.}
-
 \begin{exercise}
 	Let $\cC$ be a triangulated category where countable products and countable direct sums exist.
 	Show that if there exists a functor $\mathrm{Tr}$ from the category of arrows $\cC^{\Delta^1}$ to the category of exact triangles in $\cC$, then every triangle in $\cC$ is split.
@@ -109,10 +107,8 @@
 	has a unique solution.
 \end{exercise}
 
-\noindent
-\textbf{Solution}
-
-\noindent
+\ifpersonal
+\begin{proof}[Solution]
 The nerve of a category $\cC$ is:
 \[	(N\cC)_n = \{ (f_1, \dots, f_n) | \text{ composable morphisms} \}.	\]
 The face maps are:
@@ -141,7 +137,7 @@ same as simplices $\{y_j \in K_{n-1} \}_{j\neq i}$ compatible along faces. Given
 $x \in K_n$ by:
 \[	x = \left( (d_0)^{n-2}y_{n-1}, (d_0)^{n-3}d_n y_{n-1}, \dots, d_0(d_n)^{n-3}y_{n-1}, (d_n)^{n-2} y_0 \right).	\]
 The simplicial identities ensure that $d_j x = y_j$ for $j \neq i$. \footnote{Note that it's essential that both $y_0$ and $y_{n-1}$
-are available to use in the definition of $x$, i.e. that $\Lambda^n_i$ is an inner horn.} Using the compatibility
+	are available to use in the definition of $x$, i.e. that $\Lambda^n_i$ is an inner horn.} Using the compatibility
 of the $y_j$ along faces, $x$ is the unique solution to the lifting problem.
 
 Conversely, given a $K$ which has unique solutions to all lifting problems of inner horns, we define a category $\cC$ such
@@ -149,17 +145,17 @@ that $K \cong \cC$. Let $K_0$ be the objects of $\cC$, and for $X,Y \in K_0$, de
 \[	\Hom(X,Y) := \{f \in K_1 | d_1f = X, d_0f = Y \}.	\]
 Given $f_1 : X \to Y$ and $f_2 : Y \to Z$, define a lifting problem by mapping the 1-simplices $0 \to 1$ and $1\to 2$ in
 $\Lambda^2_1$ to $f_1$ and $f_2$, respectively. We define $f_2 \circ f_1$ to be $d_1$ of the unique lift. Associativity
-of this composition follows from the unique filling of the horn $\Lambda^3_1$; we don't give the details here.
+of this composition follows from the unique filling of the horn $\Lambda^3_1$; we don't give the details here.	
+\end{proof}
+\fi
 
 \begin{exercise}
 	Let $S, S'$ be sets, seen as discrete simplicial set.
 	Show that any morphism $f \colon S \to S'$ is a Kan fibration, and that $f$ is a trivial Kan fibration if and only if $f$ is a bijection.
 \end{exercise}
 
-\noindent
-\textbf{Solution}
-
-\noindent
+\ifpersonal
+\begin{proof}[Solution]
 Since $S$ and $S'$ are sets, all $k$-simplices are of the form $s^k x$, for $x$ a 0-simplex. Given a lifting problem:
 	\[ \begin{tikzcd}
 		\Lambda^n_i \arrow{r} \arrow[hook]{d} & S\arrow{d}{f} \\
@@ -171,19 +167,23 @@ solution to the lifting problem. It follows that $f$ is a Kan fibration, and mor
 
 By definition, $f$ is a weak equivalence if it induces a weak equivalence on geometric realizations. $|S|$ and $|S'|$ are discrete
 topological spaces, therefore $|f|$ is a weak equivalence iff it is a bijection.
+\end{proof}
+\fi
 
 \begin{exercise}
 	Let $G$ and $H$ be simplicial groups and let $f \colon G \to H$ be a surjective group homomorphism.
 	Show that $f$ is a Kan fibration.
 \end{exercise}
 
-\noindent
-\textbf{Solution}
+\ifpersonal
+\begin{proof}[Solution]
 There is an algorithm for constructing fillers on nLab.
 \footnote{\url{https://ncatlab.org/nlab/show/simplicial+group}}
 We don't have any intuition for it, so we should work on building that.
 
 The algorithm produces unique fillers for all horns, so in particular simplicial groups are $\infty$-groupoids.
+\end{proof}
+\fi
 
 \begin{exercise}
 	Let $\partial \Delta^2$ be the smallest full subsimplicial set of $\Delta^2$ spanned by its non-degenerate edges $\Delta^1 \to \Delta^2$.
@@ -209,10 +209,12 @@ The algorithm produces unique fillers for all horns, so in particular simplicial
 	Show that every Kan complexes and $1$-categories are $\infty$-categories (quasicategories).
 \end{exercise}
 
-\noindent
-\textbf{Solution}
+\ifpersonal
+\begin{proof}[Solution]
 Kan complexes have fillers for all horns. 1-categories have unique fillers for all inner horns. In particular, both have
 fillers for all inner horns, which is the definition of $\infty$-categories.
+\end{proof}
+\fi
 
 \begin{exercise} \label{ex:equivalences_S_infty}
 	A morphism $f \colon X \to Y$ in an $\infty$-category $\cC$ is said to be an equivalence if its image in $\rh(\cC)$ is an isomorphism.
