@@ -1,0 +1,333 @@
+\pdfoutput=1
+%The other issue is that some packages, such as microtype, produce different output under pdflatex. By default the arXiv goes from dvi to ps to pdf, so if you need pdflatex you have to set the \pdfoutput flag in the TeX file.
+\newif\ifpersonal
+\newif\ifarxiv
+%\personaltrue % comment to remove personal notes
+\arxivtrue % comment to display shortened version for journal submissions
+\RequirePackage[l2tabu, orthodox]{nag} %detect whether obsolete packages are used
+\documentclass[10pt,a4paper,reqno,oneside]{book} %reqno places equation numbers on the right
+\linespread{1.2}
+%\allowdisplaybreaks[1]
+\usepackage{calligra}
+\usepackage{amsmath,amsthm,amssymb,mathrsfs,mathtools,bm,eucal,tensor} % math related
+\usepackage{microtype,fixltx2e} % latex technical issues
+\usepackage[scaled]{beramono,berasans}
+\usepackage{enumerate,comment,braket,xspace,tikz-cd} %utilities
+\usepackage[all,cmtip]{xy} % utilities
+\usepackage[utf8]{inputenc} % input encoding
+\usepackage[T1]{fontenc} % font encoding
+\definecolor{linkcolor}{HTML}{005050}
+\usepackage[centering,vscale=0.7,hscale=0.7]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage[capitalize]{cleveref}
+\usepackage{graphicx}
+\usepackage{xparse}
+
+%\makeevenhead{headings}{\thepage}{}{\leftmark}
+%\setlrmarginsandblock{3cm}{3.5cm}{*}
+%\setlength\marginparwidth{2.5cm}
+%\checkandfixthelayout
+%
+%\setlength\headheight{24pt}
+
+\usepackage{vmargin}
+\setpapersize{A4}
+\setmarginsrb{25mm}{10mm}{25mm}{10mm}%
+{12mm}{10mm}{5mm}{10mm}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+%%%Settings
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\fancyhf{}
+\fancyhead[LE,RO]{\bfseries\thepage}
+\fancyhead[RE]{\bfseries\footnotesize\nouppercase{\leftmark}}
+\fancyhead[LO]{\bfseries\footnotesize\nouppercase{\rightmark}}
+
+\theoremstyle{plain}
+\newtheorem{thm-intro}{Theorem}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem*{thm*}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{cor-intro}[thm-intro]{Corollary}
+\newtheorem{assumption}[thm]{Assumption}
+\theoremstyle{definition}
+\newtheorem{defin}[thm]{Definition}
+\newtheorem{exercise}[thm]{Exercise}
+\newtheorem{defin-intro}[thm-intro]{Definition}
+\newtheorem{notation}[thm]{Notation}
+\theoremstyle{remark}
+\newtheorem*{rem*}{Remark}
+\newtheorem{eg}[thm]{Example}
+\newtheorem{eg-intro}[thm-intro]{Example}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rem-intro}[thm-intro]{Remark}
+\numberwithin{equation}{section}
+\newtheorem{construction}[thm]{Construction}
+
+\input{newcommands_all}
+
+\begin{document}
+
+\chapter{$\infty$-category theory}
+
+\section{Motivations}
+
+\begin{exercise}
+	We fix a base field $k$.
+	Let $X = \mathbb P^1_k$ and let $U_0$ and $U_1$ be the standard open affine cover of $\mathbb P^1_k$.
+	For any $k$-algebra $A$, we have:
+	\[ U_0(A) \coloneqq \{ [x_0:x_1] \in \mathbb P^1_k(A) \mid x_0 \ne 0\},  \qquad U_1(A) \coloneqq \{[x_0:x_1] \in \mathbb P^1_k(A) \mid x_1 \ne 0\} . \]
+	Let $U_{01} = U_0 \cap U_1$ be their intersection.
+	Show that the canonical functor
+	\[ \rh( \cD(\mathbb P^1_k) ) \to \rh( \cD( U_0 ) ) \times_{\rh( \cD( U_{01} ) )} \rh( \cD( U_1 ) )  \]
+	is essentially surjective but not fully faithful.
+\end{exercise}
+
+\personal{Hint: For fully faithfulness look at morphisms $\cO_{\mathbb P^1_k} \to \cO_{\mathbb P^1_k}(-2)[1]$. Locally they are always zero, but globally they are not. The point is that the nullhomotopies don't glue.}
+
+\begin{exercise}
+	Let $\cC$ be a triangulated category where countable products and countable direct sums exist.
+	Show that if there exists a functor $\mathrm{Tr}$ from the category of arrows $\cC^{\Delta^1}$ to the category of exact triangles in $\cC$, then every triangle in $\cC$ is split.
+	(See \cite[Proposition II.1.2.13]{Verdier_Triangulated_categories}.)
+\end{exercise}
+
+\section{Reminders on simplicial sets}
+
+\begin{exercise}
+	Show that the nerve functor $\mathrm N \colon \Cat \to \sSet$ is fully faithful and its essential image is spanned by those simplicial sets $K$ satisfying the following lifting condition: for every $n \ge 2$ and for every $0 < i < n$ every lifting problem
+	\[ \begin{tikzcd}
+		\Lambda^n_i \arrow{r} \arrow[hook]{d} & K \\
+		\Delta^n \arrow[dashed]{ur}
+	\end{tikzcd} \]
+	has a unique solution.
+\end{exercise}
+
+\begin{exercise}
+	Let $S, S'$ be sets, seen as discrete simplicial set.
+	Show that any morphism $f \colon S \to S'$ is a Kan fibration, and that $f$ is a trivial Kan fibration if and only if $f$ is a bijection.
+\end{exercise}
+
+\begin{exercise}
+	Let $G$ and $H$ be simplicial groups and let $f \colon G \to H$ be a surjective group homomorphism.
+	Show that $f$ is a Kan fibration.
+\end{exercise}
+
+\begin{exercise}
+	Let $\partial \Delta^2$ be the smallest full subsimplicial set of $\Delta^2$ spanned by its non-degenerate edges $\Delta^1 \to \Delta^2$.
+	Show that $\partial \Delta^2$ fits into a coequalizer diagram
+	\[ (\Delta^0)^{\amalg 6} \rightrightarrows (\Delta^1)^{\amalg 3} \to \partial \Delta^2 . \]
+	(Hint: Have a look at \cite[Theorem III.3.1]{Gabriel_Zisman_Calculus_of_fractions}.)
+\end{exercise}
+
+\begin{exercise} \label{ex:coskeleton_Kan_complex}
+	Let $S$ be a set, seen as a discrete simplicial set.
+	Show that $\mathrm{cosk}_n(S)$ satisfies the following property: for every $m \ge n$ and every $0 \le i \le m$ the lifting problem
+	\[ \begin{tikzcd}
+		\Lambda^n_i \arrow{r} \arrow[hook]{d} & \mathrm{cosk}_n(S) \\
+		\Delta^n \arrow[dashed]{ur}
+	\end{tikzcd} \]
+	has a solution.
+	In particular, deduce that $\mathrm{cosk}_0(S)$ is a Kan complex.
+\end{exercise}
+
+\section{$\infty$-categories}
+
+\begin{exercise}
+	Show that every Kan complexes and $1$-categories are $\infty$-categories (quasicategories).
+\end{exercise}
+
+\begin{exercise} \label{ex:equivalences_S_infty}
+	A morphism $f \colon X \to Y$ in an $\infty$-category $\cC$ is said to be an equivalence if its image in $\rh(\cC)$ is an isomorphism.
+	Define $S^\infty \coloneqq \mathrm{cosk}_0(\{0,1\})$ and let $j \colon \Delta^1 \to S^\infty$ be the map classified by
+	\[ \mathrm{sk}_0(\Delta^1) = \{0,1\} \xrightarrow{\mathrm{id}} \{0,1\} . \]
+	To give a morphism $f \colon X \to Y$ in an $\infty$-category $\cC$ it is equivalent to specify a morphism of simplicial sets $e_f \colon \Delta^1 \to \cC$.
+	Show that $f$ is an equivalence if and only if the lifting problem
+	\[ \begin{tikzcd}
+		\Delta^1 \arrow[hook]{d}{j} \arrow{r}{e_f} & \cC \\
+		S^\infty \arrow[dashed]{ur}
+	\end{tikzcd} \]
+	has at least one solution.
+	Next, show that any two such solution are homotopic.
+	(Hint: have a look at Exercises \ref{ex:coskeleton_Kan_complex} and \ref{ex:eveloping_groupoid}.)
+\end{exercise}
+
+\begin{exercise}
+	In \cite{HTT} a functor of $\infty$-categories $f \colon \cC \to \cD$ is said to be a \emph{categorical equivalence} if and only if the induced functor $\mathfrak C[f] \colon \mathfrak C[\cC] \to \mathfrak C[\cD]$ is an equivalence of simplicial categories.
+	Show that $f$ is a categorical equivalence if and only if it is fully faithful and essentially surjective.
+\end{exercise}
+
+\begin{exercise}
+	Let $E$ denote the walking isomorphism (i.e.\ the $1$-category with two objects and an isomorphism between them).
+	Recall the definition of $S^\infty$ from the previous exercise.
+	Show that there is a canonical map $E \to S^\infty$ and that this is a categorical equivalence.
+	In particular, for every $\infty$-category $\cC$, the functor
+	\[ \Fun(S^\infty, \cC) \to \Fun(E, \cC) \]
+	is a categorical equivalence.
+	(This is a very simple example of what an ``internal rectification theorem'' looks like.)
+\end{exercise}
+
+\begin{exercise}
+	Let $\cC$ be an $\infty$-category.
+	Let $S_0$ be a collection of \emph{objects} in $\cC$.
+	Let $\cC_0$ be the smallest full subsimplicial set of $\cC$ containing $S_0$ (explicitly, an $n$-simplex $\sigma \colon \Delta^n \to \cC$ belongs to $\cC$ if and only if for every morphism $\Delta^0 \to \Delta^n$ the composition $\Delta^0 \to \Delta^n \xrightarrow{\sigma} \cC$ belongs to $S_0$.)
+	Show that $\cC_0$ is an $\infty$-category.
+	Furthermore, show that the inclusion $\cC_0 \hookrightarrow \cC$ of simplicial sets is a fully faithful functor of $\infty$-categories.
+\end{exercise}
+
+\begin{exercise}
+	Let $\cC$ be an $\infty$-category.
+	Let $S_0$ be a collection of \emph{morphisms} in $\cC$, and suppose that $S_0$ is closed under composition, in the sense that for every $2$-simplex
+	\[ \begin{tikzcd}
+	{} & Y \arrow{dr}{g} \\
+	X \arrow{ur}{f} \arrow{rr}{h} & & Z
+	\end{tikzcd} \]
+	is $\cC$, if $f$ and $g$ belong to $S_0$ then so does $h$.
+	Let $\cC_0$ be the smallest full subsimplicial set of $\cC$ containing $S_0$ (explicitly, an $n$-simplex $\sigma \colon \Delta^n \to \cC$ belongs to $\cC$ if and only if for every morphism $\Delta^1 \to \Delta^n$ the composition $\Delta^1 \to \Delta^n \xrightarrow{\sigma} \cC$ belongs to $S_0$).
+	Show that $\cC_0$ is an $\infty$-category.
+\end{exercise}
+
+\begin{exercise}
+	Let $\cC$ be an $\infty$-category. Show that the collection of equivalences in $\cC$ is closed under composition, in the sense of the previous exercise.
+	Let $\cC^{\simeq}$ be the $\infty$-subcategory of $\cC$ spanned by equivalences in $\cC$.
+	Show that $\cC^{\simeq}$ is a Kan complex.
+\end{exercise}
+
+\section{Localization of $\infty$-categories}
+
+\begin{exercise} \label{ex:eveloping_groupoid}
+	Let $\cC$ be an $\infty$-category (seen as a quasicategory).
+	Let $\cC \to \widetilde{\cC}$ be a fibrant replacement for the Kan model structure on $\sSet$.
+	Show that $\widetilde{\cC}$ enjoys the following universal property: for every $\infty$-category $\cD$ the functor of $\infty$-categories
+	\[ \Fun(\widetilde{\cC}, \cD) \to \Fun(\cC, \cD) \]
+	is fully faithful and its essential image is spanned by those morphisms $f \colon \cC \to \cD$ that send every morphism in $\cC$ into an equivalence in $\cD$.
+	Thus, there is a categorical equivalence $\tilde{\cC} \simeq \cC[W\inv]$, where $W$ denotes the collection of all arrows in $\cC$.
+	Deduce that if $\cC$ is an $\infty$-category where every morphism is invertible, then $\cC$ is categorically equivalent to a Kan complex.
+\end{exercise}
+
+\begin{exercise}
+	Let $\cC$ be an $\infty$-category and let $S$ be a (small) collection of arrows in $\cC$.
+	Show that $\rh(\cC[S\inv]) \in \Cat$ is canonically equivalent to the $1$-categorical localization of $\rh(\cC)$ at $\overline{S}$, the collection of morphism which is the image of $S$ via the canonical functor $\cC \to \rh(\cC)$.
+\end{exercise}
+
+\begin{exercise}
+	Let $\cC$ be an $\infty$-category with finite limits and let $S$ be a (small) collection of arrows in $\cC$.
+	Suppose that $\cC$ is stable under pullbacks.
+	Then the $\infty$-categorical localization $\cC[S\inv]$ has finite limits and the localization functor $L \colon \cC \to \cC[S\inv]$ commutes with them.
+\end{exercise}
+
+\section{Limits and colimits}
+
+\begin{exercise}
+	Let $\cS$ be the $\infty$-category of spaces and let $X$ be an object in $\cS$.
+	Using \cite[Theorem 4.2.4.1]{HTT} show that the colimit of the diagram
+	\[ \begin{tikzcd}
+		* & X \arrow{l} \arrow{r} & *
+	\end{tikzcd} \]
+	can be canonically identified with $\Sigma(X)$.
+	
+	Now fix two points $p, q \colon * \to X$. Show that the limit of the diagram
+	\[ \begin{tikzcd}
+		* \arrow{r}{p} & X & * \arrow{l}[swap]{q}
+	\end{tikzcd} \]
+	can be canonically identified with the path space $\mathrm{Path}_X(p,q)$.
+\end{exercise}
+
+\begin{exercise}
+	$n$-cofinality...
+\end{exercise}
+
+\begin{exercise}
+	$\star$ Let $K$ be a simplicial set and let $F \colon K\op \LPr$ be an $\infty$-functor.
+	Let $\cC$ be a presentable $\infty$-category and let $\Delta_\cC \colon K\op \to \LPr$ denote the constant $\infty$-functor associated to $F$.
+	Let $\varphi \colon \Delta_\cC \to F$ be a natural transformation in $\Fun(K\op, \LPr)$.
+	We let
+	\[ \Phi \colon \cC \to \varprojlim F \]
+	be the induced functor.
+	For every $x \in K$, the functor $\varphi_x \colon \cC \to F(x)$ admits a right adjoint, which we denote $\psi_x \colon F(x) \to \cC$.
+	Show that there exists an $\infty$-functor
+	\[ \overline{\Psi} \colon \varprojlim F \to \Fun(K, \cC) \]
+	which informally sends $Y = \{Y_x\}_{x \in K} \in \varprojlim F$ to the diagram $\overline{\Psi}(Y) \colon K \to \cC$ given by
+	\[ \overline{\Psi}(Y)(x) = \psi_x(Y_x) . \]
+	Prove moreover that the composition
+	\[ \begin{tikzcd}
+		\varprojlim F \arrow{r}{\overline{\Psi}} & \Fun(K, \cC) \arrow{r}{\mathrm{lim}} & \cC
+	\end{tikzcd} \]
+	can be canonically identified with a right adjoint for $\Phi$.
+\end{exercise}
+
+\section{Left and right fibrations}
+
+\begin{exercise}
+	Let $X$ be a connected Kan complex and let $F$ be any other Kan complex.
+	Let us further fix a point $x \in X$.
+	Let $\mathrm{LF}_x(X;F)$ be the full subcategory of left fibrations $\mathrm{LF}(X)$ over $X$ whose homotopy fiber at $x$ is equivalent to $F$.
+	Let $\mathrm{B}(\mathrm{hAut}(F))$ be the classifying space of the simplicial group of homotopy automorphisms of $F$.
+	Show that there is a canonical equivalence of $\infty$-categories
+	\[ \mathrm{LF}_x(X;F) \simeq \Fun(X, \mathrm{B}(\mathrm{hAut}(F))) . \]
+\end{exercise}
+
+\section{Cartesian and coCartesian fibrations}
+
+\begin{exercise}
+	Let $\cC$ be an $\infty$-category and let $X \in \cC$ be an object.
+	Let $f \colon U \to X$ and $g \colon V \to X$ be two morphisms in $\cC$.
+	For every $2$-simplex $\sigma \colon \Delta^2 \to \cC$ such that $d_0(\sigma) = f$ and $d_1(\sigma) = g$, show that there is a pullback square in $\cS$:
+	\[ \begin{tikzcd}
+		\mathrm{Path}_{\Map_{\cC}(U,X)}(f, d_2(\sigma)) \arrow{r} \arrow{d} & \mathrm{Map}_{\cC_{/X}}(f,g) \arrow{d} \\
+		* \arrow{r}{d_2(\sigma)} & \Map_{\cC}(U,V) .
+	\end{tikzcd} \]
+	(Hint: Use \cite[Propositions 2.1.2.1 and 2.4.4.2]{HTT}.)
+\end{exercise}
+
+\section{Adjunctions}
+
+\begin{exercise}
+	Let $\cC$ be an $\infty$-category with a zero object $0$.
+	Suppose that for every object $X \in \cC$ the span
+	\[ 0 \longleftarrow X \longrightarrow 0 \]
+	has both a limit $\Omega(X)$ and a colimit $\Sigma(X)$.
+	Construct in an explicit way $\infty$-functors $\Sigma, \Omega \colon \cC \to \cC$ informally given by $X \mapsto \Sigma(X)$ and $X \mapsto \Omega(X)$, respectively.
+	Show that $\Sigma$ and $\Omega$ are adjoint by explicitly constructing a fibration $\cD \to \Delta^1$ which is both Cartesian and coCartesian.
+\end{exercise}
+
+\begin{exercise}
+	Let $F \colon \cC \to \cD$ be an $\infty$-functor.
+	Show that the following statements are equivalent:
+	\begin{enumerate}
+		\item $F$ has a right adjoint $G \colon \cD \to \cC$;
+		\item for every $Y \in \cD$ there exists an object $X \in \cC$ and a morphism $\varepsilon_X \colon F(X) \to Y$ such that for every other $X' \in \cC$ the canonical composition
+		\[ \Map_{\cC}(X',X) \xrightarrow{f} \Map_{\cD}(f(X'), f(X)) \xrightarrow{\varepsilon_{X*}} \Map_{\cD}(f(X'), Y) \]
+		is a weak homotopy equivalence.
+	\end{enumerate}
+\end{exercise}
+
+\section{Stable $\infty$-categories}
+
+\begin{exercise}
+	Let $\cC$ be a stable $\infty$-category and let $\cD \subseteq \cC$ be a full stable subcategory of $\cC$.
+	Let $S \coloneqq \{f \colon X \to Y \in \cC \mid \mathrm{cofib}(f) \in \cD\}$.
+	Show that the $\infty$-categorical localization $\cC[S\inv]$ is a stable $\infty$-category.
+\end{exercise}
+
+\begin{exercise}
+	It is shown in \cite{Blumberg_Gepner_Universal_2013} that $\Catst$ is a presentable $\infty$-category.
+	Prove directly that cofibers in $\Catst$ exist.
+\end{exercise}
+
+\chapter{Derived rings}
+
+
+
+\chapter{Derived stacks}
+
+
+
+\bibliographystyle{plain}
+\bibliography{dahema}
+
+\end{document}

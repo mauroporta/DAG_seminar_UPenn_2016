@@ -1,0 +1,546 @@
+% personal remarks
+
+\ifpersonal
+\newcommand*{\personal}[1]{\textcolor[rgb]{0.6,0.6,1}{(Personal: #1)}}
+\newcommand*{\todo}[1]{\textcolor{red}{(Todo: #1)}}
+\else
+\newcommand*{\personal}[1]{\ignorespaces}
+\newcommand*{\todo}[1]{\ignorespaces}
+\fi
+
+% Fonts
+\newcommand{\C}{\mathbb C}
+\newcommand{\CP}{\mathbb{CP}}
+\newcommand{\F}{\mathbb F}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Z}{\mathbb Z}
+
+\newcommand{\rB}{\mathrm B}
+\newcommand{\rD}{\mathrm D}
+\newcommand{\rH}{\mathrm H}
+\newcommand{\rI}{\mathrm I}
+\newcommand{\rL}{\mathrm L}
+\newcommand{\rP}{\mathrm P}
+\newcommand{\rQ}{\mathrm Q}
+\newcommand{\rR}{\mathrm R}
+\newcommand{\rb}{\mathrm b}
+\newcommand{\rd}{\mathrm d}
+\newcommand{\rh}{\mathrm h}
+\newcommand{\rs}{\mathrm s}
+\newcommand{\rt}{\mathrm t}
+
+
+\newcommand{\fA}{\mathfrak A}
+\newcommand{\fB}{\mathfrak B}
+\newcommand{\fC}{\mathfrak C}
+\newcommand{\fD}{\mathfrak D}
+\newcommand{\fH}{\mathfrak H}
+\newcommand{\fS}{\mathfrak S}
+\newcommand{\fT}{\mathfrak T}
+\newcommand{\fU}{\mathfrak U}
+\newcommand{\fV}{\mathfrak V}
+\newcommand{\fX}{\mathfrak X}
+\newcommand{\fY}{\mathfrak Y}
+\newcommand{\fZ}{\mathfrak Z}
+\newcommand{\ff}{\mathfrak f}
+\newcommand{\fm}{\mathfrak m}
+\newcommand{\fn}{\mathfrak n}
+\newcommand{\fs}{\mathfrak s}
+\newcommand{\ft}{\mathfrak t}
+
+\newcommand{\cA}{\mathcal A}
+\newcommand{\cB}{\mathcal B}
+\newcommand{\cC}{\mathcal C}
+\newcommand{\cD}{\mathcal D}
+\newcommand{\cE}{\mathcal E}
+\newcommand{\cF}{\mathcal F}
+\newcommand{\cH}{\mathcal H}
+\newcommand{\cG}{\mathcal G}
+\newcommand{\cI}{\mathcal I}
+\newcommand{\cJ}{\mathcal J}
+\newcommand{\cK}{\mathcal K}
+\newcommand{\cL}{\mathcal L}
+\newcommand{\cM}{\mathcal M}
+\newcommand{\cN}{\mathcal N}
+\newcommand{\cO}{\mathcal O}
+\newcommand{\cP}{\mathcal P}
+\newcommand{\cR}{\mathcal R}
+\newcommand{\cS}{\mathcal S}
+\newcommand{\cT}{\mathcal T}
+\newcommand{\cU}{\mathcal U}
+\newcommand{\cV}{\mathcal V}
+\newcommand{\cW}{\mathcal W}
+\newcommand{\cX}{\mathcal X}
+\newcommand{\cY}{\mathcal Y}
+\newcommand{\cZ}{\mathcal Z}
+\DeclareFontFamily{U}{BOONDOX-calo}{\skewchar\font=45 }
+\DeclareFontShape{U}{BOONDOX-calo}{m}{n}{<-> s*[1.05] BOONDOX-r-calo}{}
+\DeclareFontShape{U}{BOONDOX-calo}{b}{n}{<-> s*[1.05] BOONDOX-b-calo}{}
+\DeclareMathAlphabet{\mathcalboondox}{U}{BOONDOX-calo}{m}{n}
+%\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\newcommand{\cf}{\mathcalboondox f}
+
+\newcommand{\bbA}{\mathbb A}
+\newcommand{\bbD}{\mathbb D}
+\newcommand{\bbG}{\mathbb G}
+\newcommand{\bbL}{\mathbb L}
+\newcommand{\bbP}{\mathbb P}
+\newcommand{\bbT}{\mathbb T}
+
+\newcommand{\bA}{\mathbf A}
+\newcommand{\bD}{\mathbf D}
+\newcommand{\bP}{\mathbf P}
+\newcommand{\bQ}{\mathbf Q}
+\newcommand{\bT}{\mathbf T}
+\newcommand{\bX}{\mathbf X}
+\newcommand{\bY}{\mathbf Y}
+\newcommand{\be}{\mathbf e}
+\newcommand{\br}{\mathbf r}
+\newcommand{\bu}{\mathbf u}
+\newcommand{\balpha}{\bm{\alpha}}
+\newcommand{\bDelta}{\bm{\Delta}}
+\newcommand{\brho}{\bm{\rho}}
+
+\newcommand{\sC}{\mathscr C}
+\newcommand{\sX}{\mathscr X}
+\newcommand{\sD}{\mathscr D}
+\newcommand{\sU}{\mathscr U}
+
+
+% Decorations
+
+% Definition of \widebar from http://tex.stackexchange.com/questions/16337/can-i-get-a-widebar-without-using-the-mathabx-package/60253#60253
+\makeatletter
+\let\save@mathaccent\mathaccent
+\newcommand*\if@single[3]{%
+	\setbox0\hbox{${\mathaccent"0362{#1}}^H$}%
+	\setbox2\hbox{${\mathaccent"0362{\kern0pt#1}}^H$}%
+	\ifdim\ht0=\ht2 #3\else #2\fi
+}
+%The bar will be moved to the right by a half of \macc@kerna, which is computed by amsmath:
+\newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
+%If there's a superscript following the bar, then no negative kern may follow the bar;
+%an additional {} makes sure that the superscript is high enough in this case:
+\newcommand*\widebar[1]{\@ifnextchar^{{\wide@bar{#1}{0}}}{\wide@bar{#1}{1}}}
+%Use a separate algorithm for single symbols:
+\newcommand*\wide@bar[2]{\if@single{#1}{\wide@bar@{#1}{#2}{1}}{\wide@bar@{#1}{#2}{2}}}
+\newcommand*\wide@bar@[3]{%
+	\begingroup
+	\def\mathaccent##1##2{%
+		%Enable nesting of accents:
+		\let\mathaccent\save@mathaccent
+		%If there's more than a single symbol, use the first character instead (see below):
+		\if#32 \let\macc@nucleus\first@char \fi
+		%Determine the italic correction:
+		\setbox\z@\hbox{$\macc@style{\macc@nucleus}_{}$}%
+		\setbox\tw@\hbox{$\macc@style{\macc@nucleus}{}_{}$}%
+		\dimen@\wd\tw@
+		\advance\dimen@-\wd\z@
+		%Now \dimen@ is the italic correction of the symbol.
+		\divide\dimen@ 3
+		\@tempdima\wd\tw@
+		\advance\@tempdima-\scriptspace
+		%Now \@tempdima is the width of the symbol.
+		\divide\@tempdima 10
+		\advance\dimen@-\@tempdima
+		%Now \dimen@ = (italic correction / 3) - (Breite / 10)
+		\ifdim\dimen@>\z@ \dimen@0pt\fi
+		%The bar will be shortened in the case \dimen@<0 !
+		\rel@kern{0.6}\kern-\dimen@
+		\if#31
+		\overline{\rel@kern{-0.6}\kern\dimen@\macc@nucleus\rel@kern{0.4}\kern\dimen@}%
+		\advance\dimen@0.4\dimexpr\macc@kerna
+		%Place the combined final kern (-\dimen@) if it is >0 or if a superscript follows:
+		\let\final@kern#2%
+		\ifdim\dimen@<\z@ \let\final@kern1\fi
+		\if\final@kern1 \kern-\dimen@\fi
+		\else
+		\overline{\rel@kern{-0.6}\kern\dimen@#1}%
+		\fi
+	}%
+	\macc@depth\@ne
+	\let\math@bgroup\@empty \let\math@egroup\macc@set@skewchar
+	\mathsurround\z@ \frozen@everymath{\mathgroup\macc@group\relax}%
+	\macc@set@skewchar\relax
+	\let\mathaccentV\macc@nested@a
+	%The following initialises \macc@kerna and calls \mathaccent:
+	\if#31
+	\macc@nested@a\relax111{#1}%
+	\else
+	%If the argument consists of more than one symbol, and if the first token is
+	%a letter, use that letter for the computations:
+	\def\gobble@till@marker##1\endmarker{}%
+	\futurelet\first@char\gobble@till@marker#1\endmarker
+	\ifcat\noexpand\first@char A\else
+	\def\first@char{}%
+	\fi
+	\macc@nested@a\relax111{\first@char}%
+	\fi
+	\endgroup
+}
+\makeatother
+
+
+\newcommand{\oDelta}{\widebar\Delta}
+\newcommand{\oGamma}{\widebar\Gamma}
+\newcommand{\oSigma}{\widebar\Sigma}
+\newcommand{\oalpha}{\widebar\alpha}
+\newcommand{\obeta}{\widebar\beta}
+\newcommand{\otau}{\widebar\tau}
+\newcommand{\oC}{\widebar C}
+\newcommand{\oD}{\widebar D}
+\newcommand{\oE}{\widebar E}
+\newcommand{\oG}{\widebar G}
+\newcommand{\oM}{\widebar M}
+\newcommand{\oR}{\widebar R}
+\newcommand{\oS}{\widebar S}
+\newcommand{\oU}{\widebar U}
+\newcommand{\oW}{\widebar W}
+\newcommand{\oX}{\widebar X}
+\newcommand{\oY}{\widebar Y}
+\newcommand{\oPhi}{\overline{\Phi}}
+
+
+\newcommand{\ok}{\widebar k}
+\newcommand{\ov}{\widebar v}
+\newcommand{\ox}{\widebar x}
+\newcommand{\oy}{\widebar y}
+\newcommand{\oz}{\widebar z}
+
+\newcommand{\hh}{\widehat h}
+\newcommand{\hf}{\widehat f}
+\newcommand{\hA}{\widehat A}
+\newcommand{\hB}{\widehat B}
+\newcommand{\hC}{\widehat C}
+\newcommand{\hE}{\widehat E}
+\newcommand{\hF}{\widehat F}
+\newcommand{\hI}{\widehat I}
+\newcommand{\hL}{\widehat L}
+\newcommand{\hU}{\widehat U}
+\newcommand{\hZ}{\hat Z}
+\newcommand{\hbeta}{\widehat\beta}
+\newcommand{\hGamma}{\widehat\Gamma}
+\newcommand{\hPhi}{\widehat{\Phi}}
+\newcommand{\hPsi}{\widehat{\Psi}}
+
+\newcommand{\hrP}{\widehat \rP}
+
+\newcommand{\tw}{\widetilde w}
+\newcommand{\tW}{\widetilde W}
+\newcommand{\tk}{\tilde k}
+\newcommand{\tv}{\tilde v}
+\newcommand{\tB}{\widetilde B}
+\newcommand{\tD}{\widetilde D}
+\newcommand{\tI}{\widetilde I}
+\newcommand{\tM}{\widetilde M}
+\newcommand{\tN}{\widetilde N}
+\newcommand{\tP}{\widetilde P}
+\newcommand{\tR}{\widetilde R}
+\newcommand{\tX}{\widetilde X}
+\newcommand{\tfX}{\widetilde{\fX}}
+\newcommand{\tfB}{\widetilde{\fB}}
+\newcommand{\tsX}{\widetilde{\sX}}
+\newcommand{\tH}{\widetilde H}
+\newcommand{\tY}{\widetilde Y}
+\newcommand{\tbeta}{\widetilde{\beta}}
+\newcommand{\tphi}{\widetilde{\phi}}
+\newcommand{\ttau}{\widetilde{\tau}}
+
+% Global tropicalization
+\newcommand{\Ih}{I^\mathrm{h}}
+\newcommand{\Iv}{I^\mathrm{v}}
+\newcommand{\IX}{I_\fX}
+\newcommand{\IY}{I_\fY}
+\newcommand{\SD}{S_\fD}
+\newcommand{\SX}{S_\fX}
+\newcommand{\SsXH}{S_{(\sX,H)}}
+\newcommand{\SY}{S_\fY}
+\newcommand{\CsXH}{C_{(\sX,H)}}
+\newcommand{\oF}{\overline{F}}
+\newcommand{\oP}{\overline{P}}
+\newcommand{\oSX}{\overline{\SX}}
+\newcommand{\oIX}{\overline{\IX}}
+
+
+% Vanishing cycles
+\newcommand{\fXe}{\fX_\eta}
+\newcommand{\fXs}{\fX_s}
+\newcommand{\ofX}{\widebar{\fX}}
+\newcommand{\ofXs}{\widebar{\fX}_s}
+\newcommand{\fYe}{\fY_\eta}
+\newcommand{\fYs}{\fY_s}
+\newcommand{\fXbs}{\fX_{\bar s}}
+\newcommand{\fXbe}{\fX_{\bar\eta}}
+\newcommand{\fDe}{\fD_\eta}
+\newcommand{\LX}{\Lambda_{\fX}}
+\newcommand{\LXe}{\Lambda_{\fX_\eta}}
+\newcommand{\LXs}{\Lambda_{\fXbs}}
+\newcommand{\QXe}{\Q_{\ell,\fX_\eta}}
+\newcommand{\QXbs}{\Q_{\ell,\fXbs}}
+\newcommand{\sXe}{\sX_\eta}
+\newcommand{\sXs}{\sX_s}
+\newcommand{\LUe}{\Lambda_{\fU_\eta}}
+\newcommand{\fCbs}{\fC_{\bar s}}
+\newcommand{\QUe}{\Q_{\ell,\fU_\eta}}
+\newcommand{\QCe}{\Q_{\ell,\fC_\eta}}
+\newcommand{\QCs}{\Q_{\ell,\fCbs}}
+
+% stacks
+
+\newcommand{\hcC}{\mathrm h\cC}
+\newcommand{\hcD}{\mathrm h\cD}
+\newcommand{\PSh}{\mathrm{PSh}}
+\newcommand{\Sh}{\mathrm{Sh}}
+\newcommand{\Shv}{\mathrm{Shv}}
+\newcommand{\Tuupperp}{\tensor*[^\cT]{u}{^p}}
+\newcommand{\Tulowerp}{\tensor*[^\cT]{u}{_p}}
+\newcommand{\Tuuppers}{\tensor*[^\cT]{u}{^s}}
+\newcommand{\Tulowers}{\tensor*[^\cT]{u}{_s}}
+\newcommand{\pu}{\tensor*[_p]{u}{}}
+\newcommand{\su}{\tensor*[_s]{u}{}}
+\newcommand{\Tpu}{\tensor*[^\cT_p]{u}{}}
+\newcommand{\Tsu}{\tensor*[^\cT_s]{u}{}}
+\newcommand{\Dfpull}{\tensor*[^\cD]{f}{^{-1}}}
+\newcommand{\Dfpush}{\tensor*[^\cD]{f}{_*}}
+\newcommand{\Duuppers}{\tensor*[^\cD]{u}{^s}}
+\newcommand{\Dulowers}{\tensor*[^\cD]{u}{_s}}
+\newcommand{\Geom}{\mathrm{Geom}}
+\newcommand{\LPr}{\mathcal{P}\mathrm{r}^\rL}
+\newcommand{\RPr}{\mathcal{P}\mathrm{r}^\rR}
+\newcommand{\LPromega}{\mathcal{P}\mathrm{r}^{\rL, \omega}}
+\newcommand{\LPromegast}{\mathcal{P}\mathrm{r}^{\rL, \omega}_{\mathrm{Ex}}}
+\newcommand{\CX}{\cC_{/X}}
+\newcommand{\CY}{\cC_{/Y}}
+\newcommand{\CXP}{(\cC_{/X})_{\bP}}
+\newcommand{\GeomXP}{(\mathrm{Geom}_{/X})_\bP}
+\newcommand{\GeomYP}{(\mathrm{Geom}_{/Y})_\bP}
+\newcommand{\infcat}{$\infty$-category\xspace}
+\newcommand{\infcats}{$\infty$-categories\xspace}
+\newcommand{\infsite}{$\infty$-site\xspace}
+\newcommand{\infsites}{$\infty$-sites\xspace}
+\newcommand{\inftopos}{$\infty$-topos\xspace}
+\newcommand{\inftopoi}{$\infty$-topoi\xspace}
+\newcommand{\pres}{{}^{\mathrm L} \mathcal P \mathrm{res}}
+\newcommand{\Grpd}{\mathrm{Grpd}}
+\newcommand{\sSet}{\mathrm{sSet}}
+\newcommand{\rSet}{\mathrm{Set}}
+\newcommand{\Ab}{\mathrm{Ab}}
+\newcommand{\DAb}{\cD(\Ab)}
+\newcommand{\tauan}{\tau_\mathrm{an}}
+\newcommand{\qet}{\mathrm{q\acute{e}t}}
+\newcommand{\tauet}{\tau_\mathrm{\acute{e}t}}
+\newcommand{\tauqet}{\tau_\mathrm{q\acute{e}t}}
+\newcommand{\bPsm}{\bP_\mathrm{sm}}
+\newcommand{\bPqsm}{\bP_\mathrm{qsm}}
+\newcommand{\Modh}{\textrm{-}\mathrm{Mod}^\heartsuit}
+\newcommand{\Mod}{\textrm{-}\mathrm{Mod}}
+\newcommand{\Coh}{\mathrm{Coh}}
+\newcommand{\Cohb}{\mathrm{Coh}^\mathrm{b}}
+\newcommand{\Cohh}{\mathrm{Coh}^\heartsuit}
+\newcommand{\QCohh}{\mathrm{QCoh}^\heartsuit}
+\newcommand{\RcHom}{\rR\!\mathcal H\!\mathit{om}}
+\newcommand{\kfiltered}{$\kappa$-filtered\xspace}
+\newcommand{\Stn}{\mathrm{Stn}}
+\newcommand{\Sch}{\mathrm{Sch}}
+\newcommand{\FSch}{\mathrm{FSch}}
+\newcommand{\Aff}{\mathrm{Aff}}
+\newcommand{\Afflfp}{\mathrm{Aff}^{\mathrm{lfp}}}
+\newcommand{\An}{\mathrm{An}}
+\newcommand{\Afd}{\mathrm{Afd}}
+\newcommand{\Top}{\mathcal T\mathrm{op}}
+\newcommand{\bfMap}{\mathbf{Map}}
+
+
+% DAnG
+
+\newcommand{\dAnk}{\mathrm{dAn}_k}
+\newcommand{\Ank}{\mathrm{An}_k}
+\newcommand{\cTan}{\cT_{\mathrm{an}}}
+\newcommand{\cTannc}{\cT_{\mathrm{an}}^{\mathrm{nc}}}
+\newcommand{\cTank}{\cT_{\mathrm{an}}(k)}
+\newcommand{\cTdisck}{\cT_{\mathrm{disc}}(k)}
+\newcommand{\cTet}{\cT_{\mathrm{\acute{e}t}}}
+\newcommand{\cTetnc}{\cTet^{\mathrm{nc}}}
+\newcommand{\cTetk}{\cT_{\mathrm{\acute{e}t}}(k)}
+\newcommand{\Strloc}{\mathrm{Str}^\mathrm{loc}}
+\newcommand{\RTop}{\tensor*[^\rR]{\Top}{}}
+\newcommand{\LTop}{\tensor*[^\rL]{\Top}{}}
+\newcommand{\RHTop}{\tensor*[^\rR]{\mathcal{H}\Top}{}}
+\newcommand{\LRT}{\mathrm{LRT}}
+\newcommand{\Tor}{\mathrm{Tor}}
+\newcommand{\dAfd}{\mathrm{dAfd}}
+\newcommand{\dAfdk}{\mathrm{dAfd}_k}
+\newcommand{\biget}{\mathrm{big,\acute{e}t}}
+\newcommand{\trunc}{\mathrm{t}_0}
+\newcommand{\Hyp}{\mathrm{Hyp}}
+\newcommand{\HSpec}{\mathrm{HSpec}}
+\newcommand{\CAlg}{\mathrm{CAlg}}
+\newcommand{\trunctopoi}{\Spec^{\cG_{\mathrm{an}}^{\le 0}(k)}_{\cG_{\mathrm{an}(k)}}}
+
+% Formal Gluing
+
+\newcommand{\IndPro}[1]{\mathrm{Ind}(\mathrm{Pro}(#1))}
+\newcommand{\GFRings}{\mathrm{GFRings}}
+\newcommand{\Pro}{\mathrm{Pro}}
+\newcommand{\Ind}{\mathrm{Ind}}
+\newcommand{\preNbd}{\mathrm{PNbd}}
+\newcommand{\Nbd}{\mathrm{Nbd}^{\circ}}
+\newcommand{\cHom}{\cH \mathrm{om}}
+\newcommand {\D} {\mathsf{L}}
+\newcommand{\St}{\mathbf{St}}
+\newcommand{\dSt}{\mathbf{dSt}}
+\newcommand{\Tw}{\mathrm{Tw}}
+\newcommand{\Lan}{\mathrm{Lan}}
+\newcommand{\IndCoh}{\mathrm{IndCoh}}
+\newcommand{\QCoh}{\mathrm{QCoh}}
+\newcommand{\Perf}{\mathrm{Perf}}
+\newcommand{\lex}{\mathrm{lex}}
+\newcommand{\Dsing}{\rD_\mathrm{sing}}
+\newcommand{\fib}{\mathrm{fib}}
+\newcommand{\cofib}{\mathrm{cofib}}
+\newcommand{\stMap}{\mathrm{Map}^{\mathrm{st}}}
+\newcommand{\Zar}{\mathrm{Zar}}
+\newcommand{\Cat}{\mathrm{Cat}}
+\newcommand{\AbCat}{\mathrm{AbCat}}
+\newcommand{\bfCoh}{\mathbf{Coh}}
+\newcommand{\bfPerf}{\mathbf{Perf}}
+\newcommand{\bfQCoh}{\mathbf{QCoh}}
+\newcommand{\Catst}{\Cat_\infty^{\mathrm{Ex}}}
+\newcommand{\Catstidem}{\Cat_\infty^{\mathrm{Ex}, \mathrm{idem}}}
+\newcommand{\Catstlc}{\Cat_\infty^{\mathrm{Ex}, \mathrm{l.c.}}}
+\newcommand{\Catstlb}{\Cat_\infty^{\mathrm{Ex}, \mathrm{l.b.}}}
+
+\newcommand{\bfBun}{\operatorname{\mathbf{Bun}}}
+\newcommand{\Bun}{\operatorname{\mathrm{Bun}}}
+\newcommand{\Bunhat}{\operatorname{\mathbf{B\widehat{un}}}}
+
+% Special symbols
+\newcommand{\bcM}{\widebar{\mathcal M}}
+\newcommand{\bcC}{\widebar{\mathcal C}}
+\newcommand{\bcMgn}{\widebar{\mathcal M}_{g,n}}
+\newcommand{\bcMol}{\widebar{\mathcal M}_{0,1}}
+\newcommand{\bcMot}{\widebar{\mathcal M}_{0,3}}
+\newcommand{\bcMof}{\widebar{\mathcal M}_{0,4}}
+\newcommand{\bcMon}{\widebar{\mathcal M}_{0,n}}
+\newcommand{\bcMgnprime}{\widebar{\mathcal M}_{g,n'}}
+\newcommand{\bcMgnijprime}{\widebar{\mathcal M}_{g_{ij},n'_{ij}}}
+\newcommand{\bMgnt}{\widebar{M}^\mathrm{trop}_{g,n}}
+\newcommand{\Mmdisc}{M_{m\textrm{-disc}}}
+\newcommand{\Gm}{\mathbb G_{\mathrm m}}
+\newcommand{\Gmk}{\mathbb G_{\mathrm m/k}}
+\newcommand{\Gmkprime}{\mathbb G_{\mathrm m/k'}}
+\newcommand{\Gmnan}{(\Gm^n)\an}
+\newcommand{\Gmknan}{(\Gmk^n)\an}
+\newcommand{\Lin}{\mathit{Lin}}
+\newcommand{\Simp}{\mathit{Simp}}
+\newcommand{\vol}{\mathit{vol}}
+\newcommand{\LanD}{\mathcal L_{an}^D}
+
+% Categories
+
+
+% Shorthands
+\newcommand{\kc}{k^\circ}
+\newcommand{\llb}{[\![}
+\newcommand{\rrb}{]\!]}
+\newcommand{\llp}{(\!(}
+\newcommand{\rrp}{)\!)}
+\newcommand{\an}{^\mathrm{an}}
+\newcommand{\alg}{^\mathrm{alg}}
+\newcommand{\loweralg}{_\mathrm{alg}}
+\newcommand{\bad}{^\mathrm{bad}}
+\newcommand{\ess}{^\mathrm{ess}}
+\newcommand{\ness}{^\mathrm{ness}}
+\newcommand{\et}{_\mathrm{\acute{e}t}}
+\newcommand{\Et}{_\mathrm{\acute{E}t}}
+\newcommand{\ev}{\mathrm{ev}}
+%\newcommand{\eistar}{\mathbf e_i^*}
+%\newcommand{\ejstar}{\mathbf e_j^*}
+%\newcommand{\ekstar}{\mathbf e_k^*}
+\newcommand{\mult}{\mathit{mult}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\gn}{$n$-pointed genus $g$ }
+\newcommand{\gnprime}{$n'$-pointed genus $g$ }
+\newcommand{\GW}{\mathrm{GW}}
+\newcommand{\GWon}{\GW_{0,n}}
+\newcommand{\canal}{$\mathbb C$-analytic\xspace}
+\newcommand{\nanal}{non-archimedean analytic\xspace}
+\newcommand{\kanal}{$k$-analytic\xspace}
+\newcommand{\ddim}{$d$-dimensional\xspace}
+\newcommand{\ndim}{$n$-dimensional\xspace}
+\newcommand{\narch}{non-archimedean\xspace}
+\newcommand{\nminusone}{$(n\!-\!1)$}
+\newcommand{\nminustwo}{$(n\!-\!2)$}
+\newcommand{\red}{^\mathrm{red}}
+\renewcommand{\th}{^\mathrm{\tiny th}}
+\newcommand{\Wall}{\mathit{Wall}}
+\newcommand{\vlb}{virtual line bundle\xspace}
+\newcommand{\mvlb}{metrized \vlb}
+\newcommand{\wrt}{with respect to\xspace}
+\newcommand{\Zaffine}{$\mathbb Z$-affine\xspace}
+\newcommand{\sw}{^\mathrm{sw}}
+\newcommand{\Trop}{\mathrm{Trop}}
+\newcommand{\trop}{^\mathrm{trop}}
+\newcommand{\op}{^\mathrm{op}}
+\newcommand{\Cech}{\check{\mathcal C}}
+\newcommand{\DM}{Deligne-Mumford\xspace}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+
+
+% Arrows
+\newcommand*{\longhookrightarrow}{\ensuremath{\lhook\joinrel\relbar\joinrel\rightarrow}}
+\newcommand*{\DashedArrow}[1][]{\mathbin{\tikz [baseline=-0.25ex,-latex, dashed,#1] \draw [#1] (0pt,0.5ex) -- (1.3em,0.5ex);}}
+
+\usetikzlibrary{decorations.markings} %arrows for open immersions and closed immersions
+\tikzset{
+  closed/.style = {decoration = {markings, mark = at position 0.5 with { \node[transform shape, xscale = .8, yscale=.4] {/}; } }, postaction = {decorate} },
+  open/.style = {decoration = {markings, mark = at position 0.5 with { \node[transform shape, scale = .7] {$\circ$}; } }, postaction = {decorate} }
+}
+
+
+%Operators
+\DeclareMathOperator{\Anc}{Anc}
+\DeclareMathOperator{\Area}{Area}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Bl}{Bl}
+\DeclareMathOperator{\CH}{CH}
+\DeclareMathOperator{\Coker}{Coker}
+\DeclareMathOperator{\codim}{codim}
+\DeclareMathOperator{\cosk}{cosk}
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\Ext}{Ext}
+\DeclareMathOperator{\Fun}{Fun}
+\DeclareMathOperator{\FunR}{Fun^R}
+\DeclareMathOperator{\FunL}{Fun^L}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Image}{Im}
+\DeclareMathOperator{\Int}{Int}
+\DeclareMathOperator{\Isom}{Isom}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Map}{Map}
+\DeclareMathOperator{\Mor}{Mor}
+\DeclareMathOperator{\NE}{NE}
+\DeclareMathOperator{\oStar}{\widebar{\Star}}
+\DeclareMathOperator{\Pic}{Pic}
+\DeclareMathOperator{\Proj}{Proj}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\RHom}{RHom}
+\DeclareMathOperator{\Sp}{Sp}
+\DeclareMathOperator{\Spa}{Spa}
+\DeclareMathOperator{\SpB}{Sp_\mathrm{B}}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Spf}{Spf}
+\DeclareMathOperator{\Star}{Star}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\val}{val}
+
+\DeclareMathOperator*{\colim}{colim}
+\DeclareMathOperator*{\holim}{holim}
+\DeclareMathOperator*{\hocolim}{hocolim}
+\DeclareMathOperator*{\cotimes}{\widehat{\otimes}}
