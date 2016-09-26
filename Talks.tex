@@ -1,0 +1,966 @@
+\pdfoutput=1
+%The other issue is that some packages, such as microtype, produce different output under pdflatex. By default the arXiv goes from dvi to ps to pdf, so if you need pdflatex you have to set the \pdfoutput flag in the TeX file.
+\newif\ifpersonal
+\newif\ifarxiv
+\personaltrue % comment to remove personal notes
+\arxivtrue % comment to display shortened version for journal submissions
+\RequirePackage[l2tabu, orthodox]{nag} %detect whether obsolete packages are used
+\documentclass[10pt,a4paper,reqno,oneside]{book} %reqno places equation numbers on the right
+\linespread{1.2}
+%\allowdisplaybreaks[1]
+\usepackage{calligra}
+\usepackage{amsmath,amsthm,amssymb,mathrsfs,mathtools,bm,eucal,tensor} % math related
+\usepackage{microtype,fixltx2e} % latex technical issues
+\usepackage[scaled]{beramono,berasans}
+\usepackage{enumerate,comment,braket,xspace,tikz-cd} %utilities
+\usepackage[all,cmtip]{xy} % utilities
+\usepackage[utf8]{inputenc} % input encoding
+\usepackage[T1]{fontenc} % font encoding
+\usepackage{lmodern}
+\definecolor{linkcolor}{HTML}{005050}
+\usepackage[centering,vscale=0.7,hscale=0.7]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage[capitalize]{cleveref}
+\usepackage{graphicx}
+\usepackage{xparse}
+\usepackage{url}
+
+%\makeevenhead{headings}{\thepage}{}{\leftmark}
+%\setlrmarginsandblock{3cm}{3.5cm}{*}
+%\setlength\marginparwidth{2.5cm}
+%\checkandfixthelayout
+%
+%\setlength\headheight{24pt}
+
+\usepackage{vmargin}
+\setpapersize{A4}
+\setmarginsrb{25mm}{10mm}{25mm}{10mm}%
+{12mm}{10mm}{5mm}{10mm}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+%%%Settings
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\fancyhf{}
+\fancyhead[LE,RO]{\bfseries\thepage}
+\fancyhead[RE]{\bfseries\footnotesize\nouppercase{\leftmark}}
+\fancyhead[LO]{\bfseries\footnotesize\nouppercase{\rightmark}}
+
+\theoremstyle{plain}
+\newtheorem{thm-intro}{Theorem}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem*{thm*}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{cor-intro}[thm-intro]{Corollary}
+\newtheorem{assumption}[thm]{Assumption}
+\theoremstyle{definition}
+\newtheorem{defin}[thm]{Definition}
+\newtheorem{exercise}[thm]{Exercise}
+\newtheorem{defin-intro}[thm-intro]{Definition}
+\newtheorem{notation}[thm]{Notation}
+\theoremstyle{remark}
+\newtheorem*{rem*}{Remark}
+\newtheorem{eg}[thm]{Example}
+\newtheorem{eg-intro}[thm-intro]{Example}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rem-intro}[thm-intro]{Remark}
+\numberwithin{equation}{section}
+\newtheorem{construction}[thm]{Construction}
+
+\input{newcommands_all}
+
+\begin{document}
+
+\chapter{$\infty$-category theory}
+Talk by Mauro Porta.
+
+\section{Why $\infty$-categories?}
+
+Our main reason for studying $\infty$-categories in this seminar is that derived schemes form an $\infty$-category.
+Some other applications of $\infty$-categories are the following.
+
+\begin{enumerate}
+\item \label{item:formal_moduli}
+Formal moduli problems over a field $k$ of characteristic 0 are equivalent to $\text{dgLie}_{k}$, but this is
+an equivalence of $\infty$-categories. We can see explicitly why this equivalence is plausible. For $F$ a formal moduli problem, 
+$T_xF[1]$ is a dgLie algebra. Conversely, Maurer-Cartan elements on the RHS determine $F(k[\epsilon])$, 
+i.e. infinitesimal formal moduli problems. Brackets then allow the complete recovery of $F$. 
+
+\item 
+The $\infty$-category of rational homotopy types is equivalent to that of dgLie algebras over $\Q$, concentrated in
+positive degrees:
+\[	S_*^{\text{rat}} \cong \text{dgLie}_{\Q}^{\geq 1}	\] 
+This statement is related to item \ref{item:formal_moduli}: Lurie gives nice proof using formal moduli problems, see 
+\cite{DAG-XIII}.
+
+\item To $X \in \Sch_k$, we associate its derived category of quasi-coherent sheaves, $D(X) = D(QCoh(X))$. 
+It's a powerful invariant of $X$, especially when $X$ is not
+smooth. For example, it contains the cotangent complex and dualizing complex, $\bbL_X , \omega_X \in D(X)$, which are not 
+necessarily bounded if $X$ is not smooth.
+
+The problem is that we cannot reconstruct $D(X)$, the derived category in the classical sense, by patching: $D(X) \not \simeq 
+\lim_{\{U\} \text{ Zariski cover }} D(U)$. For example, take $X = \bbP^1_k$, and its standard cover by 2 open affines $U_0, U_1$.
+We show that the functor:
+\[	D(\bbP^1) \to D(U_0) \times_{D(U_{01})} D(U_1)	\]
+is not faithful, by exhibiting a morphism in $D(\bbP^1)$ which gets mapped to 0. Start from the observation that morphisms
+from the structure sheaf $\mathcal{O}_{\bbP^1}$ are the same as sections of the target sheaf, which implies:
+\[	\R(\Hom) \big(\mathcal{O}_{\bbP^1},\mathcal{O}_{\bbP^1}(-2)[1]\big) \cong \R \Gamma\big(\mathcal{O}_{\bbP^1}(-2)[1]\big) .	\]
+This complex has nontrivial cohomology in degree 0:
+\begin{equation}
+\label{eq:derived_counterex}
+	H^0 \R \Gamma\big(\mathcal{O}_{\bbP^1}(-2)[1]\big) \cong H^1\big(\mathcal{O}_{\bbP^1}(-2)\big) \cong k.
+\end{equation}
+However, when passing to the affine patches, $D(U_i) \simeq D(k[T]-Mod)$, and the complexes corresponding to the
+restrictions of $\mathcal{O}_{\bbP^1}$ and $\mathcal{O}_{\bbP^1}(-2)[1]$ are the following.
+\[
+\begin{tikzcd}
+0\arrow{r} & 0\arrow{r} & k[T]\arrow{r} & 0 \\
+0\arrow{r} & k[T]\arrow{r} & 0\arrow{r} & 0
+\end{tikzcd}
+\]
+As such, there are no non-zero morphisms between the restrictions. Equivalently, when restricting to affine opens,
+the first cohomology in equation \ref{eq:derived_counterex} is 0.
+
+On the other hand, we will see that the $\infty$-derived category of $X$ (which we temporarily 
+denote by $L_{\text{qcoh}}(X)$) can be patched using the homotopy fiber product:
+\[	L_{qcoh}(\bbP^1_k) \simeq  L_{qcoh}(U_0) \times_{L_{qcoh}(U_{01})} L_{qcoh}(U_1) .\]
+
+\item Let $\mathcal{M}_{ell}$ be the moduli stack of elliptic curves, i.e. the functor $F$ sending
+$\Spec(A)$ to the classes of elliptic curves over $\Spec(A)$. It is not a sheaf, because two elliptic curves can become
+isomorphic after a base extension. The problem here is that we were trying to take $F : \cA ff^{\op} \to \cS et$, and we can't talk
+about isomorphisms in $\cS et$. Classically one solves this problem by replacing sets by groupoids, which are equivalent to
+1-homotopy types.
+\[
+\begin{tikzcd}
+\; & & \cG pd \cong \cS^{\leq 1}\arrow{d} \\
+\cA ff^{\op}\arrow{urr}{\text{stacks}}\arrow[swap]{rr}{\begin{array}{c}\text{naive moduli}\\
+\text{problems}\end{array}} & & \cS et \cong \cS^{\leq 0}
+\end{tikzcd}
+\]
+We can define higher stacks by extending the tower to higher homotopy types, and ultimately to the category of spaces.
+\[
+\begin{tikzcd}
+\; & &  \cS\arrow{d} \\
+\; & &  \vdots\arrow{d} \\
+\; & &  \cS^{\leq 1}\arrow{d} \\
+\cA ff^{\op}\arrow{uuurr}{\begin{array}{c}\text{higher}\\\text{stacks}\end{array}}
+\arrow{urr}{\text{stacks}}\arrow[swap]{rr}{\begin{array}{c}\text{naive moduli}\\\text{problems}\end{array}} & & 
+\cS et \cong \cS^{\leq 0}
+\end{tikzcd}
+\]
+In later talks, we'll
+see that the perfect complexes $\cP erf$ form an $\infty$-stack which doesn't factor through finite homotopy types.
+\end{enumerate}
+
+
+\section{Three ways of working with $\infty$-categories}
+To be attempted in order of desperation:
+\begin{enumerate}
+\item \label{model_indep} 
+Reason model-independently to get a clean proof. The trick is that there are key statements (not proven model
+independently; some are proven by Lurie and can be found in \cite{HTT}) which behave like a ``non-minimal set of axioms''.
+One should learn a roadmap to \cite{HTT}, in order to know where to find these statements.
+
+\item Internal rectification. Cut the number of homotopies necessary to define the object. Example: an $\infty$-category with
+products, see it as a symmetric monoidal category with products. $Mon_{E_1}(\cC) \simeq Fun^{\times}(\Delta^{\op}, \cC)
+\to Fun(\Delta^{\op}, \cC)$.
+The reference is \cite{Lurie_Higher_algebra}, 4.1.2.6. 
+
+\item \label{item:real_rectification}
+Try a ``real rectification'' result, i.e. work with a model-categorical presentation. For example, take $\cS$,
+the $\infty$-category
+of spaces, fix $x,y \in X$, want diagram. $\cS = \infty(sSet_{Kan})$. Theorem 4.2.4.1 in \cite{HTT} says that, in this situation, 
+$\infty$-categorical limits correspond to homotopy limits. We use this theorem to show that $Path_X(x,y)$ is the $\infty$-limit
+of the diagram.
+
+Rectification: something is defined up to homotopy, and we try to reduce the necessary homotopies. Suppose we have
+$\cM$, compare $Fun(\Delta^2,\cM)$ to $\Fun(\Delta^2, \infty \cM)$. The first one gives 3 objects and 3 morphisms, while
+the other gives a homotopy between composition and the other map. The theorem is that you can forget the homotopy, and
+just remember the data on the LHS. (HTT 4.2.4.4)
+\end{enumerate}
+
+In what follows we give examples where we can get by with procedure \ref{model_indep}. 
+
+\begin{defin}
+An $\infty$-cateogry is a simplicial set $\cC$ such that all inner horns have fillers. In other words, for all $0<i<n$,
+the dotted arrow in the following diagram exists.
+\[
+\begin{tikzcd}
+\Lambda^{n}_{i}\arrow[hook]{d}\arrow{r} & \cC \\
+\Delta^n\arrow[dotted]{ur} & 
+\end{tikzcd}
+\]
+\end{defin}
+
+Note that this achieves what we want: inner horn fillings act as composition of morphisms, but this composition is not unique. 
+``Higher Topos Theory is the book where all of category theory is carried out without ever talking about composition.'' 
+A few problems arise
+from here:
+
+\begin{enumerate}
+\item How do we define Yoneda? A morphism $X \to Y$ is supposed to determine a morphism $h_X \to h_Y$ by composition, which
+is not well-defined.
+\item Let $\cC$ be an $\infty$-category. We want $f: x \to y$ in $\cC$ to determine a functor $f_*: \cC_{/X} \to \cC_{/Y}$
+between over-categories, where, morally speaking, $g: Z \to X$ is sent to the composition $f \circ g$.
+Again, this composition is not well-defined.
+\end{enumerate}
+
+To the rescue comes Corollary 2.4.7.12 in \cite{HTT}. 
+\begin{thm}
+\label{thm:cartesian_fib}
+Let $f: \cC \to \cD$ be an $\infty$-functor between $\infty$-categories. Then the projection
+\[	\mathcal{P} : Fun(\Delta^1, \cD) \times_{Fun(\{1\},\cD)} \cC \to Fun(\{0\}, \cD) 	\]
+is a \textbf{cartesian fibration}. Moreover, a morphism in the source is $\mathcal{P}$-\textbf{cartesian} iff its image in $\cC$ 
+is an \textbf{equivalence}.
+\end{thm}
+Note that the $\infty$-functors $Fun(\cC,\cD)$ are nothing but the internal $\Hom$ in $s\cS et$. 
+\[	Fun(\cC,\cD)_n = s\cS et(\cC \times \Delta^n, \cD)	\]
+It's standard to prove that, if $\cC, \cD$ are $\infty$-categories, then so is $\Hom(\cC, \cD)$.
+
+We will spend much of section \ref{sect:cartesian} defining the terms in bold in Theorem \ref{thm:cartesian_fib}. In Example
+\ref{eg:composition}, we will use Theorem \ref{thm:cartesian_fib} to obtain the desired pushforward map between overcategories.
+
+
+
+\section{Equivalences and Cartesian fibrations}
+\label{sect:cartesian}
+
+\begin{defin}
+$g : x \to y$ in $\cC$ is an \textbf{equivalence} if any of the following equivalent conditions hold.
+\begin{enumerate}[(a)]
+\item \label{item:inverse_fillers}
+The outer horn which maps $01\mapsto g$ and $02 \mapsto 1_x$ has a filler.
+\[
+\begin{tikzcd}
+\Lambda^2_0 \arrow{r}{g,1_x}\arrow[hook]{d} & \cC \\
+\Delta^2 \arrow[dotted]{ur} & 
+\end{tikzcd}
+\]
+Morally speaking, the restriction of the dotted arrow to the $12$ face is the right inverse of $g$.
+
+Moreover, the outer horn which maps $12\mapsto g$ and $02 \mapsto 1_y$ has a filler.
+\[
+\begin{tikzcd}
+\Lambda^2_2 \arrow{r}{1_y,g}\arrow[hook]{d} & \cC \\
+\Delta^2 \arrow[dotted]{ur} & 
+\end{tikzcd}
+\]
+Morally speaking, the restriction of the dotted arrow to the $01$ face is the left inverse of $g$.
+
+\item \label{item:infinity_sphere}
+The same as variant \ref{item:inverse_fillers}, but with higher homotopies included. Formally, we introduce the
+Kan complex $S^{\infty}$, defined as 0-coskeleton of the discrete simplicial set with 2 vertices. (For more details see
+the exercises.) \todo{Figure out a way to reference the exercises.}
+We say $g$ is equivalence if there is a lift in the following diagram.
+\[
+\begin{tikzcd}
+\Delta^1 \arrow{r}{g}\arrow[hook]{d} & \cC \\
+S^{\infty}\arrow[dotted]{ur} & 
+\end{tikzcd}
+\]
+
+\item \label{item:iso_homcat}
+We say that $g$ is an equivalence if its image in the homotopy category $h(\cC)$ is an isomorphism.
+\footnote{Recall that this is a 1-category with objects Ob$(\cC)$ and morphisms $\Hom(x,y) = \pi_0(\cC(x,y))$.}
+\end{enumerate}
+\end{defin}
+
+In the definition, going from version \ref{item:infinity_sphere} to version \ref{item:inverse_fillers} of is a rectification result,
+in the sense of procedure \ref{item:real_rectification} described above.
+
+Next, we recall the notions of cartesian morphism and cartesian fibration in the context of 1-categories.
+\begin{defin}
+Let $\mathcal{P} : C \to D$ be a functor between 1-categories. If $x \in Ob(C)$ and $f\in \Hom(x,y)$, we use the notation
+$\bar x := \mathcal{P}(x)$, $\bar f = \mathcal{P}(f)$. In the following diagram, the first 2 rows are in $C$, while the
+third one is in $D$. However, we would like to think about the ``square'' as a pullback square.
+\[
+\begin{tikzcd}
+z\arrow[dashed]{dd}{\mathcal{P}} & & \\
+& x\arrow{r}{f}\arrow[dashed]{d}{\mathcal{P}} & y\arrow[dashed]{d}{\mathcal{P}} \\
+\bar z & \bar x \arrow{r}{\bar f} & \bar y
+\end{tikzcd}
+\]
+We say that $f$ is a $\mathcal{P}$-\textbf{cartesian morphism} if the data of a morphism $z \to y$ in $C$ and a 
+morphism $\bar z \to \bar x$
+in $D$ uniquely determine a morphism $z \to x$ in $C$, such that the ``diagram'' commutes.
+
+We say that $\mathcal{P}$ is a \textbf{cartesian fibration} if for all $y \in C$ and all $\bar x \overset{\bar f}{\to} \bar y$ 
+morphism in $D$, $\exists f : x \to y \in \mathcal{C}$ such that $\mathcal{P}(f) = \bar f$ and $f$ is $\mathcal{P}$-cartesian.
+\end{defin}
+
+The analogous definitions for $\infty$-categories are the following.
+
+\begin{defin}
+Let $\mathcal{P} : \cC \to \cD$ be an $\infty$-functor. A 1-morphism in $\cC$, which is the same as an edge $f: \Delta^1
+\to \cC$, is $\mathcal{P}$\textbf{-cartesian} if for all $n\geq 2$, the following outer horn has a filler.
+\[
+\begin{tikzcd}
+\Delta^1 = \Delta^{\{n-1,n\}}\arrow{d}\arrow{dr}{f} & \\
+\Lambda^n_n\arrow{d}\arrow{r} & \cC \arrow{d}{\mathcal{P}} \\
+\Delta^n \arrow{r}\arrow[dashed]{ur} & \cD
+\end{tikzcd}
+\]
+Morally speaking, when $n=2$, this says that for any edge $g: z \to f(1)$ and edge $\bar h : \bar z \to \overline{f(0)}$,
+there exist an edge $h : z \to f(0)$ and a homotopy $g \simeq f \circ h$, such that $\mathcal{P}(h) = \bar h$.
+
+We say that $\mathcal{P}$ is a \textbf{cartesian fibration} if for every edge $a : \bar x \to \bar y$ of $\cD$, and every
+object $y$ of $\cC$ such that $\mathcal{P}(y) = \bar y$, there exists a $\mathcal{P}$-cartesian edge $f : x \to y$ such that
+$\mathcal{P}(f) = a$.
+\end{defin}
+
+Recall that, in the study of fibered 1-categories, one proves that cartesian fibrations with base $D$ are the same as
+lax 2-functors from $D$ to the 2-category of 1-categories. (This is known as the ``Grothendieck construction'', see
+for example, Proposition I.3.26 in \cite{FGAex}.) Explicitly, given a cartesian fibration $\mathcal{P} : C \to D$,
+the corresponding lax 2-functor maps an object $d \in D$ to the fiber $\mathcal{P}^{-1}(d)$.
+Theorem 3.2.0.1, the main theorem of Chapter 3 in \cite{HTT}, is the analog of this result for the setting of $\infty$-categories.
+
+\begin{thm}
+\label{thm:cartesian_equiv}
+For any $\infty$-category $\cC$, there is an equivalence of $\infty$-categories:
+\begin{equation}		
+\text{CartesianFibr}/\cC \simeq \Fun(\cC^{op},\Cat_{\infty}).
+\end{equation}
+\end{thm}
+
+\begin{eg}
+\label{eg:composition}
+Recall that we started out by trying to construct an $\infty$-functor $f_* : \cC_{/x} \to \cC_{/y}$ between overcategories,
+given an 1-morphism $f: x \to y$ in $\cC$. Taking $F : \cC \to \cC$ as the identity, Theorem \ref{thm:cartesian_fib} gives
+a Cartesian fibration over $\cC$:
+\[	  \big\{ (f : x \to y, a) | \{f :x \to y\} \in \cC, F(a) \cong y \big\} \to \cC,	\]
+where a pair $(f : x \to y, a)$ maps to $x$. We recognize the fiber over $x$ as the undercategory $\cC_{x/}$:
+\[	\Hom_{sSet}(\Delta^n, \cC_{x/}) = \big\{\alpha: \Delta^{n+1} \to \cC | \alpha_{\Delta^{[0,\dots,n}} = x \big\}.	\]
+
+Theorem \ref{thm:cartesian_equiv} then produces an $\infty$-functor:
+\begin{align*}
+\cC^{\op} &\to \infty-\cC at \\
+x & \mapsto \cC_{x/} \\
+f:x\to y & \mapsto f^* : \cC_{y/} \to \cC_{x/}.
+\end{align*}
+We have obtained a pullback map on undercategories. To obtain the pushforward on overcategories, start with $F : \cC^{\op} \to \cC$
+as the contravariant identity functor instead.
+\end{eg}
+
+Next, we discuss a simpler example. Let $\cC$ be an $\infty$-category, and let $x \in \cC$ be an initial object. 
+We want to construct a functor $\cC \to \cC_{x/}$. Note that this is silly in 1-category theory, since there's a unique 
+morphism $x \to y$. To aid us in the context of $\infty$-categories, we start
+by giving a good definition. 
+
+\begin{defin}
+$x \in \cC$ \textbf{initial} if $\forall y \in \cC$, $Map_{\cC}(x,y)$ is contractible.
+\end{defin}
+
+The key result, proved, for example, in \cite{Groth}, is the following.
+\begin{prop}
+If $\cC$ is an $\infty$ category, then $x \in \cC$ is initial iff the canonical projection $\cC_{x/} \to \cC$ is
+a trivial Kan fibration.
+\end{prop}
+
+To solve our problem, note that $\cC$ is cofibrant in the Kan model structure, so there exists a lift in the diagram:
+\[
+\begin{tikzcd}
+\emptyset\arrow{d}\arrow{r} & \cC_{x/}\arrow{d} \\
+\cC \arrow{r}{\id}\arrow[dashed]{ur} & \cC .
+\end{tikzcd}
+\]
+
+In the exercises, we also encounter the following problem. Suppose $\cC$ has pushouts and a zero object. Construct 
+an $\infty$-functor $\cC \to \cC$ sending $x$ to the pushout of 0 and 0 over $x$. \todo{write this up, either here or in the
+exercises}
+
+
+
+
+
+
+\chapter{Derived Affines}
+Talk by Benedict Morrissey.
+
+\section{3 perspectives on derived affines}
+
+First recall the notion of affines in classical AG: $\Aff_k^{Cl} \simeq (\cC Ring)^{\op}$. We get schemes by gluing these together.
+There's also the functor of points viewpoint: $X \in \Aff_k^{Cl}$ defines a sheaf by sending $\Spec R \mapsto \Hom
+(\Spec R, X)$. The schemes are then precisely the sheaves in the Zariski topology. Already in classical AG, there exist 
+constructions which move us out of this category: 
+both Serre's intersection theorem and Illusie's notion of the cotangent complex use derived functors.
+So by introducing DAG, we will understand better these structures in classical AG.
+
+We will talk about 3 approaches to derived affines:
+\begin{enumerate}
+\item \label{item:scr} Simplicial commutative rings;
+\item \label{item:lawvere} Lawvere theory;
+\item \label{item:cdga} Sheaves of commutative differential graded algebras.
+\end{enumerate}
+
+\begin{rem}
+Classically gluing is easy. For example, fiber products are computed by reducing to the affine case, where it's just the
+tensor product of rings. In DAG, the derived tensor product is only defined up to quasi-isomorphism, so gluing can only be
+defined in a category which allows homotopy, such as an $\infty$-category. For today's talk we mostly use the model category description;
+an application of Dwyer-Kan localization produces an $\infty$-category.
+\end{rem}
+
+For approach \ref{item:scr}, recall that the simplicial category $\Delta$ is:
+\[ 	Ob(\Delta) = \{n \in \N \cup \{0\} \}		\]
+where morphisms are compositions of face maps and degeneracy maps. 
+\begin{defin}
+The \textbf{category of simplicial commutative rings} is the category of contravariant functors:
+\[	 SCR_k = \Hom(\Delta^{\op}, CRing_k).	\] 
+\end{defin}
+
+\begin{rem}
+There's a model category structure on this: fibrations are Kan fibrations on the underlying simplicial sets, i.e. morphisms
+$f: A \to B$ of simplicial commutative rings, such that all horns have fillers:
+\[
+\begin{tikzcd}
+\Lambda^n_j\arrow[hook]{d}\arrow{r} & A\arrow{d}{f} \\
+\Delta^n\arrow{r}\arrow[dashed]{ur} & B.
+\end{tikzcd}
+\]
+
+Weak equivalences
+are weak homotopy equivalences on the underlying simplicial sets. Cofibrations are then determined from the axioms of a
+model category; note that they are \textit{not} the same as cofibrations of the underlying simplicial sets.
+\end{rem}
+
+\begin{rem}
+We're using transfer to put the model structure on $SCR_k$. To explain what that means, under suitable conditions, there's 
+a general procedure for defining a model structure on a category $\cB$, given a model category $\cA$ and an adjoint functor
+pair:
+\[
+\begin{tikzcd}
+ \cA \arrow[shift left]{r}{F} & \cB \arrow[shift left]{l}{G} .
+\end{tikzcd}
+\]
+The procedure forces the adjoint functor pair to be a Quillen adjunction. In our case, we use the free-forgetful adjunction:
+\[
+\begin{tikzcd}
+ s\cS et \arrow[shift left]{r}{F} & SCR_k \arrow[shift left]{l}{U}
+\end{tikzcd}
+\]
+to transfer the Kan model structure to $SCR_k$. The key point which allows this to work is that all objects are fibrant. 
+Cofibrations are more difficult to characterize, but the cofibrant objects are precisely the quasi-free ones. (That is,
+the ones isomorphic to a free object.)
+\end{rem}
+
+Next, we introduce the Dold-Kan equivalence in the context of CDGAs. Recall that we have a Quillen equivalence:
+\[
+\begin{tikzcd}
+	s\cV ect \arrow[shift left]{r} & dg-\cV ect^{\leq 0} \arrow[shift left]{l}
+\end{tikzcd}
+\]
+between simplicial vector spaces and differential graded vector spaces, concentrated in nonpositive degrees. We want to
+talk about commutative monoids in these categories, $sc\cA lg_k$ and $cdg-\cA lg^{\leq 0}$, respectively.
+The model structure on $cdg-\cA lg^{\leq 0}$ can also be obtained by transfer from the free-forgetful adjunction; we obtain
+that the weak equivalences are quasi-isomorphisms, and the fibrations are degree-wise surjections.
+
+\begin{thm}[Symmetric monoidal Dold-Kan]
+There is a Quillen equivalence:\footnote{Note that, in general, a Quillen equivalence is not an equivalence of categories.
+It does, however, induce an equivalence of homotopy categories.}
+\[
+\begin{tikzcd}
+	sc\cA lg_k \arrow[shift left]{r}{N} & cdg-\cA lg_k^{\leq 0} \arrow[shift left]{l}{\Gamma}.	
+\end{tikzcd}
+\]
+Moreover, if the simplicial commutative algebra $A_*$ corresponds to the commutative dg-algebra $B_{\bullet}$, then
+$\pi_i(A_*) \cong H^i(B_{\bullet})$.
+\end{thm}
+
+\todo{Matei's note: I was confused when this was introduced in the talk, so I looked on nLab to find the formulation above.
+Let me know if this is not the formulation that we want.}
+
+\begin{rem}
+The functor $\Gamma : cdg-\cA lg_k^{\leq 0} \to sc\cA lg_k $ is complicated, but we describe $N$.
+$A_* \in sc\cA lg_k$ maps in the first stage to $\tilde A_{\bullet}$, where $\tilde A_{-n} = A_n$, and the differential 
+is the alternating sum of the face maps.
+$N(A_*)$ is then the quotient of $\tilde A_{\bullet}$ by the images of the degeneracy maps.
+\end{rem}
+
+%Intelligent truncations: $\tau_{\geq n} = $ identity for $i\leq n$, 0 otherwise. Then take cokernel of this. This gives
+%an adjoint between $cdga^{\geq n}$ and inclusion in degree 0.
+
+%Note: Bousfield localization to put a model cateogry structure on n-homotopy type simplicial sets. Just declare the map
+%from the $n$-sphere to the point to be a weak equivalence.
+
+
+
+We move on to approach \ref{item:lawvere} to derived affines, the Lawvere Theory description. 
+This is important because
+it's the only one of the 3 procedures which carries through in the analytic setting. You get holomorphic rings, smooth rings,
+and much of the theory of DAG can be carried in this setting.\todo{clear this part up}
+
+For example,
+\[	AbGps \cong \Fun^{\times}(FAb^{\op}, Set).	\]
+There's a map $\Z \to \Z \times \Z$, which sends $1\mapsto 1\times 1$. Since $F$ preserves products, $F(\Z) \times F(\Z)
+\cong F(\Z \times \Z) \to F(\Z)$. Free commutative rings. $k[x_1, \dots, x_n]$. $FCRing_k^{\op} \cong \{\bbA^n\}$.
+$\Fun^{\times}(Affplanes, Set) \cong CRing$. Use the group scheme structure of $\bbA^1$ to get this.
+
+Now pass to $SCR_k \cong s\Fun^{\times}(Affplanes, Set) \cong \Fun^{\times}(Affplanes, sSet) \cong \Fun^{\times}
+(Affplanes, S)$, where $S$ is the infinity category of spaces. The last step is a very hard rectification theorem, proved
+by Lurie-Bergner.\footnote{HTT Propositions 5.5.9.2} 
+
+To simplify notation, we denote Affplanes by $T_{disc}$. $\Fun^{\times}(T_{disc}, sSet)_{projective}$. 
+
+
+Finally, we say a few words about approach \ref{item:cdgas} to derived affines. For $A \in cdg-\cA lg_k$, we look at
+the truncation $\Spec H^0(A)$, which is an affine scheme in the classical sense. We can regard $A$ 
+as a sheaf of cdg-algebras on the truncation, as long as we can understand how localization works for cdg-algebras. 
+We claim that it suffices to localize the commutative algebra $A_0$. Indeed, we have the multiplication map:
+\[	\mu:	A_0 \times A_i \to A_i,		\]
+so given a multiplicative subset $S \subset A_0$, we define the localization $S^{-1}A_i$ as $\mu(S^{-1}A_0 \times A_i)$.
+If this makes sense, we get a sheaf $\mathcal{O}_A$ of cdg-algebras.
+
+We would like to define derived affines as pairs $\big(\Spec H^0(A), \mathcal{O}_A\big)$. There is a subtlety: a priori 
+this only gives a 2-category, and we need $\infty$-categories.
+
+
+
+\section{Our favorite classes of morphisms}
+\begin{defin}
+Given $f: A \to B$ in $SCR_k$, we get maps:
+\[	\pi_*(A) \otimes_{\pi_0(A)} \pi_0(B) \to \pi_*(B)	\]
+of graded modules. We say that $f$ is \textbf{strong} if this is an isomorphism of graded modules.
+\end{defin}
+
+\begin{defin}
+\label{def:fav_morphisms}
+We define $f: A \to B$ to be \textbf{\'{e}tale} (resp. \textbf{smooth}, \textbf{Zariski open immersion}, \textbf{flat})
+if $f$ is strong and $\pi_0(A) \to \pi_0(B)$ is \'{e}tale (resp. smooth, Zariski open immersion, flat) in the classical sense.
+\end{defin}
+
+\begin{rem}
+The strength condition on $f$ is quite restrictive: for example, a strong map from a non-derived domain must have a non-derived
+target.
+\end{rem}
+
+\begin{defin}
+Let $X = \Spec(A)$ be a derived affine over $k$. Then the \textbf{small \'{e}tale site} of $X$ is:
+\[	X_{\text{\'{e}t}} = \{\text{\'{e}tale maps }\Spec(B) \to \Spec(A)\}.	\]
+\end{defin}
+
+In order to obtain the small \'{e}tale site in the sense of classical AG, one needs to pass to the truncated version
+of the \'etale maps: $\pi_0(f) : \Spec(\pi_0(B)) \to \Spec(\pi_0(A))$. Then one can prove there's an equivalence of 
+$\infty$-categories between the derived and classical \'etale sites. In particular, this shows that 
+$X_{\text{\'{e}t}}$ is a 1-category. This is one of the ingredients in the proof of the easy version
+of Lurie representability. Moreover, the same holds for the small smooth site and the small Zariski site.
+
+After introducing the cotangent complex $\bbL_f$ of a morphism $f$, we will see that $f$ is \'{e}tale iff $\pi_0(f)$ 
+is of finite presentation and $\bbL_f \simeq 0$.
+
+\begin{defin}
+$f:A \to B$ is \textbf{of finite presentation} if the functor $\Map_A(B, - ) : sc\cR ing_k \to \cS$ commutes with
+filtered colimits. 
+\end{defin}
+
+Unlike in the underived case, being of finite presentation is very strong, because it has a hidden regularity condition.
+In particular, we have the proposition due to Lurie:
+
+\begin{prop}
+$f: A \to B$ is of finite presentation in the derived sense iff $\pi_0(f)$ is of finite presentation in the classical sense
+(also called to order 0) and the cotangent complex $\bbL_f$ is perfect.
+\end{prop}
+
+\begin{eg}
+Let $X = \bbA^3$, and $Y$ a closed subscheme of $X$ which is not a local complete intersection. 
+Then the inclusion $\iota :Y \to X$ is not of finite presentation in the derived sense.
+Indeed, by a conjecture of Quillen, which is now a theorem of Abramov, for maps between classical schemes, the cotangent 
+complex is either concentrated in degrees 0 and -1, or it's unbounded. Since $Y$ is not lci, the first case is ruled out,
+and $\bbL_{\iota}$ is unbounded.
+\end{eg}
+
+
+
+
+
+\chapter{Stable $\infty$-categories}
+Talk by Michael Gerapetritis.
+
+\section{Motivation}
+\label{sect:motivation}
+
+In the 1-categorical setting, if $\cC$ is a category, we may require that $\cC(A,B)$ be a set. 
+To get particularly well-behaved categories, namely the additive categories, we require that $\cC(A,B)$ is actually
+an abelian group. 
+
+We try to replicate this in the $\infty$-category setting.
+Let $\cC$ be an $\infty$-category, then $\cC(X,Y)$ is a space. We want to discover what is the good extra structure to have on 
+this space; we will call the corresponding $\infty$-categories stable.
+
+
+\section{Stable $\infty$-categories and triangulated 1-categories}
+
+\begin{defin}
+An $\infty$-category $\cC$ is \textbf{stable} if:
+\begin{itemize}
+\item $\cC$ is pointed, i.e. it has a zero object;
+\item every morphism $f : X \to Y$ admits fibers and cofibers;
+\item a triangle is a fiber iff it is a cofiber.
+\end{itemize}
+\end{defin}
+
+Recall that a \textbf{triangle} in $\cC$ is a map of simplicial sets $\Delta^1 \times \Delta^1 \to \cC$,
+i.e. a homotopy commutative diagram with the zero object in the bottom-left corner:
+\[
+\begin{tikzcd}
+X\arrow{r}{f}\arrow{d} & Y\arrow{d}{g} \\
+0\arrow{r} & Z
+\end{tikzcd}
+\]
+The triangle is a \textbf{fiber} if it is a pullback square, and a \textbf{cofiber} if it is a pushout square. We say
+that $f: X \to Y$ admits a fiber (resp. cofiber) when $\exists W$ (resp $Z$) such that:
+\[
+\begin{tikzcd}
+W\arrow{r}\arrow{d} & X\arrow{d}{f} \\
+0\arrow{r} & Y
+\end{tikzcd}
+\]
+is a pullback square (or, respectively:
+\[
+\begin{tikzcd}
+X\arrow{r}{f}\arrow{d} & Y\arrow{d} \\
+0\arrow{r} & Z
+\end{tikzcd}
+\]
+is a pushout square).
+
+\begin{rem}
+Note that the data of a triangle consists not only of homotopy commutative diagrams as above, but also of choices of 
+homotopies between the branches. This is crucial, since it ensures that cones are
+functorial at the level of the homotopy category. This functoriality does not hold in a general triangulated category. 
+(See Theorem \ref{thm:stable_triang} for the relation between stable
+$\infty$-categories and triangulated 1-categories.)
+\end{rem}
+
+\begin{eg}
+Our two main examples are $\infty$-categories of spectra (see Section \ref{sect:spectra}) and of modules over a CDGA or SCR
+(see Section \ref{sect:modules}).
+\end{eg}
+
+Recall the data for a triangulated category.
+
+\begin{defin}
+A category $\cD$ is triangulated if:
+\begin{enumerate}
+\item $\cD$ is additive;
+\item \label{item:translation_equiv}
+ $\cD$ admits a translation functor $T : \cD \overset{\simeq}{\to} \cD$;
+\item $\cD$ has a collection of distinguished triangles:
+\[
+\begin{tikzcd}
+X\arrow{r} & Y \arrow{r} & Z \arrow{r} & X[1]
+\end{tikzcd}
+\]
+\end{enumerate}
+This data is required to satisfy some axioms, but we won't go into details here.
+\end{defin}
+
+\begin{thm}
+\label{thm:stable_triang}
+If $\cC$ is a stable $\infty$-category, then $h\cC$ is triangulated.
+\end{thm}
+
+For a proof see \cite{Lurie_Higher_algebra}. We won't go over it, let's just say that translation is given by $\Sigma$,
+and distinguished triangles are precisely the images of fiber sequences (or equivalently, cofiber sequences), as resulting
+from the following diagram.
+\[
+\begin{tikzcd}
+X\arrow{r}\arrow{d} & Y \arrow{r}\arrow{d} & 0\arrow{d} \\
+0\arrow{r} & Z \arrow{r} & X[1]
+\end{tikzcd}
+\]
+
+\begin{prop}
+$\cC$ is stable iff the following hold:
+\begin{enumerate}
+\item $\cC$ admits finite limits and colimits;
+\item any square is a pushout iff it is a pullback.
+\end{enumerate}
+\end{prop}
+\begin{proof}
+Again, we don't give a full proof. Let's just see why products and coproducts must exist in a stable $\infty$-category. 
+Note first that $\Sigma$ is an equivalence of
+$\infty$-categories. Indeed, $\Sigma$ is a left adjoint functor; moreover, the unit and counit of the adjunction become 
+isomorphisms in the homotopy category, due to condition \ref{item:translation_equiv} in the definition of a triangulated
+category. Then we use the following diagram.
+\[
+\begin{tikzcd}
+\Omega(X)\arrow{d}\arrow{r} & 0\arrow{d}\arrow{r} & Y\arrow{d} \\
+0\arrow{r} & X\arrow{r} & X \oplus Y
+\end{tikzcd}
+\]
+We have defined $X \oplus Y$ as the cofiber of $\Omega(X) \overset{0}{\to} Y$, which is postulated to exist in a stable $\infty$
+-category. This turns the outer rectangle into a pushout square, and it follows that the square on the right is also a pushout
+square. Thus $X\oplus Y$ is the coproduct of $X$ and $Y$. We reason dually to obtain products.
+\end{proof}
+
+\begin{defin}
+Let $\cC, \cC'$ be stable $\infty$-categories, and $F: \cC \to \cC'$ an $\infty$-functor which maps 0 objects to 0 objects. 
+Equivalently, $F$ maps triangles to triangles.
+If $F$ maps fiber sequences to fiber sequences, we say that $F$ is \textbf{exact}.
+\end{defin}
+
+\begin{lem}
+\label{lem:exact}
+TFAE:
+\begin{enumerate}
+\item $F$ is exact;
+\item $F$ is right-exact, i.e. commutes with finite colimits;
+\item $F$ is left-exact, i.e. commutes with finite limits.
+\end{enumerate}
+\end{lem}
+
+This is very useful: sometimes it's really easy to check that a functor is right or left exact, e.g. if it's a left or right
+adjoint, respectively.
+
+
+\section{Modules}
+\label{sect:modules}
+
+For a useful example of the result in Lemma \ref{lem:exact}, we look at $\cC = A-\cM od$, where $A$ is a CDGA or SCR over $k$.
+(By $A-\cM od$ we mean the unbounded derived category.) The easiest way
+to see $A-\cM od$ as an $\infty$-category is to put a model structure on chain complexes, say the projective one, and then
+take the underlying $\infty$-category.
+We claim that $A-\cM od$ is a stable $\infty$-category. Using the theorem
+Mauro talked about in Lecture 1, limits and colimits exists in the $\infty$-category iff they exist in the model category.
+\todo{reference theorem} It remains to prove the following.
+
+\begin{lem}
+A triangle in $A-\cM od$ is a fiber iff it is a cofiber.
+\end{lem}
+\begin{proof}
+We prove one direction; the other argument is dual to this one. Assume that $f:M^{\bullet} \to N^{\bullet}$ 
+is the fiber of a map $g$. Take a cofibrant replacement of $f$, get $\tilde M, \tilde N$ cofibrant and a homotopy
+pullback square:
+\todo{figure out how to do the cartesian symbol in tikz}
+\[
+\begin{tikzcd}
+\tilde M^{\bullet}\arrow[hook]{r}{\tilde f}\arrow{d} & \tilde N^{\bullet}\arrow{d}{\tilde g} \\
+0\arrow{r}  & P^{\bullet} .
+\end{tikzcd}
+\]
+$\tilde f$ is cofibrant, so it's a degree-wise injection. Then $g$ is a degreewise surjection, and it follows that the 
+square is a strict pushout. \todo{wait, how did this work again?}
+\end{proof}
+
+Now suppose we have $f: A \to B$ a morphism of $CDGA_k^{\leq 0}$. It induces the adjunction of model categories:
+\[
+\begin{tikzcd}
+A-Mod\arrow[shift left]{r}{f^*} & B-Mod\arrow[shift left]{l}{f_*},
+\end{tikzcd}
+\]
+where $f_*$ is the forgetful functor, and $f^*(M) = M \otimes_A B$. So this gives an adjunction of $\infty$-categories:
+\footnote{Here we use $L$ and $R$ to indicate that the functors are derived.
+In later talks derived functors will be the default, and we will omit the symbols $L$ and $R$.}
+\[
+\begin{tikzcd}
+\label{tikz:adjunction}
+A-\cM od\arrow[shift left]{r}{Lf^*} & B-\cM od\arrow[shift left]{l}{Rf_*}.
+\end{tikzcd}
+\]
+Explicitly, $Lf^*$ is constructed by first choosing a cofibrant replacement $\tilde M$ for $M$, 
+and then taking $\tilde M \otimes_A B$. The
+answer doesn't depend on cofibrant replacement, up to coherent isomorphism. Then $Lf^*$ is a left adjoint
+functor, so it follows from general nonsense that it's right exact. Lemma \ref{lem:exact} then implies that $Lf^*$
+is also left exact and exact.
+
+\begin{rem}
+\label{rem:exact_t}
+If $f$ is not flat in the sense of Definition \ref{def:fav_morphisms}, then the exactness of
+$Lf^*$ comes at the price of losing t-exactness. To explain what we mean, pick $M \in A-Mod$, such that
+$H^i(M) = 0$ unless $i = 0$. But then $Lf^*(M) = M \otimes_A^{\bbL} B$, and $H^{-i}(M\otimes_A^{\bbL}B) = \Tor_i^A(M,B)$, which
+is $\neq 0$ in general, because $f$ is not flat. So even though $M$ was homologically concentrated in degree 0, $Lf^*(M)$ may
+not be. In other words, the failure of a functor of (Grothendieck) abelian categories to preserve limits translates into a lack 
+of t-exactness of the derived functor. In the following section we define t-structures and t-exactness for $\infty$-categories.
+\end{rem}
+
+
+\section{t-structures}
+\label{sect:t-struct}
+
+\begin{defin}
+If $\cC$ is a stable $\infty$-category, a \textbf{t-structure}\footnote{$t$ stands for truncation} on 
+$\cC$ is the data of two full subcategories of $\cC$, $\cC^{\leq 0}$ and
+$\cC^{\geq 0}$, \footnote{Note that we use cohomological notation, while Lurie in \cite{Lurie_Higher_algebra} uses homological
+notation. Therefore gradings have opposite signs in this seminar and in \cite{Lurie_Higher_algebra}.} such that:
+
+\begin{enumerate}
+\item \label{item:no_morph_right}
+$\pi_0 \Map_{\cC}(X,Y[-1]) = 0$ if $X \in \cC^{\leq 0}$ and $Y \in \cC^{\geq 0}$.
+\footnote{In a stable $\infty$-category, we sometimes use the shift notation $[n]$ to denote the $|n|$-fold iterated application
+of the $\Sigma$ functor (if $n$ is positive) or the $\Omega$ functor (if $n$ is negative). This notation is justified by
+Proposition \ref{prop:stable_shift}.}
+
+\item $X \in \cC^{\leq 0}, X[1]  \in \cC^{\leq 0}$;
+
+\item \label{item:fiber_seq}
+$\forall X$, $\exists$ fiber sequence $X' \to X \to X''$, where $X' \in \cC^{\leq 0}$, $X'' \in \cC^{\geq 1}$.
+\end{enumerate}
+\end{defin}
+
+\begin{rem}
+Condition \ref{item:no_morph_right} has the following intuitive meaning in the case $\cC = A-\cM od$. $0$-morphisms in 
+$\cC$ are chain maps which preserve degree, while
+higher morphisms are homotopies which shift the degree to the left; morphisms that shift degree to the right are not allowed.
+Then, if $X \in \cC^{\leq 0}$ and $Y \in \cC^{\geq 0}$, no nonzero morphisms should be allowed between $X$ and $Y[-1]$:
+\[
+\begin{tikzcd}
+\dots \arrow{r} & X_{-2} \arrow{r} & X_{-1} \arrow{r} & X_0 \arrow{r} & 0\arrow{r} & 0\arrow{r} & 0\arrow{r} & \dots \\
+\dots \arrow{r} & 0 \arrow{r} & 0 \arrow{r} & 0 \arrow{r} & Y_0\arrow{r} & Y_1\arrow{r} & Y_2\arrow{r}  & \dots
+\end{tikzcd}
+\]
+\end{rem}
+
+\begin{rem}
+$X'$ and $X''$ are uniquely determined by $X$.
+\end{rem}
+
+\begin{thm}
+The inclusion $\cC^{\leq 0} \to \cC$ has a right adjoint, which we denote $\tau_{\leq 0} : \cC \to \cC^{\leq 0}$. Similarly
+we get $\tau_{\geq 0} : \cC \to \cC^{\geq 0}$.
+\end{thm}
+
+\begin{cor}
+For all $X \in \cC$, the fiber sequence of \ref{item:fiber_seq} is just:
+\[	\tau_{\leq 0} X \to X \to \tau_{\geq 1} X.	\]
+\end{cor}
+
+\begin{prop}
+Denote by $\cC^{\heartsuit} := \cC^{\leq 0} \cap \cC^{\geq 0}$, the \textbf{heart} or \textbf{core} of the t-structure. 
+It is an abelian 1-category.
+\end{prop}
+
+\begin{prop}
+Let $\cC$ be stable. Then if:
+\[	X \to Y \to Z	\]
+is a fiber sequence, then we have a long exact sequence of $H^i$, where $H^i(X) := \tau_{\geq i} \circ \tau_{\leq i} (X)$.
+\end{prop}
+
+Putting the last few results together, from $\cC$ a presentable stable $\infty$-category with $t$-structure, the heart 
+is Grothendieck abelian. Write $A = \cC^{\heartsuit}$. Then we can form $\cD(A)$, the $\infty$-derived category of $A$.
+The next theorem describes the relationship between $\cC$ and $\cD(A)$.
+
+\begin{thm}[Lurie]
+$\cD(A)$ has a universal property which produces an $\infty$-functor:
+\[	\cD(A) \to \cC.	\]
+In general this is very far from being an equivalence.
+\end{thm}
+
+\begin{eg}
+Let $A \in CDGA^{\leq 0}_k$. The theorem gives a map:
+\begin{equation}
+\label{eq:map_heart}
+	(A-\cM od)^{\heartsuit} \to  (H^0(A)-Mod)^{\heartsuit}.
+\end{equation}
+This is one of the most important facts
+in DAG, because it reduces problems about the $\infty$-category of $A$-modules to problems in classical categories of modules,
+where one can work with generators and relations. The map in \ref{eq:map_heart} is an equivalence iff $A \simeq H^0(A)$ 
+are quasi-isomorphic.\todo{figure out what's the precise relationship here}
+\end{eg}
+
+\begin{defin}
+Let $\cC, \cD$ be stable $\infty$-categories with $t$-structures. Then an exact functor $F : \cC \to \cD$ is:
+\begin{enumerate}
+\item \textbf{left t-exact} if $F(\cC^{\leq 0}) \subset \cD^{\leq 0}$;
+\item \textbf{right t-exact} if $F(\cC^{\geq 0}) \subset \cD^{\geq 0}$;
+\item \textbf{t-exact} if both.
+\end{enumerate}
+\end{defin}
+
+Example: for $A,B \in CDGA_k^{\leq 0}$, $f:A \to B$, we have the adjunction:
+\[
+\begin{tikzcd}
+A-\cM od\arrow[shift left]{r}{Lf^*} & B-\cM od\arrow[shift left]{l}{Rf_*}.
+\end{tikzcd}
+\] 
+Every object is fibrant, so we don't need to
+derive the functors. $Rf_*$ is both left and right t-exact. $Lf^*$ is not right t-exact, because of nontrivial $\Tor^i$
+terms; see \ref{rem:exact_t}. However, $Lf^*$ is right t-exact: morally speaking, Projective resolution only puts stuff in negative degrees. We give an $\infty$-categorical proof.
+\begin{proof}
+Pick $M \in A-Mod^{\geq 0}$. We want $Lf^*(M) \in B-Mod^{\leq 0}$. To check this is the same as checking that
+$\forall N \in B-Mod^{\geq 1}$, $\Map_{B-Mod}(Lf^*M,N) \cong 0$. But this is $Map_{A-Mod}(M,Rf_*N) \cong 0$, which
+follows since $Rf_*$ was t-exact.
+\end{proof}
+
+
+\section{Spectra}
+\label{sect:spectra}
+
+Going back to the question left unanswered in Section \ref{sect:motivation}, the extra structure we want on
+morphism spaces of stable $\infty$-categories is $\Map_{\cC}(X,Y) \in \Sp^{\leq 0}$.
+
+\begin{defin}
+\textbf{Spectra} are sequences $\{F_i\}$ of objects in $\cC$ such that $F_n \simeq \Omega F_{n+1}$. Alternatively,
+we identify them with objects of the homotopy limit:
+\[	\dots \overset{\Omega}{\to} \cC \overset{\Omega}{\to} \cC \overset{\Omega}{\to} \dots	\]
+\end{defin}
+
+\begin{rem}
+We must be careful with defining morphisms between spectra: we want squares to commute up to coherent homotopy.
+Moreover, it's hard to get a monoidal model structure on the category of spectra: this was done only in the 2000s, after Hovey 
+introduced symmetric spectra. Lurie has a very categorical and very nice way of putting a monoidal structure 
+at the level of the $\infty$-category
+directly. See the last chapter of \cite{Groth}, and also 4.8.2 of \cite{Lurie_Higher_algebra}.
+\end{rem}
+
+\begin{thm}
+$Sp(\cC)$ is stable.
+\end{thm}
+
+This gives a canonical stabilization for every $\infty$-category. The proof of the theorem follows from the following characterization
+of stable $\infty$-categories,
+and the fact that $\Omega:Sp(\cC) \to Sp(\cC)$ is an equivalence.
+
+\begin{prop}
+\label{prop:stable_shift}
+$\cC$ is a pointed $\infty$-category. TFAE:
+\begin{enumerate}
+\item $\cC$ is stable;
+\item $\cC$ admits colimits and $\Sigma : \cC \to \cC$ is an equivalence;
+\item $\cC$ admits limits and $\Omega : \cC \to \cC$ is an equivalence;
+\end{enumerate}
+\end{prop}
+
+%\begin{thm}
+%Let $K$ be a simplicial set, and $F : K \to \cC at_{\infty}$. These correspond to cartesian fibrations, by HTT chapter 3,
+%as explained by Mauro in the first lecture. We find a cartesian fibration $\mathscr{P} : \mathscr{X} \to K$.
+%\todo{insert diagram}
+%We have $\N \to \Cat_{\infty}$, we associate $\mathscr{X} \overset{\mathscr{P}}{\to} \N$. Look at section $s
+%: \N \to \mathscr{X}$. $n \to m$ goes to:\todo{complete the diagram}
+%\[
+%\begin{tikzcd}
+%s(n)\arrow{d}\arrow{r} & s(m)\arrow{d} \\
+%n \arrow{r} & m
+%\end{tikzcd}
+%\]
+%Thus we get a cocartesian fibration. Conclusion: let $\cD$ be the full subcategory of $\Map_{/K}(K,\mathscr{X})$ 
+%spanned by cocartesian sections. Then
+%$\cD$ is equivalent to $invlim_{\cC at_{\infty}} K$. In Theorem 3.3.3.1 of \cite{HTT}, Lurie has $\cD = \Map^{\flat}_{K^{\sharp}}
+%(K^{\sharp}, \mathscr{X}^{fillthisinhere})$.
+%\end{thm}
+
+%Upshot: we need $sSet^+_{/K}$, where some collection of arrows is marked. We think of the marked ones as the ones which
+%will become cocartesian.
+%\[	sSet^+ = \{ (L,S) | L \in sSet, S\subset \Fun(\Delta^1, L), S \text{ contains the identities }\}	\]
+%We have two functors $sSet \to sSet^+$. One is $K \mapsto K^{\flat} = (K, \text{identities})$. The other is
+%$K \mapsto (K,\text{all morphisms}) = K^{\sharp}$. $\mathscr{P} : \mathscr{X} \to K$ cartesian, so
+%$\mathscr{X}^{fillthisin} = (\mathscr{X}, \text{p-cartesian edges})$.
+
+%We have an adjunction $Forget: sSet^+ \to sSet_{Joyal} : (-)^{\sharp}$. What is $L(Forget)$? Cocartesian morphisms
+%over a point are just equivalences. So $L(Forget)$ is $\infty$-categorical localization.
+
+
+
+\bibliographystyle{plain}
+\bibliography{dahema}
+
+\end{document}
+
+
+
+
+
+
+
