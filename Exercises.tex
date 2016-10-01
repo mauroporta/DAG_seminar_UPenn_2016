@@ -396,7 +396,66 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 
 \chapter{Derived rings}
 
+\section{Derived rings}
 
+\begin{exercise}
+	Show that a discrete commutative ring $A$ over $k$ is finitely presented if and only if its associated corepresentable functor
+	\[ \Hom_{\CAlg_k}(A,-) \colon \CAlg_k \to \rSet \]
+	commutes with filtered colimits.
+\end{exercise}
+
+\begin{exercise}
+	Let $A \in \mathrm{sCAlg}_k$ and let $M \in A\Mod^{\le 0}$.
+	Show that the diagram
+	\[ \begin{tikzcd}
+		\Sym_A(M) \arrow{r} \arrow{d} & A \arrow{d} \\
+		A \arrow{r} & \Sym_A(M[1])
+	\end{tikzcd} \]
+	is a (homotopy) pushout square (where the two maps $\Sym_A(M) \to A$ are both classified by the zero map $M \to A$, and where both the maps $A \to \Sym_A(M[1])$ are the structure morphisms).
+\end{exercise}
+
+\begin{exercise}
+	Let $A \in \mathrm{sCAlg}_k$ and let $M \in A \Mod^{\le 0}$.
+	Let $A \oplus M$ denote the split square-zero extension of $A$ by $M$.
+	Show that the diagram
+	\[ \begin{tikzcd}
+		A \oplus M \arrow{r} \arrow{d} & A \arrow{d}{d_0} \\
+		A \arrow{r}{d_0} & A \oplus M[1]
+	\end{tikzcd} \]
+	is a homotopy pullback, where $d_0 \colon A \to A \oplus M[1]$ is the morphism classifying the zero derivation.
+\end{exercise}
+
+\section{Modules}
+
+\begin{exercise}
+	Let $A$ be a discrete commutative ring over $k$.
+	Show that $M \in A\Modh$ is finitely generated if and only if its associated corepresentable functor
+	\[ \Hom_{A\Modh}(M,-) \colon A \Modh \to \rSet \]
+	commutes with filtered colimits of monomorphisms.
+\end{exercise}
+
+\begin{exercise}
+	Let $A$ be a discrete commutative ring over $k$.
+	Show that $M \in A \Modh$ is finitely presented if and only if its associated corepresentable functor
+	\[ \Hom_{A\Modh}(M,-) \colon A \Modh \to \rSet \]
+	commutes with filtered colimits.
+\end{exercise}
+
+\section{Cotangent complex}
+
+\begin{exercise}
+	Compute the cotangent complex of the following morphisms:
+	\begin{enumerate}
+		\item $k \to k[\varepsilon] / (\varepsilon^2)$, $\deg(\varepsilon) = 0$;
+		\item $k[X,Y] \to k[X,Y] / (Y^3 - X^2)$;
+		\item $k \to k[X,Y] / (Y^3 - X^2)$.
+	\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+	Find all the square-zero extensions (up to homotopy) of $R \coloneqq k[\varepsilon] / (\varepsilon^2)$ by $k \simeq R / (\varepsilon)$.
+	What happens if we replace $k$ by $k[n]$, $n \ge 0$?
+\end{exercise}
 
 \chapter{Derived stacks}
 
