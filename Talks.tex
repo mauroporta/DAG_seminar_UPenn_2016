@@ -73,7 +73,19 @@
 
 \input{newcommands_all}
 
+\title{Derived Algebraic Geometry Seminar: Upenn 2016}
+
 \begin{document}
+
+\maketitle
+\tableofcontents
+
+\chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction} \markboth{INTRODUCTION}{}
+
+This contains notes livetexed for the Derived Algebraic Geometry Seminar currently being held at the University of Pennsylvania math department in the 2016-17 academic year.  We are following Mauro Porta's plan to introduce derived algebraic geometry, and then to look at derived geometric objects with extra structure (initially we will be looking at the case of symplectic and Poisson structures).
+
+This is a draft and errors should be expected.
 
 \chapter{$\infty$-category theory}
 Talk by Mauro Porta.
@@ -254,7 +266,7 @@ Morally speaking, the restriction of the dotted arrow to the $01$ face is the le
 \item \label{item:infinity_sphere}
 The same as variant \ref{item:inverse_fillers}, but with higher homotopies included. Formally, we introduce the
 Kan complex $S^{\infty}$, defined as 0-coskeleton of the discrete simplicial set with 2 vertices. (For more details see
-the exercises.) \todo{Figure out a way to reference the exercises.}
+the exercises \cite{Mauro_Exercises}.)
 We say $g$ is equivalence if there is a lift in the following diagram.
 \[
 \begin{tikzcd}
@@ -384,16 +396,16 @@ Talk by Benedict Morrissey.
 
 First recall the notion of affines in classical AG: $\Aff_k^{Cl} \simeq (\cC Ring)^{\op}$. We get schemes by gluing these together.
 There's also the functor of points viewpoint: $X \in \Aff_k^{Cl}$ defines a sheaf by sending $\Spec R \mapsto \Hom
-(\Spec R, X)$. The schemes are then precisely the sheaves in the Zariski topology. Already in classical AG, there exist 
+(\Spec R, X)$. The schemes are then precisely the sheaves in the Zariski topology.  Already in classical AG, there exist 
 constructions which move us out of this category: 
 both Serre's intersection theorem and Illusie's notion of the cotangent complex use derived functors.
 So by introducing DAG, we will understand better these structures in classical AG.
 
-We will talk about 3 approaches to derived affines:
+We will talk about 3 approaches to derived affines --- all of these consist of embedding the classical category $CRing_{k}$ into a larger category in which we have a derived tensor product.  In this section we assume that we are working over a ring $k$ of characteristic zero\footnote{We note here that we neglect to mention the important generalization of rings given by E-$\infty$ ring spectra, as described in chapter 7 of \cite{Lurie_Higher_algebra}.  In the case where we are working over $k$ a $\mathbb{Q}$-algebra this infinity category is equivalent to those described in this section as shown in  \cite{Lurie_DAG_V} proposition 4.1.11.  When we remove the characteristic zero assumption the statements about the Model structure on CDGA's no longer hold.  One can still use simplicial commutative rings or E-$\infty$ algebras, though these give different $\infty$ categories.}.
 \begin{enumerate}
 \item \label{item:scr} Simplicial commutative rings;
+\item \label{item:cdga} Commutative differential graded algebras. (CDGA's)
 \item \label{item:lawvere} Lawvere theory;
-\item \label{item:cdga} Sheaves of commutative differential graded algebras.
 \end{enumerate}
 
 \begin{rem}
@@ -403,9 +415,11 @@ defined in a category which allows homotopy, such as an $\infty$-category. For t
 an application of Dwyer-Kan localization produces an $\infty$-category.
 \end{rem}
 
+\subsection{Simplicial Commutative Rings}
+
 For approach \ref{item:scr}, recall that the simplicial category $\Delta$ is:
 \[ 	Ob(\Delta) = \{n \in \N \cup \{0\} \}		\]
-where morphisms are compositions of face maps and degeneracy maps. 
+where morphisms are compositions of face maps $\delta_{i}^{n}:[n-1]\rightarrow [n]$ for $0 \leq i < n$ and degeneracy maps $s_{i}^{n}: [n+1]\rightarrow [n]$, subject to the simplicial identities as can be found in e.g. \cite{gillam2013simplicial}. 
 \begin{defin}
 The \textbf{category of simplicial commutative rings} is the category of contravariant functors:
 \[	 SCR_k = \Hom(\Delta^{\op}, CRing_k).	\] 
@@ -446,7 +460,9 @@ Cofibrations are more difficult to characterize, but the cofibrant objects are p
 the ones isomorphic to a free object.)
 \end{rem}
 
-Next, we introduce the Dold-Kan equivalence in the context of CDGAs. Recall that we have a Quillen equivalence:
+\subsection{CDGA's}
+
+Next, we introduce CDGA's and the Dold-Kan equivalence --- which shows that this category is the same as that of simplicial commutative rings under our assumption that we are working over a characteristic zero field. Recall that we have a Quillen equivalence:
 \[
 \begin{tikzcd}
 	s\cV ect \arrow[shift left]{r} & dg-\cV ect^{\leq 0} \arrow[shift left]{l}
@@ -457,9 +473,9 @@ talk about commutative monoids in these categories, $sc\cA lg_k$ and $cdg-\cA lg
 The model structure on $cdg-\cA lg^{\leq 0}$ can also be obtained by transfer from the free-forgetful adjunction; we obtain
 that the weak equivalences are quasi-isomorphisms, and the fibrations are degree-wise surjections.
 
-\begin{thm}[Symmetric monoidal Dold-Kan]
+\begin{thm}[Symmetric monoidal Dold-Kan (A proof can be found in \cite{schwede2003equivalences})]
 There is a Quillen equivalence:\footnote{Note that, in general, a Quillen equivalence is not an equivalence of categories.
-It does, however, induce an equivalence of homotopy categories.}
+It does, however, induce an equivalence of Dwyer-Kan localizations (and hence also of homotopy categories).}
 \[
 \begin{tikzcd}
 	sc\cA lg_k \arrow[shift left]{r}{N} & cdg-\cA lg_k^{\leq 0} \arrow[shift left]{l}{\Gamma}.	
@@ -469,43 +485,58 @@ Moreover, if the simplicial commutative algebra $A_*$ corresponds to the commuta
 $\pi_i(A_*) \cong H^i(B_{\bullet})$.
 \end{thm}
 
-\todo{Matei's note: I was confused when this was introduced in the talk, so I looked on nLab to find the formulation above.
-Let me know if this is not the formulation that we want.}
-
 \begin{rem}
-The functor $\Gamma : cdg-\cA lg_k^{\leq 0} \to sc\cA lg_k $ is complicated, but we describe $N$.
+We describe $N$:
 $A_* \in sc\cA lg_k$ maps in the first stage to $\tilde A_{\bullet}$, where $\tilde A_{-n} = A_n$, and the differential 
 is the alternating sum of the face maps.
 $N(A_*)$ is then the quotient of $\tilde A_{\bullet}$ by the images of the degeneracy maps.
+For $C$ a CDGA we can describe $(\Gamma C)_{n}:=Hom_{ch^{-}}(N(\Delta^{n}), C)$ where we are in fact using the above definition of $N$ to give a functor from simplicial abelian groups to $ch^{-}$ --- the category of non positively graded chain complexes, and $\Delta^{n}$ is the simplicial abelian group freely generated by an $n$-simplex.  
 \end{rem}
 
-%Intelligent truncations: $\tau_{\geq n} = $ identity for $i\leq n$, 0 otherwise. Then take cokernel of this. This gives
-%an adjoint between $cdga^{\geq n}$ and inclusion in degree 0.
+We have a similar result for the category of simplicial modules for a given simplicial ring, and the category of dg-modules for its image in CDGA's.  Note that the categories of simplicial modules and of non-positively graded modules for a given CDGA both have model structures.
+
+\begin{thm}[\cite{schwede2003equivalences}]
+If $A$ is a simplicial ring the categories of simplicial $A$-modules and of negatively graded $N(A)$-modules are Quillen equivalent.
+
+If $A$ is a CDGA, the categories of negatively graded $A$-modules and of simplicial $\Gamma(A)$-modules are equivalent.
+\end{thm}
+
+
+We now define the truncation functor of a CDGA.  We can use the above Quillen equivalence to also define truncation functors on the category of Simplicial Commutative Rings.
+
+Let $CDGA_{k}^{\leq n} \hookrightarrow CDGA_{k}$ denote the subcategory of $CDGA_{k}$ consisting of objects $A$ such that $H^{i}(A) =0$ for all $i>n$.  Note that $CDGA_{k}^{\leq 0} \cong CRing_{k}$.  The inclusion has a right adjoing $\tau^{\leq n}: CDGA_{k}\rightarrow CDGA^{\leq n}$.  For $A=(A_{n})$, \[(\tau^{\leq n}(A))_{m}= \begin{cases} 
+      A_{m} & 0 > m > -n \\
+      A/im(d^{m+1}) & m=n \\
+      0 & m < n.
+   \end{cases}
+\]
 
 %Note: Bousfield localization to put a model cateogry structure on n-homotopy type simplicial sets. Just declare the map
 %from the $n$-sphere to the point to be a weak equivalence.
 
-
+\subsection{Lawvere Theories}
 
 We move on to approach \ref{item:lawvere} to derived affines, the Lawvere Theory description. 
 This is important because
-it's the only one of the 3 procedures which carries through in the analytic setting. You get holomorphic rings, smooth rings,
+it's the only one of the 3 procedures which carries through in the analytic setting (see e.g. \cite{Porta_Yu_Higher_analytic_stacks_2014}). You get holomorphic rings, smooth rings,
 and much of the theory of DAG can be carried in this setting.\todo{clear this part up}
 
+The idea of Lawvere theory is to describe all objects with some type of algebraic structure as functors between the free objects and the category $Set$.
 For example,
 \[	AbGps \cong \Fun^{\times}(FAb^{\op}, Set).	\]
 There's a map $\Z \to \Z \times \Z$, which sends $1\mapsto 1\times 1$. Since $F$ preserves products, $F(\Z) \times F(\Z)
-\cong F(\Z \times \Z) \to F(\Z)$. Free commutative rings. $k[x_1, \dots, x_n]$. $FCRing_k^{\op} \cong \{\bbA^n\}$.
-$\Fun^{\times}(Affplanes, Set) \cong CRing$. Use the group scheme structure of $\bbA^1$ to get this.
+\cong F(\Z \times \Z) \to F(\Z)$.  In fact $F(\Z)$ has the structure of an abelian group, and the equivalence of categories above is realized on objects by $F \mapsto F(Z)$.  We denote by $T_{disc}$ the opposite category of free commutative rings.  Free commutative rings are the rings $k[x_1, \dots, x_n]$. Hence $T_{disc}$ is the subcategory of the category of affine schemes with objects the planes $\{\bbA^n\}$.
+$\Fun^{\times}(T_{disc}, Set) \cong CRing$. On objects we map a functor to it's value on the group ring $\bbA^{1}$, $F\mapsto F(\bbA^{1})$.  The addition and multiplication on $\bbA^{1}$ give $F(\bbA^{1})$ the structure of a (commutative) ring.  
 
-Now pass to $SCR_k \cong s\Fun^{\times}(Affplanes, Set) \cong \Fun^{\times}(Affplanes, sSet) \cong \Fun^{\times}
-(Affplanes, S)$, where $S$ is the infinity category of spaces. The last step is a very hard rectification theorem, proved
+Now pass to $SCR_k \cong s\Fun^{\times}(T_{disc}, Set) \cong \Fun^{\times}(T_{disc}, sSet) \cong \Fun^{\times}
+(T_{disc}, S)$, where $S$ is the infinity category of spaces. The last step is a very hard rectification theorem, proved
 by Lurie-Bergner.\footnote{HTT Propositions 5.5.9.2} 
 
-To simplify notation, we denote Affplanes by $T_{disc}$. $\Fun^{\times}(T_{disc}, sSet)_{projective}$. 
+ %$\Fun^{\times}(T_{disc}, sSet)_{projective}$. 
 
+\section{Derived Affines as Ringed Spaces}
 
-Finally, we say a few words about approach \ref{item:cdgas} to derived affines. For $A \in cdg-\cA lg_k$, we look at
+Finally, we take the viewpoint of seeing a scheme as a locally ringed space. For $A \in cdg-\cA lg_k$, we look at
 the truncation $\Spec H^0(A)$, which is an affine scheme in the classical sense. We can regard $A$ 
 as a sheaf of cdg-algebras on the truncation, as long as we can understand how localization works for cdg-algebras. 
 We claim that it suffices to localize the commutative algebra $A_0$. Indeed, we have the multiplication map:
@@ -514,7 +545,7 @@ so given a multiplicative subset $S \subset A_0$, we define the localization $S^
 If this makes sense, we get a sheaf $\mathcal{O}_A$ of cdg-algebras.
 
 We would like to define derived affines as pairs $\big(\Spec H^0(A), \mathcal{O}_A\big)$. There is a subtlety: a priori 
-this only gives a 2-category, and we need $\infty$-categories.
+this only gives a 2-category, and we need $\infty$-categories.  The key to resolving this is to define the notion of a sheaf valued in an $(\infty,1)$-category.
 
 
 
@@ -1295,6 +1326,7 @@ We have one talk on Postnikov tower, and one on perfect complexes, then we leave
 \bibliography{dahema}
 
 \end{document}
+
 
 
 
