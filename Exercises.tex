@@ -444,6 +444,7 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 \section{Cotangent complex}
 
 \begin{exercise}
+\label{ex:cotangent_comp}
 	Compute the cotangent complex of the following morphisms:
 	\begin{enumerate}
 		\item $k \to k[\varepsilon] / (\varepsilon^2)$, $\deg(\varepsilon) = 0$;
@@ -456,6 +457,120 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 	Find all the square-zero extensions (up to homotopy) of $R \coloneqq k[\varepsilon] / (\varepsilon^2)$ by $k \simeq R / (\varepsilon)$.
 	What happens if we replace $k$ by $k[n]$, $n \ge 0$?
 \end{exercise}
+
+\ifpersonal
+\begin{proof}[Solution]
+We could work with the cotangent complex of $k \to k[\varepsilon]/(\varepsilon^2)$, as computed in Exercise \ref{ex:cotangent_comp}.
+Instead, we work straight from the definition, in order to get a more explicit understanding of the extensions. Recall that square
+zero extensions up to homotopy are:
+\begin{equation}
+\label{eq:ext_need_cofibrant}
+	\pi_0 \Map_{cdga_k^{\leq 0} / k[\varepsilon]/(\varepsilon^2)} \big( k[\varepsilon]/(\varepsilon^2) ,
+k[\varepsilon]/(\varepsilon^2) \oplus k[1] \big).
+\end{equation}
+Note that mapping spaces are \emph{not} homotopy invariant; in order to obtain the correct answer, we need to take a cofibrant
+replacement of the first variable and a fibrant replacement of the second, in the category 
+$cdga_k^{\leq 0} / k[\varepsilon]/(\varepsilon^2)$. Recall that the model structure on $cdga_k$ is obtained via transfer
+from the model structure on $Chain_k$; in particular:
+\begin{itemize}
+\item Fibrations are the same as those of the underlying complexes, i.e. the degree-wise surjections. All objects are fibrant.
+\item Cofibrations $f:A \to B$ are the morphisms such that $B$ is quasi-free over $A$. The cofibrant objects
+are cdga's which are quasi-free over $k$.
+\end{itemize}
+Therefore, to describe the square-zero extensions given by \ref{eq:ext_need_cofibrant}, it suffices to take a k-free resolution
+of $k[\varepsilon]/(\varepsilon^2)$. This is accomplished by:
+\[
+\begin{tikzcd}
+0 \arrow{r} & k[\varepsilon]\arrow{r}{\varepsilon^2} & k[\varepsilon]\arrow{r} & 0 .
+\end{tikzcd}
+\]
+Of course, one needs to check that this gives indeed a cdga.
+\begin{itemize}
+\item For $|a| = |b| = 0$, $ab$ is ring multiplication in $k[\varepsilon]$.
+\item For $|a| = 0, |b| = 1$, $ab$ is ring multiplication in $k[\varepsilon]$.
+\item For $|a| = |b| = 1$, $|ab| = 2$, so the only possibility is $ab = 0$.
+\item Let's check that multiplication by $\varepsilon^2$ satisfies the Leibniz rule. We do this for $|a| = 0, |b| = 1$:
+\[ \varepsilon^2(a) \cdot b + (-1)^{|a|} a \varepsilon^2(b) = 0 \cdot b + (-1)^0 a \varepsilon^2 b = \varepsilon^2 (ab). \]
+\end{itemize}
+
+With this cofibrant model, we compute \ref{eq:ext_need_cofibrant}. These are maps between cdga's, and we identify them
+by their components:
+\[
+\begin{tikzcd}
+k[\varepsilon]\arrow[swap]{d}{\eta}\arrow{r}{\varepsilon^2} & k[\varepsilon]\arrow{d}{p} \\
+k\arrow{r}{0} & k[\varepsilon]/(\varepsilon^2) .
+\end{tikzcd}
+\]
+But, since we are working in the comma category of cdga's over $k[\varepsilon]/(\epsilon^2)$, the map $p$ is forced to be
+the canonical projection $k[\varepsilon] \to k[\varepsilon]/(\varepsilon^2)$. It follows that the only freedom is in choosing
+$\eta$. The constraints on $\eta$ are given by the fact that a morphism of cdga's must commute with the cdga multiplication, in
+the sense that, for $|f| = 0$ and $|g| = 1$, $\eta(fg) = p(f)\eta(g)$. In particular:
+\[	\eta(\varepsilon) = \eta(1\cdot \varepsilon) = p(\varepsilon)\cdot \eta(1) = \varepsilon \cdot \eta(1) = 0,	\]
+because $\epsilon$ acts by 0 on $k = k[\varepsilon]/(\varepsilon)$. Similarly, $\eta(\epsilon^i) = 0$ for all $i>0$. It follows
+that, if $|g| = 1$ with $g = \alpha_0 + \alpha_1 \varepsilon + \dots$, then $\eta(g) = \lambda \alpha_0$, for some $\lambda \in
+k$. Thus, elements of \ref{eq:ext_need_cofibrant} are classified by $\lambda \in k$.\footnote{We point out that, had we not
+used a cofibrant replacement for $k[\varepsilon]/(\varepsilon^2)$, we would obtain $(0,\id)$ as the only map of cdga's; this
+corresponds to the zero derivation. This answer is clearly wrong, as it doesn't account for the square-zero extension
+$k[\varepsilon]/(\varepsilon^3) \to k[\varepsilon]/(\varepsilon^2)$.}
+
+To see the square-zero extensions explicitly, we need to compute the homotopy fiber products:
+\[
+\begin{tikzcd}
+A^{\eta}\arrow[dashed]{r}\arrow[dashed]{d} & k[\varepsilon]/(\varepsilon^2)\arrow{d}{d_{\eta}} \\
+k[\varepsilon]/(\varepsilon^2) \arrow{r}{d_0} & k[\varepsilon]/(\varepsilon^2) \oplus k[1] .
+\end{tikzcd}
+\]
+Homotopy fiber products \emph{are} homotopy invariant, so this is the same as computing the homotopy fiber products:
+\[
+\begin{tikzcd}
+&
+k[\varepsilon]
+%\ar{dl}[swap, sloped, near start]{t}
+\ar{rr}{\varepsilon^2}
+\ar[]{dd}[near end]{\eta}
+& & k[\varepsilon]
+\ar{dd}{p}
+%\ar{dl}[swap, sloped, near start]{}
+\\
+A
+\ar[crossing over,dashed]{rr}[near end]{\phi}
+\ar[swap,dashed]{dd}
+\ar[dashed]{ur}
+& & B \ar[dashed]{ur}\ar[dashed]{dd}
+\\
+&
+k
+\ar[near start]{rr}{0}
+& & k[\varepsilon]/(\varepsilon^2)
+\\
+k[\varepsilon]
+\ar{rr}{\varepsilon^2}
+\ar{ur}{0}
+& & k[\varepsilon]
+%\ar[crossing over, leftarrow, near start]{uu}{}
+\ar{ur}{p}
+\end{tikzcd}
+\]
+The advantage of using this model is that the maps on the right face of the cube are degree-wise surjections, hence fibrations,
+so it suffices to compute the naive fiber product. This gives:
+\begin{align*}
+A &= k[\varepsilon] \oplus (\varepsilon) k[\varepsilon], \\
+B &=  k[\varepsilon] \oplus  (\varepsilon^2) k[\varepsilon], \\
+\phi &= (\varepsilon^2, \varepsilon^2).
+\end{align*}
+Note first that $\phi$ is injective, so the homotopy fiber product is (cohomologically) concentrated in degree 0. In other words,
+it is quasi-isomorphic as cdga to:
+\[	0 \to 0 \to k[\varepsilon]/(\varepsilon^2) \oplus k \to 0.	\]
+It remains to see how the choice of $\lambda \in k$ determines the product structure on $k[\varepsilon]/(\varepsilon^2) \oplus k$.
+The claim is that we get:
+\[	(a + b \varepsilon, c) \cdot_{\lambda} (a' + b' \varepsilon, c') = 
+\big(aa' + (a'b + ab')\varepsilon, \lambda bb' + ac' + ca' \big)	\]
+Note that for $\lambda = 1$ this is just the ring multiplication in $k[\varepsilon]/(\varepsilon^3)$, so we recover the
+classical square-zero extension $k[\varepsilon]/(\varepsilon^3) \to k[\varepsilon]/(\varepsilon^2)$.
+\todo{I actually don't understand how we get this product structure in degree 0, given that the only freedom is in the map $\eta$,
+which goes between the degree -1 parts.}
+\end{proof}
+\fi
 
 \chapter{Derived stacks}
 
