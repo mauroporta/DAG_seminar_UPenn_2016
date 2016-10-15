@@ -1646,6 +1646,176 @@ homotopic.
 
 
 
+\chapter{Perfect Complexes}
+Talk by Benedict Morrissey.
+
+Half of this is about perfect complexes in classical AG, and the second half about what we do in the derived setting. 
+In 2-3 weeks we will see that perfect complexes actually form a stack.
+
+\section{Classical}
+\label{sect:perf_classical}
+
+Let $X$ be a scheme, then we look at $Ch^{\bullet}(QCoh(X))$.
+
+\begin{defin}
+$E^{\bullet} \in Ch^{\bullet}(QCoh(X))$ is \textbf{perfect} if it's Zariski locally quasi-isomorphic to an object
+of $Ch^b(Vect_X)$. 
+\end{defin}
+
+\begin{rem}
+This is not the same as requiring cohomology to be finitely supported.
+\end{rem}
+
+\begin{defin}
+$E^{\bullet} \in Ch^{\bullet}(QCoh(X))$ has \textbf{Tor amplitude} in $[a,b]$ if for all $\mathcal{F} \in \mathcal{O}_X -Mod$,
+\[	H^k(E^{\bullet} \otimes^{\bbL}_{\mathcal{O}_X} \mathcal{F}) = 0	\]
+for $k \not \in [a,b]$. In particular, if $E$ is in the heart, this is just saying that the Tor with any given sheaf is bounded.
+\end{defin}
+
+\begin{rem}
+For $\mathcal{F} = \mathcal{O}_X$, we just get the cohomology of $E^{\bullet}$.
+\end{rem}
+
+This is sometimes difficult to work with, so we have:
+
+\begin{defin}
+$E^{\bullet} \in Ch^{\bullet}(QCoh(X))$ is \textbf{almost perfect} if Zariski locally there is a $n$-quasi-isomorphic to
+something in $Ch^b(Vect_X)$. n-quasi-isomorphism means isomorphism on cohomologies for $k\geq n+1$, and surjection
+for degree $n$.\todo{Figure out cohomological convention}
+\end{defin}
+
+Perfect obviously implies almost perfect; this descends to the derived category of quasi-coherent sheaves.
+
+\begin{thm}
+$E^{\bullet}$ is perfect iff $E^{\bullet}$ is almost perfect (for some $n$) and has finite Tor amplitude.
+\end{thm}
+\begin{proof}
+Locally free means flat, so tensoring it with anything preserves the tor amplitude. The other direction is in
+TT, Higher algebraic K-theory of schemes, 2.2.12.
+\end{proof}
+
+Alternative definition: $E^{\bullet} \in D(Coh(X))$. Locally on some $U$ we have an $\mathcal{O}_X(U)$-module
+$E|_{U}^{\bullet}$. We require that this is bounded above and has coherent cohomologies. Equivalently, $\tau_{\leq n}(E^{\bullet}|_n)$
+is compact in $\tau_{\leq n} Mod_{\mathcal{O}_X(U)}$.
+
+\begin{thm}
+For $X$ affine, $E^{\bullet}$ is perfect if and only if it's globally quasi-isomorphic to an object of $Ch^b(Vect_X)$.
+\end{thm}
+
+\begin{thm}
+If $X$ is smooth and Noetherian, then $D(Coh^b(X)) \simeq D(Perf(X))$.
+\end{thm}
+
+We'll prove this by Serre regularity.
+
+\begin{defin}
+A is \textbf{regular} if $\dim_k(m/m^2) = \dim_{Krull} A$. The \textbf{global dimension} of $A$ is:
+\[	gldim(A) = \sup_{M \in A-Mod} \text{projdim}(M),	\]
+where the latter is the minimum length of a projective resolution of $M$.
+\end{defin}
+
+\begin{thm}[Serre regularity]
+If $A$ is a Noetherian local ring, TFAE:
+\begin{enumerate}
+\item $A$ is regular;
+\item $gldim(A) < \infty$;
+\item $gldim(A) = \dim_{Krull}A$.
+\end{enumerate}
+\end{thm}
+
+Going back to $X$ smooth and Noetherian, we know that all local rings are regular. $E^{\bullet} \in Coh^b(X)$, then
+$E^{\bullet}_p$ is a $\mathcal{O}_{X,p}$ module. 
+
+\begin{proof}
+We actually just do the case of $E$ in the heart, because it's easier. (For the other one, we probably resoluve to a double
+complex, and take the total complex.)
+
+Take a projective resolution of $E^{\bullet}_p$ as a $\mathcal{O}_{X,p}$ module; we know it must be finite:
+\[	0 \to P_n \to \dots \to P_2 \to P_1 \to E^{\bullet}_p \to 0.	\]
+We can do this in an open set around $p$:\todo{draw this from paper}
+
+This takes care of one direction. We then use Tor dimension to show that, if $E$ is perfect, it's in $D(Coh^b(X))$.
+\end{proof}
+
+For the non-smooth case, we look at the ind-completion $Ind(Perf(X)) \simeq QCoh(X)$. (Always true for $X$ quasi-compact,
+quasi-separated.) On the other side, $Ind(Coh^b(X)) = IndCoh(X)$. The quotient $IndCoh(X)/QCoh(X) = D_{sing}(X)$, which
+really sees the singularities of $X$.
+
+
+\section{derived}
+\label{sect:perf_derived}
+
+Let $A \in SCR_k$; recall that $\cM od_A$ is a stable $\infty$-category.
+
+\begin{defin}
+$\cM od^{\text{perf}}_A \subset \cM od_A$ is the smallest stable subcategory containing $A$ and closed under retracts.
+Recall that $A$ is a retract of $B$ if there exist maps $i:A \to B, r:B \to A$ such that $r\circ i = \id_A$.
+\end{defin}
+
+\begin{defin}
+$N \in \cC$ is \textbf{compact} if $\cH om_{\cC}(N, -)$ commutes with filtered colimits. The latter means that
+the index category is nonempty, and for all $i,j \in I$, there exists $k$ such that $i \to k \leftarrow j$, and
+coequalizers exist.
+\end{defin}
+
+\begin{eg}
+Consider $(\cM od_A)^{\heartsuit}$. The compact objects are the finitely presented ones. We have a map $A^n \to M$,
+so:
+\[	\Hom(M, \varinjlim_I B_i) \simeq \varinjlim_I \Hom(M,B_i),	\]
+because if we have a map $M \to B$, we can fully describe it by the composition $A^n \to B$. Each of the $n$ generators goes
+to some $B_{i_k}$, so by the definition of filtered index category, there exists some $B_j$ such that $A^n \to B_j$. 
+
+Conversely, starting with compact $M$, we look at finitely generated submodules $M_i$, and we have:
+\[	\Hom(M, \varinjlim_I M_i) \simeq \varinjlim_I(M,M_i).	\]
+In particular, the identity map $M \to M$ factors through some $M_j$, so $M = M_j$.
+\end{eg}
+
+\begin{thm}
+$M \in \cM od_A$ is perfect iff it's compact.
+\end{thm}
+\begin{proof}
+$\cM od_A^{\text{perf}} \subset \cM od_A^{\text{cpct}}$. \todo{add diagram from paper}
+\[
+\begin{tikzcd}
+\;
+\end{tikzcd}
+\]
+
+Since DK is an equivalence, we only need to argue that truncation and the forgetful functor preserve filtered colimits.
+For the first one: filtered colimits are t-exact. For the second one: it does.
+
+For the other direction, we have the inclusion $\cM od_A^{\text{perf}} \to \cM od_A$, we factor this though Ind, which
+is just the completion with respect to filtered colimits.
+\[
+\begin{tikzcd}
+\cM od_A^{\text{perf}} \arrow{r} & \cM od_A \\
+ & Ind(\cM od_A^{\text{perf}}) \arrow{u}{\phi}
+\end{tikzcd}
+\]
+$f$ is obviously fully faithful, because $Ind(\cM od_A^{\text{perf}})^{\omega} = \Mod_A^{perf}$.\footnote{We'll talk more about
+this equality later, it follows because Perf is idempotent complete.} Mapping spaces
+in $Ind$ are computed by:
+\[ \cM ap_{Ind(\cC)}(\colim_{i \in I} \mathcal{F}_i, \colim_{j \in J} \mathcal{G}_j)	
+= \lim_{i \in I} \colim_{j \in J}	\cM ap_{\cC}(\mathcal{F}_i, \mathcal{G}_j) .\]
+This means we're computing mapping spaces by the same formula, so $\phi$ is fully faitfhul.
+\end{proof}
+
+The following is 7.2.4.5 in \cite{Lurie_Higher_algebra}:
+\begin{thm}
+$M \in \Mod_A^{perf}$, we have:
+\begin{enumerate}
+\item $\pi_n M = 0$ for $n >>0$;
+\item If $\pi_m M \cong 0$ for all $m>k$, then $\pi_k M$ is finitely presented as a $\pi_0(M)$-module.
+\end{enumerate}
+\end{thm}
+
+
+\begin{eg}
+Think about $\Sym(k[2])$ as a module over itself. It is perfect by definition, but it's not bounded below.
+\end{eg}
+
+
+
 \bibliographystyle{plain}
 \bibliography{dahema}
 
