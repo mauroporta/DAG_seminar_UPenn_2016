@@ -1809,11 +1809,96 @@ $M \in \Mod_A^{perf}$, we have:
 \end{enumerate}
 \end{thm}
 
+\begin{proof}
+For $M$ perfect, we use compactness to get $M \simeq \lim_{n\to \infty} (\tau_{\leq n} M)$. In fact, the map must
+factor through one of the terms in the limit, so $M \simeq \tau_{\leq n}M$ for some $n$.
+
+Next, we have the adjunction:
+\[
+\begin{tikzcd}
+\cM od_A^{\heartsuit} \arrow{r} & \cM od_A^{connective} \arrow{r}{[k]} & \cM od_A^{support \leq k}
+\end{tikzcd}
+\]
+The adjoint truncates $\geq k$ and then shifts. Both of these preserve  \todo{finish}
+\end{proof}
 
 \begin{eg}
 Think about $\Sym(k[2])$ as a module over itself. It is perfect by definition, but it's not bounded below.
 \end{eg}
 
+
+
+
+Recall from the last talk that we have $A \in SCR_k$, and a stable$\infty$-category $\cM od_A$. We defined the
+stable $\infty$-subcategory $\cM od_A^{\text{perf}}$. We proved that $\cM od_A^{\text{perf}}\simeq \cM od_A^{\text{cpt}}$.
+
+
+\begin{defin}
+$M$ is almost perfect if it's almost compact, i.e. $M$ is bounded above and $\forall n\leq 0$, $\tau_{\geq n}M$ is 
+compact in $\cM od_A^{\geq n}$.
+\end{defin}
+
+\begin{rem}
+In the classical setting, due to Tor amplitude, perfect complexes need to be bounded below. This is no longer the case.
+\end{rem}
+
+\begin{thm}[7.2.4.11 in \cite{Lurie_Higher_algebra}]
+\begin{enumerate}
+\item $\cM od_A^{aperf} \subset \cM od_A$ closed under translation, finite colimits, so it's a stable subcategory of
+$\cM od_A$;
+\item $\cM od_A^{aperf}$ is closed under retracts;
+\item $\cM od_A^{perf} \subset \cM od_A^{aperf}$;
+\item $(\cM od_A^{aperf})^{\leq 0}$ closed under geometric realizations;
+\item Every $M \in \cM od_A^{aperf}$ is $M = |P_{\bullet}|$, a geometric realization of a simplicial $A$-module. Each 
+$P_i$ finite rank and free.\footnote{In fact, the almost perfect ones are precisely these geometric realizations - we think.
+Write about this in more detail.}
+\end{enumerate}
+\end{thm}
+
+\begin{proof}
+Look at 2.4.1
+\end{proof}
+
+A note about geometric realizations, which are colimits of simplicial objects. Simplicial resolutions are the classical
+description of the cotangent complex. One starts with a simplicial resolution in the category of $A$-modules, and the
+realization is the cotangent complex.
+
+Now assume that $X \in \Aff^{classical}$ and that $E_{\bullet}$ is perfect. We want to show that $E_{\bullet}$
+is equivalent to a finite complex of vector bundles, globally. This follows from the proof before, but we show that
+$D_i$ are actually vector bundles, using the finite Tor amplitude.
+
+\begin{thm}[7.2.4.17 in \cite{Lurie_Higher_algebra}]
+Say $A$ is left coherent, i.e. $A$ is connective, $\pi_nA$ is a finitely presented $\pi_0(A)$-module, and that every
+finitely generated left ideal of $A$ is a finitely presented left $A$-module. Then $M \in \cM od_A$ is almost perfect
+if and only if $\exists m >>0$ such that $\pi_k M = 0$ for all $k\geq m$, and $\pi_k M$ is a finitely presented
+$\pi_0(A)$-module. \footnote{This formulation is using homological convention, I think. Figure out the signs.}
+\end{thm}
+
+\begin{rem}
+In particular, from this it's obvious that not all almost perfect modules are perfect. Think about the discrete case,
+this allows almost perfect to be unbounded below, whereas perfect have to be bounded below, due to finite Tor amplitude.
+\end{rem}
+
+\begin{defin}
+The tor amplitude $Toramp(M) \leq n$ if for all discrete $A$-modules $N$, $\pi_i(M \otimes_A N) = 0$ for all $i\leq -n$.
+\end{defin}
+
+\begin{thm}[7.2.4.23 in \cite{Lurie_Higher_algebra}]
+$A \in SCR_k$:
+\begin{enumerate}
+\item $M \in \cM od_A$, tor amplitude $\leq n$ $M[k]$ has tor amplitude $\leq n+k$;
+\item $M' \to M \to M''$ a fiber sequence, $M'$ and $M''$ have tor amplitude $\leq n$, then so does $M$;
+\item $M$ has tor amplitude $\leq n$, so does any retract;
+\item $M$ is almost perfect, then $M$ is perfect iff it has finite Tor amplitude;
+\item $M$ has $Toramp \leq n$, then $\forall N \in (\cM od(A)_{supp \leq 0})$, $\pi_i(N\otimes_A M) = 0$ for
+	$i \leq -n$.
+\end{enumerate}
+\end{thm}
+
+\begin{proof}
+For 4, the inductive hypothesis uses 2, for the base case we want that almost perfect and flat implies perfect. The latter
+follows from 7.2.4.20.
+\end{proof}
 
 
 \bibliographystyle{plain}
