@@ -313,11 +313,35 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 \end{exercise}
 
 \begin{exercise}
-	$n$-cofinality...
+	$\star$ Prove the following variation of Quillen's theorem A: let $1 \le n \le \infty$ and let $\cC$ be an $(n,1)$-category.
+	Let $G \colon I \to J$ be an $\infty$-functor between $\infty$-categories.
+	Let $F \colon J \to \cC$ be any other $\infty$-functor.
+	Suppose that for every $j \in J$ and any $i \in I_{/j} \coloneqq I \times_J J_{/j}$ one has
+	\[ \pi_m( I_{/j}, i ) = 0 \]
+	for all $0 \le m \le n-1$ (the above homotopy group is understood to be the homotopy group of the enveloping groupoid of $I_{/j}$).
+	Then $F$ admits a limit if and only if $F \circ G$ admits a limit, in which case they coincide.
+\end{exercise}
+
+\begin{rem}
+	The above version of Quillen's theorem A appears in \cite{MacLane_Categories} for $n = 1$ and in \cite[4.1.3.1]{HTT} for $n = \infty$.
+\end{rem}
+
+\begin{exercise}
+	Let $\mathbf \Delta_s$ denote the subcategory of $\mathbf \Delta$ spanned by all the objects and only the monomorphisms between them.
+	For $n \ge 1$, let $\mathbf \Delta^{\le n}_s$ be the full subcategory of $\mathbf \Delta_s$ spanned by the objects $1, 2, \ldots, n$.
+	Prove that for every $n \ge 1$ and every $k \ge 0$ the enveloping groupoid of $(\mathbf \Delta^{\le n}_s)_{/n+k}$ is equivalent to the wedge of a certain number $N_{n,k}$ of $(n-1)$-spheres.\footnote{It should be possible to determine these numbers. We certainly have $N_{n,0} = 1$ and $N_{n,1} = 3$.}
 \end{exercise}
 
 \begin{exercise}
-	$\star$ Let $K$ be a simplicial set and let $F \colon K\op \LPr$ be an $\infty$-functor.
+	A useful consequence of Quillen's theorem A is the following: let $I$ be a weakly contractible $\infty$-category, by which we mean that the enveloping groupoid of $I$ is weakly contractible. Let $\cC$ be an $\infty$-category and let $x \in \cC$ be an object in $\cC$.
+	Let $c_x \colon I \to \cC$ be the constant diagram associated to $x$.
+	Then prove that both the limit and the colimit of $c_x$ exists and coincides with $x$.
+	
+	The above result is false if $I$ is not weakly contractible. Construct a counterexample by choosing $\cC = \cS$, $I = \{\bullet \rightrightarrows \bullet\}$ and $x = *$, the final object of $\cS$. Nevertheless, show that keeping the same $I$ and the same $x$, the result is again true for $\cC = \rSet$. What happens in the $\infty$-category of $n$-homotopy types $\cS^{\le n}$ for general $n$?
+\end{exercise}
+
+\begin{exercise}
+	$\star$ Let $K$ be a simplicial set and let $F \colon K\op \to \LPr$ be an $\infty$-functor.
 	Let $\cC$ be a presentable $\infty$-category and let $\Delta_\cC \colon K\op \to \LPr$ denote the constant $\infty$-functor associated to $F$.
 	Let $\varphi \colon \Delta_\cC \to F$ be a natural transformation in $\Fun(K\op, \LPr)$.
 	We let
