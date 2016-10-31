@@ -1901,6 +1901,183 @@ follows from 7.2.4.20.
 \end{proof}
 
 
+
+
+
+\chapter{Descent}
+Talk by Antonjio Mrcela.
+
+\section{Motivation}
+\label{sect:cc_motivation}
+
+Recall:
+\[
+\begin{tikzcd}
+\cC Alg_{/A} \arrow{r}\arrow{d} & \Fun(\Delta^1 , \cC Alg_k)\arrow{d}{ev_1} \\
+\{A\} \arrow{r} & \cC Alg_k
+\end{tikzcd}
+\]
+This is a Cartesian fibration. Next:
+\[
+\begin{tikzcd}
+\cC Alg_{/B} \arrow{d} &  \cC Alg_{/A} \arrow{d}\arrow{l}\\
+\{B\} \arrow{r}{f} & \cC \{A\}
+\end{tikzcd}
+\]
+$f$ is a Cartesian morphism. So we can apply Grothendieck construction to get a functor $\mathcal{F} : \cC Alg_k^{\op}
+\to \cC at_{\infty}$. We then take the spectralization to $\cC at_{\infty}^{st}$.
+
+Moreover, $Mod$ lands in the presentable category: $Pr_{st}^R$, where the functors are right adjoint functors. There's also a version
+$Pr_{st}^L$, and we have, by \cite{HTT} 5.5.3.4, $[\cS, Pr_{st}^R] \simeq [\cS^{\op}, Pr^L]$. So we can take the adjoint of
+$Mod: \cC Alg_k^{\op} \to Pr_{st}^R$ to get $QCoh^{\times} \cC Alg_k \to Pr_{st}^L$.
+
+Note also that at the level of Mod we have a contravariant functoriality, where $f: A \to B$ gets sent to the forgetful functor
+$f_* : B-Mod \to A-Mod$. At the level of $QCoh^{\times}$ we have covariant functoriality.
+
+We'll define Grothendieck topologies for $\infty$-categories, and surprisingly get just Grothendieck topologies on the homotopy
+category.
+
+\begin{defin}
+A \textbf{sieve} on an $\infty$-cat $\cC$ is a full subcategory such that, if $f: C \to D$ and $D \in \cC^0$, then
+$C \in \cC^0$. If $C \in \cC$, then a \textbf{sieve over} $C$ is a sieve on $\cC_{/C}$.
+\end{defin}
+
+By Remark 6.2.2.3 in \cite{HTT}, a Grothendieck topology on $\cC$ is just one on $h\cC$.
+
+Note, though, that $\eta : h(\cC_{/C}) \to h(\cC)_{/C}$ is not normally an equivalence. This is because in $h(\cC_{/C})$
+we also need to specify hte homotopy that makes $A \to B \to C$ commute. However, $\eta$ induces a bijection on sieves.
+
+In $\cC Alg_k$, $S$ the set of faitfully flat morphisms. The following is DAG VII 5.4, 5.1: $S$
+determines a Grothendieck topology on $\cC Alg_k$. This is called \textbf{the flat topology}.
+
+\begin{defin}
+The \textbf{Cech nerve functor} $B^{\bullet} : \Delta \to \cC Alg_k$, $i \to B^{\otimes_A^{i+1}}$.
+\end{defin}
+
+\begin{rem}
+We need to build this functor as a left Kan extension.
+\end{rem}
+
+The descent problem is: we get a map $A-Mod \to \varinjlim B^{\otimes_A^{n}} - Mod$, is this an equivalence? If it is,
+construct some sort of inverse. The following lemma is 3.20 in Shennon - Porta - Vezzosi, Formal Gluing along non-linear
+flags. \todo{cite this once it appears}
+
+\begin{lem}
+Let $p : \mathcal{X} \to \cS$ be a stable filtration, and let $\cS^{\op} \to \cC at_{\infty}^{st}$ be the associated 
+$\infty$-functor. Suppose:
+\begin{enumerate}
+\item $\forall s \in S$ there is a t-structure $(\mathcal{X}_s^{\leq 0}, \mathcal{X}_s^{\geq 0})$on $\mathcal{X}_s$
+\item $\forall $ edge $s \to s^1$, the induced functor $f^*$ is t-exact.
+\end{enumerate}
+Then the stable $\infty$-category $\varprojlim F$ has a (unique) t-structure characterized by:
+\[	\forall s \in S, e_s : \varprojlim F \to \mathcal{X}_s 	\]
+is $t$-exact.
+\end{lem}
+\begin{proof}
+We can represent the limit as: $\varprojlim F = \Map^{\flat}_S(S^{\sharp},\mathcal{X}^{} )$. \todo{figure out how to do symbol
+over $\mathcal{X}$; see \cite{HTT} 3.3.3.2.}
+I.e. we map all edges to $p$-Cartesian edges. Define $\cC^{\leq 0}$ to be the full subcategory spanned by $x \in \cC$ such that
+$x(s) \in \mathcal{X}_s^{\leq 0}$.
+in $\mathcal{X}$.
+
+Let $\mathcal{X}^{\leq 0}$ be the full subcat spanned by $x \in \mathcal{X}$ such that $x \in \mathcal{X}^{\leq 0}_{}$. Let
+$j: \mathcal{X}^{\leq 0} \to \mathcal{X}$ be the inclusion.
+$p\circ j$ is again a Cartesian fibration, because $f^*$ is exact. Then the inclusion preserves Cartesian edges.
+By Proposition 1.2.1.5 in \cite{Lurie_Higher_algebra} (says that $\cC^{\leq n}$ is a localization of $\cC$), which we apply
+fiberwise, we get a left adjoint for each fiber. Then apply \cite{Lurie_Higher_algebra} 7.3.2.6 which says the
+following. Suppose that we have
+a commutative diagram,
+\[
+\begin{tikzcd}
+\cC\arrow{dr}{q} & & \cD\arrow{ll}{G} \arrow{dl}{p} \\
+ & \cE & 
+\end{tikzcd}
+\]
+where $p, q$ are locally Cartesian categorical fibrations. Then $G$ admits a left adjoint iff
+\begin{enumerate}
+\item for every $E \in \mathcal{E}$, the map $G_E : \cD_E \to \cC_E$ admits a left adjoint;
+\item $G$ carries locally $p$-Cartesian morphisms in $\cD$ to locally $q$-Cartesian in $\cC$.
+\end{enumerate}
+This is a ``gluing result for left-adjoints''; not entirely obvious result. But using this gives a global adjoint
+$\tau_{\leq 0} : \mathcal{X} \to \mathcal{X}^{\leq 0}$.
+
+Note that, in general, $G$ doesn't have
+to preserve Cartesian edges. But we used the fact that $f^*$ is t-exact to deal with this.
+\end{proof}
+
+\begin{eg}
+Pick $A \to B$ a non-flat morphism. Then we have: \todo{add from paper}
+\end{eg}
+
+Now we need to reduce to the problem of descent in the heart. We use Lemma 3.3.7 in the same paper.
+\begin{lem}
+Let $f : \cC \to \cD$ be an exact functor between stable $\infty$-categories. Assume $\cC, \cD$ have t-structures which
+are left complete and right bounded, and that with respect to these structures $f$ is t-exact. Then TFAE:
+\begin{enumerate}
+\item $f$ is an equivalence;
+\item $f^{\heartsuit} : \cC^{\heartsuit} \to \cD^{\heartsuit}$ is an equivalence of abelian categories.
+\end{enumerate}
+\end{lem}
+Note that 1 implies 2 is obvious, while 2 implies 1 is super powerful. This is because we can do many constructions
+at the level of the hearts that we can't do at the level of $\infty$-categories.
+
+\begin{proof}
+The first step is fully faithfulness. Fix $x,y \in \cC$ and get canonical transformation $\psi_{x,y} :
+Map_{\cC}^{st}(x,y) \to Map_{\cD}^{st}(f(x), f(y))$. Start by fixing the full subcategory $\cC_x \subset \cC$,
+spanned y those $y$ such that $\psi_{x,y}$ is an equivalence. This is closed under loop and suspension, extensions
+and retract. So if $\cC^{\heartsuit} \subset \cC_X$, we go by induction on non-vanishing cohomology groups,
+to get $\cC^b \subset \cC_X$. Here we use the left complete and right complete assumptions. $y = \varprojlim
+\tau_{\geq n} y$, $f$ commutes with this specific colimit, so $f(y) = \varinjlim f(\tau_{\geq n} y)$.
+
+Step 2 is essential surjectivity. On the heart it's the hypothesis. Pick $y\in \cD^b$, we have the exact sequence
+$\tau_{\leq k} y \to y \to \tau_{>k} y$, with $k$ chosen so that both truncations have fewer cohomology groups than $y$.
+Since \todo{fill in from paper}
+\end{proof}
+
+\begin{rem}
+According to Marci, there are two non-equivalent versions of $D^bCoh$ which have the same heart. We could think about why
+this lemma doesn't apply for them.
+\end{rem}
+
+\begin{rem}
+Mauro says that you can use this statement to prove a bunch of things, for example reduce $\infty$-GAGA to classical GAGA.
+\end{rem}
+
+Recall that we were trying to determine whether $A-Mod \to \varinjlim B^{\otimes_A^{n}} - Mod$ is an equivalence. We use
+the first lemma to put a t-structure on the limit, and the second lemma to replace with descent for hearts. The RHS
+becomes $\varinjlim (B^{\otimes_A^{n}} - Mod)^{\heartsuit} = \pi_0(B^{\otimes_A^{n}}) - Mod$.
+
+Note that this is not quite the classical case, because the Cech nerve is infinite here. We'll need to apply
+the following theorem for $\cC = \cC at \subset \cC at_{\infty}$, which is a 2-category. So we'll apply $n=2$.
+
+\begin{thm}[Quillen, version of Theorem A]
+If $\cC$ is an $n$ category (it's proven in \cite{HTT} that $n$ can be $\infty$), $A : J \to I$ a functor,
+if for every object $x \in I$ we have $\pi_i(J_{/X}) = 0$ for $i<n$, then $\lim F = \lim F \circ A$, for all $F : I \to \cC$.
+\end{thm}
+
+Note that $J_{/x} = J \times_I I_{/x}$. 
+
+\begin{rem}
+We have $\Delta^{\leq} \to \Delta$ as $I$ and $J$. The homotopy type of $(\Delta^{\leq n}_S)_{/n+k}$, with $k\geq 0$,
+is a wedge of a number $N_{n,k}$ of $n-1$-spheres. $N_{n,1} = 1$ and $N_{n,2}= 3$. So the minimum $n$ we can take is 3,
+and this gives back the usual theorem of Grothendieck.
+\end{rem}
+
+\begin{rem}
+We have:
+\[
+\begin{tikzcd}
+ \varinjlim B^{\otimes_A^{n}} - Mod \arrow{d} \\
+A-Mod
+\end{tikzcd}
+\]
+Warning: in non-affine situations, the functor $\lim QCoh(U^n) \to \Fun(\Delta, QCoh(X))$ is highly non-explicit. Given
+a descent datum $\{\mathcal{F}^n\}$, we get an $\infty$-functor $\Delta \to QCoh(X)$ which is very lax. In practice one uses
+rectification to write $\Fun(\Delta, QCoh(X)) \simeq \infty \Fun(\Delta, Ch(QCoh(X)))$, and use Reed something. The problem is
+that the rectification is also very non-explicit.
+\end{rem}
+
+
 \bibliographystyle{plain}
 \bibliography{dahema}
 
