@@ -516,6 +516,7 @@ Let $CDGA_{k}^{\leq n} \hookrightarrow CDGA_{k}$ denote the subcategory of $CDGA
 %from the $n$-sphere to the point to be a weak equivalence.
 
 \subsection{Lawvere Theories}
+\label{sect:lawvere}
 
 We move on to approach \ref{item:lawvere} to derived affines, the Lawvere Theory description. 
 This is important because
@@ -1905,26 +1906,27 @@ follows from 7.2.4.20.
 
 
 \chapter{Descent}
-Talk by Antonjio Mrcela.
+Talk by Antonijo Mrcela.
 
-\section{Motivation}
-\label{sect:cc_motivation}
+\section{Statement}
+\label{sect:cc_statement}
 
-Recall:
+We recall the construction of overcategories, introduced in \ref{sect:cartesian}. In particular, the $\infty$-category of
+commutative algebras over $A$ is the homotopy pullback in the following diagram.
 \[
 \begin{tikzcd}
 \cC Alg_{/A} \arrow{r}\arrow{d} & \Fun(\Delta^1 , \cC Alg_k)\arrow{d}{ev_1} \\
 \{A\} \arrow{r} & \cC Alg_k
 \end{tikzcd}
 \]
-This is a Cartesian fibration. Next:
+This is a co-Cartesian fibration. Next, given $f:B \to A$, we get a Cartesian morphism:
 \[
 \begin{tikzcd}
 \cC Alg_{/B} \arrow{d} &  \cC Alg_{/A} \arrow{d}\arrow{l}\\
 \{B\} \arrow{r}{f} & \cC \{A\}
 \end{tikzcd}
 \]
-$f$ is a Cartesian morphism. So we can apply Grothendieck construction to get a functor $\mathcal{F} : \cC Alg_k^{\op}
+So we can apply the Grothendieck construction to get a functor $\mathcal{F} : \cC Alg_k^{\op}
 \to \cC at_{\infty}$. We then take the spectralization to $\cC at_{\infty}^{st}$.
 
 Moreover, $Mod$ lands in the presentable category: $Pr_{st}^R$, where the functors are right adjoint functors. There's also a version
@@ -1951,23 +1953,40 @@ In $\cC Alg_k$, $S$ the set of faitfully flat morphisms. The following is DAG VI
 determines a Grothendieck topology on $\cC Alg_k$. This is called \textbf{the flat topology}.
 
 \begin{defin}
-The \textbf{Cech nerve functor} $B^{\bullet} : \Delta \to \cC Alg_k$, $i \to B^{\otimes_A^{i+1}}$.
+The \textbf{Cech nerve functor} $B^{\bullet} : \Delta \to \cC Alg_k$, is informally described by $i \to B_i = B^{\otimes_A^{i+1}}$.
+To construct it as an $\infty$-functor, we take the left Kan extension of the functor $\Delta^{\leq 1} \to \cC Alg_k$, given
+by the morphism $B \to B \otimes_A B$. \todo{Doesn't sound right, figure this out}
 \end{defin}
 
-\begin{rem}
-We need to build this functor as a left Kan extension.
-\end{rem}
 
-The descent problem is: we get a map $A-Mod \to \varinjlim B^{\otimes_A^{n}} - Mod$, is this an equivalence? If it is,
-construct some sort of inverse. The following lemma is 3.20 in Shennon - Porta - Vezzosi, Formal Gluing along non-linear
+Since $A$ maps to each $B_i$, we obtain an $\infty$-functor $\phi: A-\cM od \to \varinjlim_{\Delta} B^{\otimes_A^{n+1}} - \cM od$.
+The \textbf{descent problem} asks if this is an equivalence, and if it is,
+whether we can construct some sort of inverse. We give an affirmative answer to the first question, using the following
+strategy:
+\begin{itemize}
+\item The category $A-\cM od$ has a standard t-structure given by the degrees of the modules. We use Lemma \ref{lem:t_filt}
+to put a t-structure on $\varinjlim_{\Delta} B^{\otimes_A^{n}} - \cM od$ as well.
+\item Due to Lemma \ref{lem:equiv_heart}, $\phi$ is an equivalence if and only if it induces an equivalence on the hearts
+of the given t-structures. Due to the equivalence \ref{eq:map_heart}, $\phi$ is an equivalence if and only if it induces
+an equivalence $\pi_0(A) \cM od^{\heartsuit} \to \varinjlim_{\Delta} \pi_0(B)^{\otimes_{\pi_0(A)}^{n+1}} - \cM od^{\heartsuit}$.
+\item We use a version of Quillen's Theorem A, reproduced in \ref{thm:A}, to show that we can replace the infinite Cech nerve
+with a 3-term Cech nerve, without changing the limit. This reduces the problem to Grothendieck's classical formulation of 
+descent, which we know to be true.
+\end{itemize}
+
+
+\section{Proof}
+\label{sect:descent_proof}
+The following lemma is 3.20 in Shennon - Porta - Vezzosi, Formal Gluing along non-linear
 flags. \todo{cite this once it appears}
 
 \begin{lem}
+\label{lem:t_filt}
 Let $p : \mathcal{X} \to \cS$ be a stable filtration, and let $\cS^{\op} \to \cC at_{\infty}^{st}$ be the associated 
 $\infty$-functor. Suppose:
 \begin{enumerate}
-\item $\forall s \in S$ there is a t-structure $(\mathcal{X}_s^{\leq 0}, \mathcal{X}_s^{\geq 0})$on $\mathcal{X}_s$
-\item $\forall $ edge $s \to s^1$, the induced functor $f^*$ is t-exact.
+\item For all $s \in \cS$ there is a t-structure $(\mathcal{X}_s^{\leq 0}, \mathcal{X}_s^{\geq 0})$ on $\mathcal{X}_s$.
+\item For all edges $f:s \to s'$, the induced functor $f^*$ is t-exact.
 \end{enumerate}
 Then the stable $\infty$-category $\varprojlim F$ has a (unique) t-structure characterized by:
 \[	\forall s \in S, e_s : \varprojlim F \to \mathcal{X}_s 	\]
@@ -2011,6 +2030,7 @@ Pick $A \to B$ a non-flat morphism. Then we have: \todo{add from paper}
 
 Now we need to reduce to the problem of descent in the heart. We use Lemma 3.3.7 in the same paper.
 \begin{lem}
+\label{lem:equiv_heart}
 Let $f : \cC \to \cD$ be an exact functor between stable $\infty$-categories. Assume $\cC, \cD$ have t-structures which
 are left complete and right bounded, and that with respect to these structures $f$ is t-exact. Then TFAE:
 \begin{enumerate}
@@ -2018,16 +2038,18 @@ are left complete and right bounded, and that with respect to these structures $
 \item $f^{\heartsuit} : \cC^{\heartsuit} \to \cD^{\heartsuit}$ is an equivalence of abelian categories.
 \end{enumerate}
 \end{lem}
-Note that 1 implies 2 is obvious, while 2 implies 1 is super powerful. This is because we can do many constructions
+Note that 1 $\Rightarrow$ 2 is obvious, while 2 $\Rightarrow$ 1 is very powerful. This is because we can do many constructions
 at the level of the hearts that we can't do at the level of $\infty$-categories.
 
 \begin{proof}
-The first step is fully faithfulness. Fix $x,y \in \cC$ and get canonical transformation $\psi_{x,y} :
-Map_{\cC}^{st}(x,y) \to Map_{\cD}^{st}(f(x), f(y))$. Start by fixing the full subcategory $\cC_x \subset \cC$,
-spanned y those $y$ such that $\psi_{x,y}$ is an equivalence. This is closed under loop and suspension, extensions
+The first step is full faithfulness. For $x,y \in \cC$, there is a canonical transformation $\psi_{x,y} :
+Map_{\cC}^{st}(x,y) \to Map_{\cD}^{st}(f(x), f(y))$. Start by fixing $x$ and defining the full subcategory $\cC_x \subset \cC$,
+spanned by those $y$ such that $\psi_{x,y}$ is an equivalence. This is closed under loop and suspension, extensions
 and retract. So if $\cC^{\heartsuit} \subset \cC_X$, we go by induction on non-vanishing cohomology groups,
-to get $\cC^b \subset \cC_X$. Here we use the left complete and right complete assumptions. $y = \varprojlim
-\tau_{\geq n} y$, $f$ commutes with this specific colimit, so $f(y) = \varinjlim f(\tau_{\geq n} y)$.
+to get $\cC^b \subset \cC_X$. Here we use the left complete and right complete assumptions. Now for an arbitrary $y\in \cC$,
+$y = \varinjlim \tau_{\geq n} y$. $f$ commutes with this specific colimit, so $f(y) = \varinjlim f(\tau_{\geq n} y)$.
+Every map from $x$ to $y$ lands in $\tau_{\geq n} y$ for some $n$, and analogously for maps $f(x)$ to $f(y)$, which reduces
+the problem to the case of bounded modules, which is already proved.
 
 Step 2 is essential surjectivity. On the heart it's the hypothesis. Pick $y\in \cD^b$, we have the exact sequence
 $\tau_{\leq k} y \to y \to \tau_{>k} y$, with $k$ chosen so that both truncations have fewer cohomology groups than $y$.
@@ -2043,24 +2065,44 @@ this lemma doesn't apply for them.
 Mauro says that you can use this statement to prove a bunch of things, for example reduce $\infty$-GAGA to classical GAGA.
 \end{rem}
 
-Recall that we were trying to determine whether $A-Mod \to \varinjlim B^{\otimes_A^{n}} - Mod$ is an equivalence. We use
-the first lemma to put a t-structure on the limit, and the second lemma to replace with descent for hearts. The RHS
-becomes $\varinjlim (B^{\otimes_A^{n}} - Mod)^{\heartsuit} = \pi_0(B^{\otimes_A^{n}}) - Mod$.
-
-Note that this is not quite the classical case, because the Cech nerve is infinite here. We'll need to apply
-the following theorem for $\cC = \cC at \subset \cC at_{\infty}$, which is a 2-category. So we'll apply $n=2$.
+Recall that we were trying to determine whether $A-\cM od \to \varinjlim B^{\otimes_A^{n}} - \cM od$ is an equivalence. We use
+Lemma \ref{lem:t_filt} to put a t-structure on the limit, and Lemma \ref{lem:equiv_heart} to show that the problem is equivalent
+to that of equivalence of the hearts of the categories. The RHS
+becomes:
+\[	\varinjlim (B^{\otimes_A^{n}} - \cM od)^{\heartsuit} = \varinjlim \pi_0(B^{\otimes_A^{n}}) - \cM od ,	\]
+and the LHS becomes:
+\[	\pi_0(A)- \cM od.	\]
+This is almost the statement of the classical descent theorem \`{a} la Grothendieck. However, 
+in our case the Cech nerve is infinite, instead of having only 3 terms. These two versions are actually
+equivalent, due to the following theorem. 
 
 \begin{thm}[Quillen, version of Theorem A]
+\label{thm:A}
 If $\cC$ is an $n$ category (it's proven in \cite{HTT} that $n$ can be $\infty$), $A : J \to I$ a functor,
-if for every object $x \in I$ we have $\pi_i(J_{/X}) = 0$ for $i<n$, then $\lim F = \lim F \circ A$, for all $F : I \to \cC$.
+if for every object $x \in I$ we have $\pi_i(J_{/x}) = 0$ for $i<n$, then $\lim F = \lim F \circ A$, for all $F : I \to \cC$.
 \end{thm}
 
-Note that $J_{/x} = J \times_I I_{/x}$. 
+Here $J_{/x} = J \times_I I_{/x}$. We apply the theorem with $\cC = \cC at \subset \cC at_{\infty}$, which is a 2-category. 
+So we need $n=2$.\footnote{For $n=1$, Theorem A is classical; for $n=\infty$, it is proved in \cite{HTT}. For $1<n<\infty$,
+we don't think it's written up anywhere, but it should be true.} Furthermore, we use the inclusion $\Delta_s^{\leq 3} \to
+\Delta_s$, where the subscript denotes the subcategories with the same objects, but only monomorphisms as morphisms. Define
+$F$ as the infinite Cech nerve, $F : \Delta_s \to \cC$, $n \mapsto B^{\otimes_A^n}$; then the restriction $F \circ A$ is
+the Cech nerve \`a la Grothendieck:
+\[
+\begin{tikzcd}
+\pi_0(B) - \cM od \arrow[shift left]{r}\arrow[shift right]{r} & \pi_0(B) \otimes_{\pi_0(A)} \pi_0(B) -\cM od
+\arrow[shift left = 2]{r}\arrow{r}\arrow[shift right = 2]{r} & \pi_0(B) \otimes_{\pi_0(A)} \pi_0(B) \otimes_{\pi_0(A)} \pi_0(B)
+-\cM od .
+\end{tikzcd}
+\]
+
 
 \begin{rem}
-We have $\Delta^{\leq} \to \Delta$ as $I$ and $J$. The homotopy type of $(\Delta^{\leq n}_S)_{/n+k}$, with $k\geq 0$,
-is a wedge of a number $N_{n,k}$ of $n-1$-spheres. $N_{n,1} = 1$ and $N_{n,2}= 3$. So the minimum $n$ we can take is 3,
-and this gives back the usual theorem of Grothendieck.
+We motivate the choice of 3 in $\Delta_s^{\leq 3}$ above.
+As proved in Exercise 1.5.4, the homotopy type of $(\Delta^{\leq m}_S)_{/m+k}$, with $k\geq 0$,
+is a wedge of a number $N_{m,k}$ of $m-1$-spheres. \footnote{Mauro has computed $N_{m,1} = 1$ and $N_{m,2}= 3$; we should see
+if we can determine all $N_{m,k}$.} In order for $J = \Delta^{\leq m}_S$ to satisfy the assumptions of Theorem \ref{thm:A} with
+$n=2$, we need $m\geq 3$. Therefore the Cech nerve can be reduced to a minimum of 3 terms.
 \end{rem}
 
 \begin{rem}
@@ -2076,6 +2118,315 @@ a descent datum $\{\mathcal{F}^n\}$, we get an $\infty$-functor $\Delta \to QCoh
 rectification to write $\Fun(\Delta, QCoh(X)) \simeq \infty \Fun(\Delta, Ch(QCoh(X)))$, and use Reed something. The problem is
 that the rectification is also very non-explicit.
 \end{rem}
+
+
+
+
+
+\chapter{Geometric Stacks and Gluing}
+Talk by Mauro Porta.
+
+
+We finally leave the affine world! Only took us 2 months. But first, we mention a
+correction to Lemma \ref{lem:equiv_heart} from the previous talk.
+The statement ``$F^{\heartsuit}$ is an equivalence'' should be taken as ``$F^{\heartsuit}$ is essentially surjective and 
+$F|_{\cC^{\heartsuit}}$ is
+fully faithful''. This means we have to take into account $\Ext$ between discrete objects; an equivalence at the level of
+hearts is not strong enough to guarantee an equivalence on the entire categories.
+
+Otherwise, there's a counterexample to the lemma. Take $A \in cdga^{\leq 0}$, we have the pullback  functor 
+$A-\cM od \overset{f^*}{\to} H^0(A)-\cM od$, $M\mapsto M \otimes_A H^0(A)$, which is not t-exact, so the lemma makes no statement
+about it. However, the forgetful functor $f_* : H^0(A) - \cM od \to A-\cM od$ is t-exact, but it fails to be an equivalence, even if
+$f_*^{\heartsuit}$ is an equivalence between the categories of discrete modules.
+
+
+\section{Gluing: problems and approaches}
+The problem for today is: how do we patch together derived affines? This is difficult for two reasons:
+\begin{enumerate}
+\item If a derived scheme is to be thought of as a gluing of derived affines, we should be able to produce many gluing
+diagrams in $d \cA ff_k$. This means functors $I \to d \cA ff_k$, which is difficult because the latter is an $\infty$-category,
+so we need to specify higher coherencies when defining functors.
+In particular, to define $\bbP^1$, we have:
+\[
+\begin{tikzcd}
+\; & \bbA^1\arrow{dr} &  \\
+\bbG_m \arrow{ur}\arrow{dr} & & \bbP^1 \\
+& \bbA^1\arrow{ur} &
+\end{tikzcd}
+\] 
+as well as a homotopy between the branches. \todo{Am I interpreting this correctly?}
+This is not an existential threat, because we can choose a model-categorical presentation for $d \cA ff_k$.
+\item But we really need an environment category where the gluing is performed; constructing this is tricky. There are 2 ways.
+\begin{itemize}
+\item Structured spaces, i.e. the environment is the category of locally ringed topoi, or similar.
+\item Functor of points, i.e. the environment is the category of presheaves of spaces, $\Fun(d\cA ff \to \cS)$.
+\end{itemize}
+Today we want to address both and compare them.
+\end{enumerate}
+
+First, we look at pros and cons for both:
+\begin{itemize}
+\item Structured spaces. It's fairly easy to think about objects in this way: they are $(X, \mathcal{O}_X)$, where $X$ is some
+sort of topological space (actually $\infty$-topos), and $\mathcal{O}_X$ is a sheaf of cdga's on $X$. Note how similar this is
+to how we think about underived schemes. Moreover, the subdivision $(X, \mathcal{O}_X)$ makes it easy to distinguish the
+derived information from the underived one. For example, $\pi_0(X,\mathcal{O}_X) = (X, \pi_0(\mathcal{O}_X))$, and the Postnikov
+tower discussion carries over to derived schemes:
+\[	\dots \to (X, \tau_{\leq 2} \mathcal{O}_X) \to (X, \tau_{\leq 1} \mathcal{O}_X) \to (X, \pi_0 \mathcal{O}_X).	\]
+Cons: maps are difficult to understand, and only Deligne-Mumford stacks can be described in this way. 
+\footnote{Any structured space has connected cotangent complex, but Artin stacks don't need to. The smooth \'etale
+site is not canonical, while the \'etale site is.}
+Note that the stack of
+perfect complexes, as well as the Eilenberg-Maclane stacks are Artin, but not Deligne-Mumford.
+
+\item Functor of points. It can deal with Artin stacks, and then some more. Sometimes in life we want to deal with objects 
+which are stacks,
+but not geometric stacks; the easiest example is $QCoh : d Aff \to Cat_{\infty}$. We saw last time it has descent, so it's
+a stack, but it's not geometric.\footnote{I.e. it doesn't have an appropriate atlas, we'll see shortly what this means.} 
+We only have one con, but it's pretty bad: it's not clear at all,
+in this language, why schemes should be simpler than Artin stacks. In other words, techniques which hold for schemes but don't
+hold for Artin stacks are obscured.
+\end{itemize}
+
+
+\section{Structured spaces}
+We want a category $\cC$ with the following properties:
+\begin{enumerate}
+\item \label{env1}
+$\cC$ contains $d \cA ff_k$ in a fully faithful way.
+\item \label{env2}
+$\cC$ is big enough to contain all the gluings we'll make. For example, we'd be happy with $\cC$ closed under colimits.
+\item \label{env3}
+$\cC$ is small enough to have a good notion of Grothendieck topology. (Note that any co-complete category has a Grothendieck
+topology, called the \textbf{canonical topology}: for an object $X$, and a collection $\{U\}$ of objects mapping to $X$, 
+call it a covering if
+the geometric realization of the $\check{C}$ech nerve of $\{U\}$ is equivalent to $X$. But this is not a very useful topology; when
+we say ``good Grothendieck topology'', we want to have a better grasp on the coverings: describe them using words such as
+\'etale, smooth, flat, open immersion etc.)
+\end{enumerate}
+
+
+To exemplify this philosophy, recall what we do in classical AG. That is, start with $\cA ff_k$ instead of $d \cA ff_k$. 
+Then we have two choices for $\cC$.
+\begin{itemize}
+\item $(X,\mathcal{O}_X)$ locally ringed spaces. Property \ref{env1} we all know. For \ref{env2}, note that LRS doesn't admit
+all colimits (you can't talk about $\bbP^{\infty}$, for example; that's an IndScheme), but admits enough of them
+to describe schemes. For \ref{env3}, the Grothendieck topology is as follows. We say $(X, \mathcal{O}_X) \to (Y,\mathcal{O}_Y)$ is an
+\textbf{open immersion} if it's an open inclusion at the level of topological spaces, and the induced map $f^{\sharp}
+: f^* \mathcal{O}_Y \to \mathcal{O}_X$ is an isomorphism. Then a collection $\{X_i\}$ is a \textbf{covering} of $Y$ if
+each $X_i \to Y$ is an open immersion, and moreover the induced map $\coprod X_i \to Y$ is surjective at the level of topological
+spaces. \todo{is this definition of covering correct?}
+Then we can define schemes as objects in LRS which are covered, in the above sense, by objects in the essential
+image of $\cA ff_k \to LRS$.
+
+\item Alternatively, we can take locally ringed 1-topoi, in which case we get Deligne-Mumford stacks. Below we make a short
+summary of locally ringed 1-topoi.
+\end{itemize}
+
+\begin{defin}
+A \textbf{Grothendieck site} is a category $\mathcal{D}$ together with a Grothendieck topology. A \textbf{1-topos} $X$
+is a category equivalent to $\Sh(\mathcal{D})$ for some Grothendieck site $\mathcal{D}$.
+\end{defin}
+
+If the gluing environment $\cC$ is the category of locally ringed topoi, then \ref{env1}
+and \ref{env2} are again easy. For the Grothendieck topology on $\cC$, we make the following definitions.
+\footnote{Don't confuse the Grothendieck topology on the category $\cC$ of locally ringed topoi, which we're trying to
+define now, with the Grothendieck topology on the underlying site $\cD$ of an individual topos $\mathcal{X}$. Sometimes
+both topologies have the same name, e.g. \'etale, but it should be clear that they're completely different notions.}
+
+\begin{defin}
+For $\mathcal{X}$, $\mathcal{Y}$ 1-topoi, a \textbf{geometric morphism} $\mathcal{Y} \to \mathcal{X}$ is an adjoint pair:
+\[	f^{-1} : \mathcal{X} \to \mathcal{Y} : f_*,	\] 
+where moreover $f^{-1}$ preserves finite limits.
+\end{defin}
+
+Note that, despite the notation, the geometric morphism goes from $\mathcal{Y}$ to
+$\mathcal{X}$; the ``inverse image'' $f^{-1}$ happens to be the left adjoint. This is motivated by the following example.
+If $X, Y$ topological spaces, take $\mathcal{X} = \Sh(X)$ and $\mathcal{Y} = \Sh(Y)$.
+For any $f: Y \to X$, the usual inverse and direct image functors on sheaves:
+\[	f^{-1}: \Sh(X) \to \Sh(Y) : f_*	\]
+form a geometric morphism. Recall that $f^{-1}$ is defined as a colimit indexed by open subsets containing
+the image of $f$, followed by sheafification. Both these operations are filtered colimits, therefore commute with finite
+limits. Hence $f^{-1}$ commutes with finite limits, and the pair $(f^{-1},f_*)$ is a geometric morphism.
+
+\begin{defin}
+\label{defin:etale_topoi}
+A geometric morphism $f^{-1} : \mathcal{X} \to \mathcal{Y} : f_*$ is \textbf{\'etale} if there exists $U \in \mathcal{X}$
+and an equivalence $\mathcal{X}_{/U}$ making the following diagram commute:
+\[
+\begin{tikzcd}
+\mathcal{X}\arrow{r}{\times U}\arrow[shift left]{dr}{f^{-1}} & \mathcal{X}_{/U}\arrow{d}{\simeq} \\
+ & \mathcal{Y}\arrow[shift left]{ul}{f_*} .
+\end{tikzcd}
+\]
+\end{defin}
+
+To get a feel for this definition, note the following examples.
+
+\begin{lem}
+\label{lem:etale_topoi}
+If $f:Y \to X$ is a local homeomorphism of topological spaces, then the standard $f^{-1}, f_*$ is \'etale. Moreover, if
+$f:Y \to X$ is an \'etale map of schemes, then $f^{-1} : \Sh_{Set}(X_{\'et}, T_{\'et}) \to 
+\Sh_{Set}(Y_{\'et}, T_{\'et})$ is \'etale.\footnote{By $X_{\'et}$ we mean the \'etale site of the scheme $X$, which is the
+subcategory of the comma category $\Sch_X$ given by \'etale morphisms $U \to X$. We endow this site with the Grothendieck
+topology $T_{\'et}$ induced from the \'etale topology on $\cA ff$.}
+\end{lem}
+
+In fact, we can uprgrade the second statement of Lemma \ref{lem:etale_topoi} to a characterization of \'etale morphisms of
+schemes.
+
+\begin{prop}
+$f : X \to Y$ in $Sch_k$ is \'etale iff the induced $(f^{-1},f_*)$ morphism of topoi is \'etale
+and $f^{-1} \mathcal{O}_Y \to \mathcal{O}_X$ is an equivalence.
+\end{prop}
+
+\begin{rem}
+We elaborate on the element $U \in \mathcal{X}$ which appears in Definition \ref{defin:etale_topoi}. If $Y \subset X$ is an
+open subset of the topological space $X$, then $Y$ defines by Yoneda a sheaf $h_Y \in \mathcal{X} = \Sh(X)$, such that:
+\[
+h_Y(V) = \left\{ \begin{array} {ll} * & ,V \subset Y, \\ \emptyset &, V\not \subset Y. \end{array}\right.
+\]
+Then we take $U = h_Y$, and note that we have $\Sh(Y) \simeq \Sh(X)_{/U}$.
+
+We can relax the assumptions and take $f:Y \to X$ a local homeomorphism. Then we define a sheaf $h_f$ by
+$h_f(V) = \Hom_{/V}(V,V \otimes_X Y)$.\footnote{In other words, this is the sheaf of sections of $f:Y \to X$.}
+ This generalizes the sheaf $h_Y$ from the previous paragraph, in the sense that,
+if $f$ is an open immersion, $\Hom_{/V}(V,V \otimes_X Y)$ is nonempty iff $V\cap Y = V$, i.e. $V \subset Y$.
+Moreover, it's a fact that local homeomorphisms are characterized by the property $\Sh(Y) \simeq \Sh(X)_{/h_f}$. So
+we take $U = h_f$.
+\end{rem}
+
+We move on from the idea of gluing in the ambient category of locally ringed 1-topoi to the derived analog. This
+will involve the theory of $\infty$-topoi, which allows us to replace sheaves of sets with sheaves of spaces,
+and obtain higher DM stacks. This is necessary, for example, in order to talk about $K(G,n)$, for $G$ finite abelian
+and $n>1$.\footnote{In algebraic topology, we obtain $K(G,n)$ by de-looping $K(G,n-1)$, a process which almost never
+returns a scheme. So when doing geometry we need to replace de-looping with working with higher groupoids; morally
+speaking, de-looping $n$ times in topology corresponds to increasing the stack level by $n$. For example, the de-looping
+$BG$ of a topological group $G$ corresponds to the stack $BG$ in geometry.}
+
+
+\section{A primer on $\infty$-topoi}
+Note first that the HAG framework \cite{HAG-I} involves hypercomplete $\infty$-topoi, while the DAG framework
+\cite{Lurie_DAG_V} involves non-hypercomplete 
+$\infty$-topoi. The latter make for a nicer theory, but in practice often need to be reduced to the hypercomplete case.
+
+The main difference is that the following hold if $\mathcal{X}$ is hypercomplete, but don't need to otherwise.
+\begin{itemize}
+\item $\mathcal{X} = \Sh(\cC, \cT)$, where $(\cC, \cT)$ is an $\infty$-Grothendieck site.\footnote{From now on,
+sheaves are sheaves of spaces, unless we explicitly say otherwise.}
+\item For $f: \mathcal{F} \to \mathcal{G}$ a morphism in $\mathcal{X}$, $f$ is an equivalence
+iff $\pi_i(f)$ are isomorphisms for all $i$.
+\end{itemize}
+
+\begin{rem}
+\begin{enumerate}
+\item If $\mathcal{X}$ is a 1-topos, viewing it as an $\infty$-category (i.e. taking the nerve) \emph{does not} get us
+an $\infty$-topos. Instead, if $\mathcal{X} = \Sh_{Set}(\cC, \cT)$, we need to replace it with $\Sh(\cC,\cT) :=\Sh_{\cS}(\cS,\cT)$,
+which is an $\infty$-topos. Moreover, we have a fully faithful embedding $\mathcal{X} \subset \Sh(\cC,\cT)$.
+
+\item If $\mathcal{X}$ is an $\infty$-topos, we can look at $\mathcal{X}^{\leq n}$, the $\infty$-category of $n$-truncated 
+objects in $\mathcal{X}$. $\mathcal{F} \in \mathcal{X}$
+is \textbf{n-truncated} if for all $\mathcal{G} \in \mathcal{X}$, $\Map_{\mathcal{X}}(\mathcal{G},\mathcal{F})$ is n-truncated
+as an $\infty$-category. Every $\mathcal{F} \in \mathcal{X}^{\leq n}$ is hypercomplete, i.e. equivalent to the limit of its
+Postnikov tower.
+
+We say that $\mathcal{X}$ is \textbf{n-localic} if we can recover it from $\mathcal{X}^{\leq n}$. More precisely, this means that
+for all $\infty$-topoi $\mathcal{Y}$, $\Map_*(\mathcal{Y}, \mathcal{X}) \simeq \Map_*(\mathcal{Y}^{\leq n}, \mathcal{X}^{\leq n})$.
+The equivalence is implemented as follows. Since $f_*$ is a right adjoint, it preserves truncated objects, which gives the
+bottom arrow in the diagram:
+\[
+\begin{tikzcd}
+\mathcal{Y}\arrow{r}{f_*} & \mathcal{X} \\
+\mathcal{Y}^{\leq n}\arrow[hook]{u}\arrow[dashed]{r} & \mathcal{X}^{\leq n}\arrow[hook]{u}.
+\end{tikzcd}
+\]
+
+\item Sometimes, $\infty$-topoi are ``naturally'' hypercomplete. For example:
+\begin{itemize}
+\item If $X$ is a topological space with finite covering dimension, such as locally compact Hausdorff, then $\Sh(X)$ is
+hypercomplete.
+\item If $X$ is a quasi-compact, quasi-separated, locally Noetherian scheme, then sheaves on $(X_{Zar},\cT_{Zar})$
+are a hypercomplete $\infty$-topos.
+\item With $X$ as before $\Sh(X_{Nis},\cT_{Nis})$ is hypercomplete.
+\item With $X$ as nice a scheme as you want, even a field, $\Sh(X_{\'et},\cT_{\'et})$ is \emph{not} hypercomplete. But it's
+always 1-localic.
+\end{itemize}
+\end{enumerate}
+\end{rem}
+
+\begin{defin}
+An $\mathbf{\infty}$\textbf{-topos} is a left exact, accessible localization of a presentable $\infty$-category.
+(For example, a presentable $\infty$-category of presheaves of spaces.)
+\end{defin}
+
+\begin{rem}
+There exists an analog of Giraud's characterization, giving necessary and sufficient intrinsic conditions for an $\infty$-category
+to be an $\infty$-topos. They are somewhere in \cite{HAG-I}.
+\end{rem}
+
+\begin{rem}
+$\mathcal{X}$ is n-localic iff there exists an n-cateogry $\cC$ such that $\mathcal{X} = \Sh(\cC,\cT)$.
+\end{rem}
+
+We want to construct the category of locally ringed $\infty$-topoi; a reference for this is Chapter 3 of \cite{DAG-V}.
+Recall the definition of derived affines via
+Lawvere theory, explained in \ref{sect:lawvere}: $d \cA ff = \Fun^{\times}(T_{disc}(k), \cS)$, where $T_{disk}(k) = \{\bbA_k^n\}$
+is the $\infty$-category of affine spaces with morphisms of schemes. To get locally ringed $\infty$-topoi, we change the target $\cS$
+to something else. Let $^L Top$ be the $\infty$-category of $\infty$-topoi with geometric morphisms; there is a forgetful
+functor $^L Top \to \cC at_{\infty}$. Using the Grothendieck construction, this buys us a Cartesian fibration
+$\overline{^L Top} \to ^L Top$.
+
+\begin{defin}
+The $\infty$-category of locally ringed $\infty$-topoi is a subcategory:
+\[	^L Top(T_{disc}(k)) \subset \Fun(T_{disc}(k), \overline{^L Top}) \times_{\Fun(T_{disc}(k),^L Top)} {^L Top}.	\]
+Its objects are pairs $(\mathcal{X}, \mathcal{O} : T_{disc}(k) \to \mathcal{X})$, where $\mathcal{O}$ commutes with products
+and $\pi_0(\mathcal{O})$ is a sheaf of local rings. Its morphisms are pairs $(f,f^{\sharp}) : (\mathcal{X},\mathcal{O}_{\mathcal{X}})
+\to (\mathcal{X},\mathcal{O}_{\mathcal{X}})$, such that $f^{\sharp} : f^{-1} \mathcal{O}_{\mathcal{Y}} \to \mathcal{O}_{\mathcal{X}}$
+induces a local morphism on $\pi_0$.
+\end{defin}
+
+\begin{defin}
+A \textbf{derived Deligne-Mumford stack} is a pair $(\mathcal{X},\mathcal{O}_{\mathcal{X}}) \in ^L Top(T_{disc}(k))$,
+such that locally $(\mathcal{X},\mathcal{O}_{\mathcal{X}})$ is of the form $\Spec A = (\Sh(A_{\'et}), \mathcal{O}_A)$,
+for some derived ring $A$.
+\end{defin}
+
+In practice, $(\mathcal{X},\mathcal{O}_{\mathcal{X}})$ is a derived DM stack if there exist $U_i \in \mathcal{X}$ such that:
+\begin{enumerate}
+\item $(\mathcal{X}_{/U_i}, \mathcal{O}_{\mathcal{X}}|_{U_i}) \cong \Spec A_i$;
+\item $U= \coprod_i U_i \to 1_{\mathcal{X}}$ is an effective epimorphism (i.e. $\pi_*(U) \to \pi_*(1_{\mathcal{X}})$ is surjective).
+\end{enumerate}
+
+\begin{defin}
+We say that $(\mathcal{X},\mathcal{O}_{\mathcal{X}})$ is a \textbf{derived scheme} if we can take $U_i$ as above such that
+$U_i \to 1_{\mathcal{X}}$ is a monomorphism for all $i$.
+\end{defin}
+
+A key property of maps of derived schemes:
+\begin{prop}
+The following diagram is a homotopy pullback:
+\[
+\begin{tikzcd}
+\Map_{\Sh_{cdga}(\mathcal{X})} (f^{-1}\mathcal{O}_{\mathcal{Y}}, \mathcal{O}_{\mathcal{X}}) \arrow{r}\arrow{d} &
+\Map_{d Sch} \big( (\mathcal{X},\mathcal{O}_{\mathcal{X}}), (\mathcal{Y},\mathcal{O}_{\mathcal{Y}}) \big)\arrow{d} \\
+(f^{-1},f) \arrow{r} & \Map_{^L Top}(\mathcal{X}, \mathcal{Y})
+\end{tikzcd}
+\]
+\end{prop}
+
+So far so good; but recall that requirement \ref{env1} for the environment gluing category was that it admits a fully
+faithful embedding from the affine category. The following, Theorem 2.1.12 in \cite{DAG-V}, addresses this. Note that
+the proof is difficult.\todo{understand and say why}
+
+\begin{thm}
+The embedding $\Spec : sc\cA lg_k \to ^L Top(T_{disc}(k))$ is fully faithful.\footnote{Essentially one needs to prove that
+$\Map(\mathcal{X}, \Spec A) \simeq \Map(A, \Gamma(\mathcal{O}_{\mathcal{X}}))$.}
+\end{thm}
+
+
+
+\section{Functor of points}
+Soon.
+
 
 
 \bibliographystyle{plain}
