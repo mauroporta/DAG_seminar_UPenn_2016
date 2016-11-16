@@ -203,6 +203,15 @@ The algorithm produces unique fillers for all horns, so in particular simplicial
 	In particular, deduce that $\mathrm{cosk}_0(S)$ is a Kan complex.
 \end{exercise}
 
+\begin{proof}
+    Recall the definition. Let $tr_{\leq n}:sSet \to sSet_{\leq n}$ be a truncation functor. It has both left adjoint $sk_n$ and right adjoint $cosk_n$ given by left and right Kan extension, respectively. We call $sk_n \circ tr_{\leq n}$ a n-skeleton functor between $sSet$, and $cosk_n \circ tr_{\leq n}$ a n-cosckeleton functor. For the notational convenience, we just denote them by $sk_n$ and $cosk_n$, respectively. \\
+    By definition, for every simplicial set $T$, we have an isomorphism 
+    \[Hom_{sSet}(T, cosk_n(S)) \simeq Hom_{sSet_{\leq n}}(tr_{\leq n}T, S)\]
+    Thus, it suffices to show that there exists a map 
+    \[Hom_{sSet_{\leq n}}(\Lambda^m_i, S) \to Hom_{sSet_{\leq n}}(\Delta^m, S)\]
+    for every $m \geq n$ and every $0 \leq i \leq m$. It follows from the fact that $S$ is discrete(i.e. Kan complex) and bijectivity of trucation maps. \todo{explain more}
+\end{proof}
+
 \section{$\infty$-categories}
 
 \begin{exercise}
@@ -231,10 +240,21 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 	(Hint: have a look at Exercises \ref{ex:coskeleton_Kan_complex} and \ref{ex:eveloping_groupoid}.)
 \end{exercise}
 
+\begin{proof}
+    Note that $cosk_n$ is right adjoint to $sk_n$. It follows that $j:\Delta^1 \to S^{\infty}$ is well defined. First, we prove that $f:X \to Y$ is an equivalence if and only if the above lifting problem has at least one solution. By Exercise 1.2.5, $cosk_0(\{0,1\})=S^{\infty}$ is a Kan complex. It means that if we choose Kan model structure on $sSet$, $S^{\infty}$ is a fibrant object. Similar to the exercise 1.3.4, we can say that $j:\Delta^1 \to S^{\infty}$ is a fibrant replacement in $sSet$. It follows from exercise 1.3.4 that we have a functor of $\infty$-categories 
+    \[ Fun(S^{\infty}, \cC) \to Fun(\Delta^1, \cC)\]
+    which is fully faithful. Also its essential image is spanned by those morphisms $f:\Delta^1 \to \cC$ that send every morphism in $\Delta^1$ into an equivalence in $\cC$. Therefore, $f:X \to Y$ is an equivalence iff $e_f:\Delta^1 \to \cC$ satisfies the above condition iff there exists a map from $S^{\infty} \to \cC$ commuting the above diagram. \\
+    Second, we need to show that any two such solution are homotopic. Due to fully faithfulness of the above $\infty$-functor, such two solutions should be isomorphic in the homotopy category of $Fun(S^{\infty}, \cC)$, implying that they are homotopic.
+\end{proof}
+
 \begin{exercise}
 	In \cite{HTT} a functor of $\infty$-categories $f \colon \cC \to \cD$ is said to be a \emph{categorical equivalence} if and only if the induced functor $\mathfrak C[f] \colon \mathfrak C[\cC] \to \mathfrak C[\cD]$ is an equivalence of simplicial categories.
 	Show that $f$ is a categorical equivalence if and only if it is fully faithful and essentially surjective.
 \end{exercise}
+
+\begin{proof}
+    By definition, $f \colon \cC \to \cD$ is a categorical equivalence if and only if the induced functor $\mathfrak C[f] \colon \mathfrak C[\cC] \to \mathfrak C[\cD]$ is an equivalence of simplicial categories if and only if, by definition, the induced functor $h\mathfrak C[f] \colon h\mathfrak C[\cC] \to h\mathfrak C[\cD]$ on the homotopy level is an equivalence. Also, $h\cC \simeq h\mathfrak C[\cC]$ and this correspondence is functorial. Note that a $\infty$-functor $f$ is defined to be fully faithful(or essentially surjective) if $hf$ is. Thus, it suffices to show that $hf$ is an equivalence iff it is fully faithful and essentially surjective which is obvious.
+\end{proof}
 
 \begin{exercise}
 	Let $E$ denote the walking isomorphism (i.e.\ the $1$-category with two objects and an isomorphism between them).
@@ -246,6 +266,11 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 	(This is a very simple example of what an ``internal rectification theorem'' looks like.)
 \end{exercise}
 
+\begin{proof}
+    Similar to the proof of Exercise 1.3.2, it is a consequence Exercise 1.4.1. We can identify $E$ with $\{0,1\}$. The canonical map $E$ is given by one characterized by the identity map $\{0,1\} \to \{0,1\}$. \todo{Categorical equivalence}
+    For the categorical equivalence between $\Fun(S^\infty, \cC), \Fun(E, \cC)$, it suffices to show that the given $\infty$-functor is essentially surjective by the virtue of Exercise 1.3.3. We already know that the essential image is spanned by a functor $f:E \to \cC$ that send every morphism in $E$ to an equivalence in $\cC$. Since there is only one morphism, $id:\{0,1\} \to \{0,1\}$ which must be sent to the identity map. Therefore, $\Fun(S^\infty, \cC), \Fun(E, \cC)$ are categorical equivalent.
+\end{proof}
+
 \begin{exercise}
 	Let $\cC$ be an $\infty$-category.
 	Let $S_0$ be a collection of \emph{objects} in $\cC$.
@@ -253,6 +278,18 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 	Show that $\cC_0$ is an $\infty$-category.
 	Furthermore, show that the inclusion $\cC_0 \hookrightarrow \cC$ of simplicial sets is a fully faithful functor of $\infty$-categories.
 \end{exercise}
+
+\begin{proof}
+    First, we show that $\cC_0$ is $\infty$ category. It suffices to show that for every $n$ and every $0<i<n$, there exists a map $\Delta^n \to \cC$ commuting the following diagram where $\sigma:\Lambda^n_i \to \cC$ belongs to $\cC_0$. Since $\cC$ is $\infty$-category, there exists a map $\tilde{\sigma}:\Delta^n \to \cC$ commuting the diagram. Now, it is enough to show that $\tilde{\sigma}$ belongs to $\cC_0$. Consider the following commutative diagram.
+    \[ \begin{tikzcd}
+		\Delta^0 \arrow{r} \arrow{dr} & \Lambda^n_i \arrow{r}{\sigma} \arrow[hook]{d} & \cC \\
+		{} & \Delta^n \arrow[dashed]{ur}{\tilde{\sigma}} \arrow{ur} & {} 
+	\end{tikzcd} \]
+	Note that the left triangular diagram commutes since maps from $\Delta^0$ are canonically chosen. Therefore, $\tilde{\sigma}$ belongs to $\cC_0$. \\
+	\todo{Show that the inclusion is fully faithful}\\
+	idea: homotopy level; directly??
+	
+\end{proof}
 
 \begin{exercise}
 	Let $\cC$ be an $\infty$-category.
@@ -266,11 +303,43 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 	Show that $\cC_0$ is an $\infty$-category.
 \end{exercise}
 
+\begin{proof}
+    Similar to the proof of Exercise 1.3.5, we show that $\cC_0$ is $\infty$-category by diagram chasing. We replace $\Delta^0$ in Exercise 1.3.5, by $\Delta^1$ and show that the following diagram commutes for every $n$ and every $0<i<n$;
+    \[ \begin{tikzcd}
+		\Delta^1 \arrow{r} \arrow{dr} & \Lambda^n_i \arrow{r}{\sigma} \arrow[hook]{d} & \cC \\
+		{} & \Delta^n \arrow[dashed]{ur}{\tilde{\sigma}} \arrow{ur} & {} 
+	\end{tikzcd} \]
+	This is trivial except $n=2$. For $n=2$, we get the following diagram.
+	\[ \begin{tikzcd}
+		\Delta^1 \arrow{r}{j} \arrow{dr} & \Lambda^2_1 \arrow{r}{\sigma} \arrow[hook]{d} & \cC \\
+		{} & \Delta^2 \arrow[dashed]{ur}{\tilde{\sigma}} \arrow{ur} & {} 
+	\end{tikzcd} \]
+	If $j(\Delta^1)=\{0 \to 1\}$ or $\{1 \to 2\}$, the above diagram commutes again. For $\tilde{\sigma}$ being in $\cC_0$, we need to consider the case where such $j$ does not exist. Namely, we need to show that $\tilde{\sigma} \circ j':\Delta^1 \to \cC$ belongs to $S_0$ where $j':\Delta^1 \to \Delta^2$ is the canonical inclusion with the image $\{0 \to 2\}$. Suppose $\tilde{\sigma}(\Delta^2)$ is the following;
+	\[ \begin{tikzcd}
+	{} & Y \arrow{dr}{g} \\
+	X \arrow{ur}{f} \arrow{rr}{h} & & Z
+	\end{tikzcd} \]
+	Note that $\tilde{\sigma} \circ j':\Delta^1 \to \cC$ corresponds to $X \xrightarrow{h} Z$. Since $f, g$ are in $S_0$ by assumption and $S_0$ is closed under composition, $\tilde{\sigma} \circ j':\Delta^1 \to \cC$ belongs to $S_0$. Thus, $\cC_0$ is an $\infty$-category. 
+\end{proof}
+
 \begin{exercise}
 	Let $\cC$ be an $\infty$-category. Show that the collection of equivalences in $\cC$ is closed under composition, in the sense of the previous exercise.
 	Let $\cC^{\simeq}$ be the $\infty$-subcategory of $\cC$ spanned by equivalences in $\cC$.
 	Show that $\cC^{\simeq}$ is a Kan complex.
 \end{exercise}
+
+\begin{proof}
+    Let $S_0$ be a collection of equivalences in $\cC$. Suppose we have 2-simplex
+    \[ \begin{tikzcd}
+	{} & Y \arrow{dr}{g} \\
+	X \arrow{ur}{f} \arrow{rr}{\phi} & & Z
+	\end{tikzcd} \]
+	where $X,Y,Z$ are objects of $\cC$ and $f:X \to Y, g:Y \to Z$ are equivalence in $\cC$. Remind that $f:X \to Y$ is an equivalence if the induced map $hf:hX \to hY$ is an isomorphism in $h\cC$. Since $g \circ f:X \to Z$ is homotopy equivalent to $\phi:X \to Z$ and $h(g\circ f)=hg\circ hf$ is an isomorphism, $\phi:X \to Z$ is an equivalence. Thus, $S_0$ is closed under composition.\\
+	Note that for any $\infty$-category $\cD$, $\cD$ is a Kan complex if and only if $\cD$ is an $\infty$-groupoid. \todo{reference-Lurie 1.2.5.1}
+	Clearly, $\cC^{\simeq}$ is an $\infty$-groupoid because its homotopy category $h\cC^{\simeq}$ is a groupoid. Therefore, $\cC^{\simeq}$ is a Kan complex. 
+	\todo{remark that we can prove this by following the definition. Similar to fill in the horn in exercise 1.2.?}
+    
+\end{proof}
 
 \section{Localization of $\infty$-categories}
 
@@ -283,6 +352,22 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 	Thus, there is a categorical equivalence $\tilde{\cC} \simeq \cC[W\inv]$, where $W$ denotes the collection of all arrows in $\cC$.
 	Deduce that if $\cC$ is an $\infty$-category where every morphism is invertible, then $\cC$ is categorically equivalent to a Kan complex.
 \end{exercise}
+
+\begin{proof}
+    Let's take the Kan model structure on $sSet$ where cofibrations are levelwise injective morphisms, fibrations are Kan fibrations and weak equivalence is given by weak homotopy equivalence. In this case we have the following property of inner homomorphism $\mathrm{Fun}$;\\
+    Suppose that $i \colon A \to B$ is a  cofibration and $p \colon X \to Y$ is a Kan fibration. Then, we have a natural Kan fibration;
+    \[ q \colon \mathrm{Fun}(B,X) \to 
+    \mathrm{Fun}(A,X) \times_{\mathrm{Fun}(A,Y)} \mathrm{Fun}(B,Y) \]
+    
+    In particular, if either $i$ or $p$ is a weak equivalence, then $q$ is a trivial fibration. \\
+    
+    In order to apply this proposition, we need a few observation. First, the fibrant replacement $\cC \to \tilde{\cC}$ is indeed a cofibrant replacement because every object in $sSet$ is cofibrant. Also, given $\cD$, we can take the Kan complex $\cD^{\simeq}$ spanned by equivalence in $\cD$ as in Exercise 1.3.7. Since $\tilde{\cC}$ is a Kan complex, we get the equivalence $\Fun(\tilde{\cC}, \cD) \simeq \Fun(\tilde{\cC}, \cD^{\simeq})$. Now we can apply the above proposition. Take $A=\cC$, $B=\tilde{\cC}$, $X=\cD^{\simeq}$, and $Y=*$. Clearly, $i$ is a weak equivalence. Thus we get the following,
+    \[ \begin{tikzcd}
+		\Fun(\tilde{\cC},\cD) \arrow{r}{\simeq} & \Fun(\tilde{\cC},\cD^{\simeq}) \arrow{d}{q} & {} \\
+		{} & \Fun(\cC, \cD^{\simeq}) &\subseteq \Fun(\cC, \cD) 
+	\end{tikzcd} \]
+	where $q$ is a weak equivalence. It tells us that the composition is fully faithful and its essential image is $\Fun(\cC, \cD^{\simeq}$. Namely, it is spanned by those morphisms $f:\cC \to \cD$ that send every morphism in $\cC$ into an equivalence in $\cD$. In particular, if $\cC$ is an $\infty$-category where every morphism is invertible, then $\cC \simeq \tilde{\cC}$ hence categorically equivalent to a Kan complex.
+\end{proof}
 
 \begin{exercise}
 	Let $\cC$ be an $\infty$-category and let $S$ be a (small) collection of arrows in $\cC$.
