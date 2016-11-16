@@ -52,6 +52,7 @@
 \newtheorem{thm}{Theorem}[section]
 \newtheorem*{thm*}{Theorem}
 \newtheorem{lem}[thm]{Lemma}
+\newtheorem*{lem*}{Lemma}
 \newtheorem{prop}[thm]{Proposition}
 \newtheorem{conj}[thm]{Conjecture}
 \newtheorem{cor}[thm]{Corollary}
@@ -203,14 +204,16 @@ The algorithm produces unique fillers for all horns, so in particular simplicial
 	In particular, deduce that $\mathrm{cosk}_0(S)$ is a Kan complex.
 \end{exercise}
 
-\begin{proof}
+\ifpersonal
+\begin{proof}[solution]
     Recall the definition. Let $tr_{\leq n}:sSet \to sSet_{\leq n}$ be a truncation functor. It has both left adjoint $sk_n$ and right adjoint $cosk_n$ given by left and right Kan extension, respectively. We call $sk_n \circ tr_{\leq n}$ a n-skeleton functor between $sSet$, and $cosk_n \circ tr_{\leq n}$ a n-cosckeleton functor. For the notational convenience, we just denote them by $sk_n$ and $cosk_n$, respectively. \\
     By definition, for every simplicial set $T$, we have an isomorphism 
     \[Hom_{sSet}(T, cosk_n(S)) \simeq Hom_{sSet_{\leq n}}(tr_{\leq n}T, S)\]
     Thus, it suffices to show that there exists a map 
     \[Hom_{sSet_{\leq n}}(\Lambda^m_i, S) \to Hom_{sSet_{\leq n}}(\Delta^m, S)\]
-    for every $m \geq n$ and every $0 \leq i \leq m$. It follows from the fact that $S$ is discrete(i.e. Kan complex) and bijectivity of trucation maps. \todo{explain more}
+    for every $m \geq n$ and every $0 \leq i \leq m$. It follows from the fact that $S$ is discrete(i.e. Kan complex) and bijectivity of trucation maps. 
 \end{proof}
+\fi
 
 \section{$\infty$-categories}
 
@@ -240,23 +243,28 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 	(Hint: have a look at Exercises \ref{ex:coskeleton_Kan_complex} and \ref{ex:eveloping_groupoid}.)
 \end{exercise}
 
-\begin{proof}
-    Note that $cosk_n$ is right adjoint to $sk_n$. It follows that $j:\Delta^1 \to S^{\infty}$ is well defined. First, we prove that $f:X \to Y$ is an equivalence if and only if the above lifting problem has at least one solution. By Exercise 1.2.5, $cosk_0(\{0,1\})=S^{\infty}$ is a Kan complex. It means that if we choose Kan model structure on $sSet$, $S^{\infty}$ is a fibrant object. Similar to the exercise 1.3.4, we can say that $j:\Delta^1 \to S^{\infty}$ is a fibrant replacement in $sSet$. It follows from exercise 1.3.4 that we have a functor of $\infty$-categories 
-    \[ Fun(S^{\infty}, \cC) \to Fun(\Delta^1, \cC)\]
+\ifpersonal
+\begin{proof}[Solution] 
+    Note that $cosk_n$ is right adjoint to $sk_n$. It follows that $j:\Delta^1 \to S^{\infty}$ is well defined. First, we prove that $f:X \to Y$ is an equivalence if and only if the above lifting problem has at least one solution. By \ref{ex:coskeleton_Kan_complex}, $cosk_0(\{0,1\})=S^{\infty}$ is a Kan complex. It follows that if we choose Kan model structure on $sSet$, $S^{\infty}$ is a fibrant object. Similar to \ref{ex: internal rectification}, we can say that $j:\Delta^1 \to S^{\infty}$ is a fibrant replacement in $sSet$. It follows from \ref{ex:eveloping_groupoid} that we have a functor of $\infty$-categories 
+    \[ \Fun(S^{\infty}, \cC) \to \Fun(\Delta^1, \cC)\]
     which is fully faithful. Also its essential image is spanned by those morphisms $f:\Delta^1 \to \cC$ that send every morphism in $\Delta^1$ into an equivalence in $\cC$. Therefore, $f:X \to Y$ is an equivalence iff $e_f:\Delta^1 \to \cC$ satisfies the above condition iff there exists a map from $S^{\infty} \to \cC$ commuting the above diagram. \\
-    Second, we need to show that any two such solution are homotopic. Due to fully faithfulness of the above $\infty$-functor, such two solutions should be isomorphic in the homotopy category of $Fun(S^{\infty}, \cC)$, implying that they are homotopic.
+    Second, we need to show that any two such solutions are homotopic. Due to-fully faithfulness of the above $\infty$-functor, such two solutions should be isomorphic in the homotopy category of 
+    $\Fun(S^{\infty}, \cC)$, implying that they are homotopic.
 \end{proof}
+\fi
 
-\begin{exercise}
+\begin{exercise}\label{ex:categorical equivalence}
 	In \cite{HTT} a functor of $\infty$-categories $f \colon \cC \to \cD$ is said to be a \emph{categorical equivalence} if and only if the induced functor $\mathfrak C[f] \colon \mathfrak C[\cC] \to \mathfrak C[\cD]$ is an equivalence of simplicial categories.
 	Show that $f$ is a categorical equivalence if and only if it is fully faithful and essentially surjective.
 \end{exercise}
 
-\begin{proof}
+\ifpersonal
+\begin{proof}[Solution]
     By definition, $f \colon \cC \to \cD$ is a categorical equivalence if and only if the induced functor $\mathfrak C[f] \colon \mathfrak C[\cC] \to \mathfrak C[\cD]$ is an equivalence of simplicial categories if and only if, by definition, the induced functor $h\mathfrak C[f] \colon h\mathfrak C[\cC] \to h\mathfrak C[\cD]$ on the homotopy level is an equivalence. Also, $h\cC \simeq h\mathfrak C[\cC]$ and this correspondence is functorial. Note that a $\infty$-functor $f$ is defined to be fully faithful(or essentially surjective) if $hf$ is. Thus, it suffices to show that $hf$ is an equivalence iff it is fully faithful and essentially surjective which is obvious.
 \end{proof}
+\fi
 
-\begin{exercise}
+\begin{exercise} \label{ex: internal rectification}
 	Let $E$ denote the walking isomorphism (i.e.\ the $1$-category with two objects and an isomorphism between them).
 	Recall the definition of $S^\infty$ from the previous exercise.
 	Show that there is a canonical map $E \to S^\infty$ and that this is a categorical equivalence.
@@ -266,20 +274,23 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 	(This is a very simple example of what an ``internal rectification theorem'' looks like.)
 \end{exercise}
 
-\begin{proof}
-    Similar to the proof of Exercise 1.3.2, it is a consequence Exercise 1.4.1. We can identify $E$ with $\{0,1\}$. The canonical map $E$ is given by one characterized by the identity map $\{0,1\} \to \{0,1\}$. \todo{Categorical equivalence}
-    For the categorical equivalence between $\Fun(S^\infty, \cC), \Fun(E, \cC)$, it suffices to show that the given $\infty$-functor is essentially surjective by the virtue of Exercise 1.3.3. We already know that the essential image is spanned by a functor $f:E \to \cC$ that send every morphism in $E$ to an equivalence in $\cC$. Since there is only one morphism, $id:\{0,1\} \to \{0,1\}$ which must be sent to the identity map. Therefore, $\Fun(S^\infty, \cC), \Fun(E, \cC)$ are categorical equivalent.
+\ifpersonal
+\begin{proof}[solution]
+    Similar to the proof of Exercise 1.3.2, it is a consequence Exercise 1.4.1. We can identify $E$ with $\{0,1\}$. The canonical map $E \to S^{\infty}$ is characterized by the identity map $\{0,1\} \to \{0,1\}$. It is categorical equivalence because we $S^{\infty}$ is a Kan complex. 
+    For the categorical equivalence between $\Fun(S^\infty, \cC)$ and $\Fun(E, \cC)$, it suffices to show that the given $\infty$-functor is essentially surjective by the virtue of \ref{ex:categorical equivalence}. We already know that the essential image is spanned by a functor $f:E \to \cC$ that send every morphism in $E$ to an equivalence in $\cC$. Since there is only one morphism, $id:\{0,1\} \to \{0,1\}$ which must be sent to the identity map. Therefore, $\Fun(S^\infty, \cC), \Fun(E, \cC)$ are categorical equivalent.
 \end{proof}
+\fi
 
 \begin{exercise}
 	Let $\cC$ be an $\infty$-category.
 	Let $S_0$ be a collection of \emph{objects} in $\cC$.
-	Let $\cC_0$ be the smallest full subsimplicial set of $\cC$ containing $S_0$ (explicitly, an $n$-simplex $\sigma \colon \Delta^n \to \cC$ belongs to $\cC$ if and only if for every morphism $\Delta^0 \to \Delta^n$ the composition $\Delta^0 \to \Delta^n \xrightarrow{\sigma} \cC$ belongs to $S_0$.)
+	Let $\cC_0$ be the smallest full subsimplicial set of $\cC$ containing $S_0$ (explicitly, an $n$-simplex $\sigma \colon \Delta^n \to \cC$ belongs to $\cC_0$ if and only if for every morphism $\Delta^0 \to \Delta^n$ the composition $\Delta^0 \to \Delta^n \xrightarrow{\sigma} \cC$ belongs to $S_0$.)
 	Show that $\cC_0$ is an $\infty$-category.
 	Furthermore, show that the inclusion $\cC_0 \hookrightarrow \cC$ of simplicial sets is a fully faithful functor of $\infty$-categories.
 \end{exercise}
 
-\begin{proof}
+\ifpersonal
+\begin{proof}[solution]
     First, we show that $\cC_0$ is $\infty$ category. It suffices to show that for every $n$ and every $0<i<n$, there exists a map $\Delta^n \to \cC$ commuting the following diagram where $\sigma:\Lambda^n_i \to \cC$ belongs to $\cC_0$. Since $\cC$ is $\infty$-category, there exists a map $\tilde{\sigma}:\Delta^n \to \cC$ commuting the diagram. Now, it is enough to show that $\tilde{\sigma}$ belongs to $\cC_0$. Consider the following commutative diagram.
     \[ \begin{tikzcd}
 		\Delta^0 \arrow{r} \arrow{dr} & \Lambda^n_i \arrow{r}{\sigma} \arrow[hook]{d} & \cC \\
@@ -287,9 +298,9 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 	\end{tikzcd} \]
 	Note that the left triangular diagram commutes since maps from $\Delta^0$ are canonically chosen. Therefore, $\tilde{\sigma}$ belongs to $\cC_0$. \\
 	\todo{Show that the inclusion is fully faithful}\\
-	idea: homotopy level; directly??
 	
 \end{proof}
+\fi
 
 \begin{exercise}
 	Let $\cC$ be an $\infty$-category.
@@ -299,11 +310,12 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 	X \arrow{ur}{f} \arrow{rr}{h} & & Z
 	\end{tikzcd} \]
 	is $\cC$, if $f$ and $g$ belong to $S_0$ then so does $h$.
-	Let $\cC_0$ be the smallest full subsimplicial set of $\cC$ containing $S_0$ (explicitly, an $n$-simplex $\sigma \colon \Delta^n \to \cC$ belongs to $\cC$ if and only if for every morphism $\Delta^1 \to \Delta^n$ the composition $\Delta^1 \to \Delta^n \xrightarrow{\sigma} \cC$ belongs to $S_0$).
+	Let $\cC_0$ be the smallest full subsimplicial set of $\cC$ containing $S_0$ (explicitly, an $n$-simplex $\sigma \colon \Delta^n \to \cC$ belongs to $\cC_0$ if and only if for every morphism $\Delta^1 \to \Delta^n$ the composition $\Delta^1 \to \Delta^n \xrightarrow{\sigma} \cC$ belongs to $S_0$).
 	Show that $\cC_0$ is an $\infty$-category.
 \end{exercise}
 
-\begin{proof}
+\ifpersonal
+\begin{proof}[solution]
     Similar to the proof of Exercise 1.3.5, we show that $\cC_0$ is $\infty$-category by diagram chasing. We replace $\Delta^0$ in Exercise 1.3.5, by $\Delta^1$ and show that the following diagram commutes for every $n$ and every $0<i<n$;
     \[ \begin{tikzcd}
 		\Delta^1 \arrow{r} \arrow{dr} & \Lambda^n_i \arrow{r}{\sigma} \arrow[hook]{d} & \cC \\
@@ -321,13 +333,15 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 	\end{tikzcd} \]
 	Note that $\tilde{\sigma} \circ j':\Delta^1 \to \cC$ corresponds to $X \xrightarrow{h} Z$. Since $f, g$ are in $S_0$ by assumption and $S_0$ is closed under composition, $\tilde{\sigma} \circ j':\Delta^1 \to \cC$ belongs to $S_0$. Thus, $\cC_0$ is an $\infty$-category. 
 \end{proof}
+\fi
 
-\begin{exercise}
+\begin{exercise}\label{ex:Kan_complex}
 	Let $\cC$ be an $\infty$-category. Show that the collection of equivalences in $\cC$ is closed under composition, in the sense of the previous exercise.
 	Let $\cC^{\simeq}$ be the $\infty$-subcategory of $\cC$ spanned by equivalences in $\cC$.
 	Show that $\cC^{\simeq}$ is a Kan complex.
 \end{exercise}
 
+\ifpersonal
 \begin{proof}
     Let $S_0$ be a collection of equivalences in $\cC$. Suppose we have 2-simplex
     \[ \begin{tikzcd}
@@ -335,11 +349,11 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 	X \arrow{ur}{f} \arrow{rr}{\phi} & & Z
 	\end{tikzcd} \]
 	where $X,Y,Z$ are objects of $\cC$ and $f:X \to Y, g:Y \to Z$ are equivalence in $\cC$. Remind that $f:X \to Y$ is an equivalence if the induced map $hf:hX \to hY$ is an isomorphism in $h\cC$. Since $g \circ f:X \to Z$ is homotopy equivalent to $\phi:X \to Z$ and $h(g\circ f)=hg\circ hf$ is an isomorphism, $\phi:X \to Z$ is an equivalence. Thus, $S_0$ is closed under composition.\\
-	Note that for any $\infty$-category $\cD$, $\cD$ is a Kan complex if and only if $\cD$ is an $\infty$-groupoid. \todo{reference-Lurie 1.2.5.1}
+	Note that for any $\infty$-category $\cD$, $\cD$ is a Kan complex if and only if $\cD$ is an $\infty$-groupoid. \cite[Theorem 1.2.5.1]{HTT}
 	Clearly, $\cC^{\simeq}$ is an $\infty$-groupoid because its homotopy category $h\cC^{\simeq}$ is a groupoid. Therefore, $\cC^{\simeq}$ is a Kan complex. 
-	\todo{remark that we can prove this by following the definition. Similar to fill in the horn in exercise 1.2.?}
-    
+	
 \end{proof}
+\fi
 
 \section{Localization of $\infty$-categories}
 
@@ -353,21 +367,22 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 	Deduce that if $\cC$ is an $\infty$-category where every morphism is invertible, then $\cC$ is categorically equivalent to a Kan complex.
 \end{exercise}
 
-\begin{proof}
-    Let's take the Kan model structure on $sSet$ where cofibrations are levelwise injective morphisms, fibrations are Kan fibrations and weak equivalence is given by weak homotopy equivalence. In this case we have the following property of inner homomorphism $\mathrm{Fun}$;\\
+\ifpersonal
+\begin{proof}[solution]
+    Let's take the Kan model structure on $sSet$ where cofibrations are levelwise injective morphisms, fibrations are Kan fibrations and weak equivalence is given by weak homotopy equivalence. In this case we have the following property of inner homomorphism $\Fun$;\\
     Suppose that $i \colon A \to B$ is a  cofibration and $p \colon X \to Y$ is a Kan fibration. Then, we have a natural Kan fibration;
     \[ q \colon \mathrm{Fun}(B,X) \to 
     \mathrm{Fun}(A,X) \times_{\mathrm{Fun}(A,Y)} \mathrm{Fun}(B,Y) \]
-    
-    In particular, if either $i$ or $p$ is a weak equivalence, then $q$ is a trivial fibration. \\
-    
-    In order to apply this proposition, we need a few observation. First, the fibrant replacement $\cC \to \tilde{\cC}$ is indeed a cofibrant replacement because every object in $sSet$ is cofibrant. Also, given $\cD$, we can take the Kan complex $\cD^{\simeq}$ spanned by equivalence in $\cD$ as in Exercise 1.3.7. Since $\tilde{\cC}$ is a Kan complex, we get the equivalence $\Fun(\tilde{\cC}, \cD) \simeq \Fun(\tilde{\cC}, \cD^{\simeq})$. Now we can apply the above proposition. Take $A=\cC$, $B=\tilde{\cC}$, $X=\cD^{\simeq}$, and $Y=*$. Clearly, $i$ is a weak equivalence. Thus we get the following,
+  
+    In particular, if either $i$ or $p$ is a weak equivalence, then $q$ is a trivial fibration.
+    In order to apply this proposition, we need a few observation. First, the fibrant replacement $\cC \to \tilde{\cC}$ is indeed a cofibrant replacement because every object in $sSet$ is cofibrant. Also, given $\cD$, we can take the Kan complex $\cD^{\simeq}$ spanned by equivalence in $\cD$ as in \ref{ex:Kan_complex}. Since $\tilde{\cC}$ is a Kan complex, we get the equivalence $\Fun(\tilde{\cC}, \cD) \simeq \Fun(\tilde{\cC}, \cD^{\simeq})$. Now we can apply the above proposition. Take $A=\cC$, $B=\tilde{\cC}$, $X=\cD^{\simeq}$, and $Y=*$. Clearly, $i$ is a weak equivalence. Thus we get the following,
     \[ \begin{tikzcd}
 		\Fun(\tilde{\cC},\cD) \arrow{r}{\simeq} & \Fun(\tilde{\cC},\cD^{\simeq}) \arrow{d}{q} & {} \\
-		{} & \Fun(\cC, \cD^{\simeq}) &\subseteq \Fun(\cC, \cD) 
+		{} & \Fun(\cC, \cD^{\simeq}) \arrow[hook]{r} & \Fun(\cC, \cD) 
 	\end{tikzcd} \]
 	where $q$ is a weak equivalence. It tells us that the composition is fully faithful and its essential image is $\Fun(\cC, \cD^{\simeq}$. Namely, it is spanned by those morphisms $f:\cC \to \cD$ that send every morphism in $\cC$ into an equivalence in $\cD$. In particular, if $\cC$ is an $\infty$-category where every morphism is invertible, then $\cC \simeq \tilde{\cC}$ hence categorically equivalent to a Kan complex.
 \end{proof}
+\fi
 
 \begin{exercise}
 	Let $\cC$ be an $\infty$-category and let $S$ be a (small) collection of arrows in $\cC$.
@@ -513,6 +528,17 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 	commutes with filtered colimits.
 \end{exercise}
 
+\ifpersonal
+\begin{proof}[solution]
+For any commutative $k$ algebra $A$ and filtered direct limit $B=\varinjlim_{i}B_{i}$, we get the following canonical map\[\varinjlim_{i}\Hom(A,B_i) \to \Hom(A, \varinjlim_{i}B_i)= \Hom(A,B) \]
+If $A=k$, then this map is isomorphism by the definition. Also, both functors $\varinjlim_{i}\Hom(-,B_i)$ and $\Hom(-, \varinjlim_{i}B_i)$ commutes with finite direct sum, this map is isomorphism when $A=k^n$ for any $n>0$.
+Let's assume that $A$ is finitely presented(i.e. there exists an exact sequence $k^n \to k^m \to A$ for some $n,m>0$). Since two functors introduced above are left exact, the five lemma tells us that \[\varinjlim_{i}\Hom(A,B_i) \to \Hom(A, \varinjlim_{i}B_i)\] is bijective. Thus, $A$ is compact.\\
+Conversely, assume that $A$ is a compact object. Since $A$ can be written as a filtered colimit of finitely presented $k$ algebras $\{A_i\}$, we get the following bijection.
+\[\varinjlim_{i}\Hom(A,A_i) \to \Hom(A, \varinjlim_{i}A_i)= \Hom(A,A) \] In particular, the identity map $A \to A$ factors through $A_i \to A$ for sufficiently large $i$. It implies that $A$ is a direct summand of finitely presented $k$ algebra $A_i$ for such $i$, hence fintely presented.
+
+\end{proof}
+\fi
+
 \begin{exercise}
 	Let $A \in \mathrm{sCAlg}_k$ and let $M \in A\Mod^{\le 0}$.
 	Show that the diagram
@@ -522,6 +548,22 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 	\end{tikzcd} \]
 	is a (homotopy) pushout square (where the two maps $\Sym_A(M) \to A$ are both classified by the zero map $M \to A$, and where both the maps $A \to \Sym_A(M[1])$ are the structure morphisms).
 \end{exercise}
+
+\ifpersonal
+\begin{proof}[solution]
+    Let $\mathrm{Sym}$ be a left adjoint functor of the natural forgetful fuctof $F: A-\mathrm{Alg} \to A\Mod$. Since $A\Mod^{\leq 0} \subset A\Mod$ which is a stable $\infty$ category, we have a pushout diagram as follows;
+    
+    \[ \begin{tikzcd}
+        M \arrow{r} \arrow{d} & 0 \arrow{d} \\
+        0 \arrow{r} & M[1]
+    \end{tikzcd} \]
+    Since $\mathrm{Sym}:A\Mod \to A-\mathrm{Alg}$ preserves colimits, the image of the above diagram under $\mathrm{Sym}$ becomes a pushout diagram. By construction, this image is as follows.
+    \[ \begin{tikzcd}
+		\Sym_A(M) \arrow{r} \arrow{d} & A \arrow{d} \\
+		A \arrow{r} & \Sym_A(M[1])
+	\end{tikzcd} \]
+\end{proof}
+\fi
 
 \begin{exercise}
 	Let $A \in \mathrm{sCAlg}_k$ and let $M \in A \Mod^{\le 0}$.
@@ -533,6 +575,18 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 	\end{tikzcd} \]
 	is a homotopy pullback, where $d_0 \colon A \to A \oplus M[1]$ is the morphism classifying the zero derivation.
 \end{exercise}
+
+\ifpersonal
+\begin{proof}[Solution]
+    Note that $A\oplus M$ is the image of $M$ under $\Omega^{\infty}:A\Mod \to \mathrm{sCAlg}_k$. Since $d_0 \colon A \to A \oplus M[1]$ is the morphism classifying the zero derivation, we get the following pullback square(because of stability) in $A\Mod$
+    \[ \begin{tikzcd}
+		M \arrow{r} \arrow{d} & 0 \arrow{d} \\
+		0 \arrow{r} & M[1]
+	\end{tikzcd} \]
+	Since the functor $\Omega^{\infty}$ preserves small limit, it preserves pullback squares. Therefore, the above diagram is a homotopy pullback square.
+
+\end{proof}
+\fi
 
 \section{Modules}
 
@@ -550,6 +604,13 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 	commutes with filtered colimits.
 \end{exercise}
 
+\ifpersonal
+\begin{proof}[solution] \todo{not sure}
+First, assume that $M \in A \Modh$ is finitely presented. Consider the inclusion functor $i:A\Modh \to A-Mod^{cn}$. Then $i(M)$ is perfect $A$ module by the characterizaion of perfect modules, hence compact object in $A-Mod^{cn}$. Since $i$ preserves filtered colimit, the right adjoint functor $\tau_{\leq0}:A-Mod^{cn} \to A\Modh$ preserves compact objects. Thus, $M=\tau_{\leq0}(i(M))$ is a compact object in $A\Modh$.\\
+Converse is trivial?
+\end{proof}
+\fi
+
 \section{Cotangent complex}
 
 \begin{exercise}
@@ -561,6 +622,47 @@ fillers for all inner horns, which is the definition of $\infty$-categories.
 		\item $k \to k[X,Y] / (Y^3 - X^2)$.
 	\end{enumerate}
 \end{exercise}
+
+\ifpersonal
+\begin{proof}[Solution1]
+    \begin{lem*}
+        Let $f:A \to B$ be a surjective ring map whose kernel $I$ is generated by a regular sequence. Then, $\mathbb{L}_{B/A}$ is quasi isomorphic to $I/{I^2}[1]$
+    \end{lem*}
+    Since $\varepsilon$ is of degree 0 we can apply the above lemma to the map $k[\varepsilon] \to k[\varepsilon](\varepsilon^2)/{\varepsilon^4}$. Then we get $\mathbb{L}_{k[\varepsilon]/{\varepsilon^2}/k[\varepsilon]}=k[\varepsilon]{\varepsilon^2}/{\varepsilon^4}[1]$ by considering the map. Note that $\mathbb{L}_{k[\varepsilon]/k}=k[\varepsilon] \otimes_k k$ because $k[\varepsilon]=\mathrm{Sym}_k(k)$. Now, let's consider the sequence of map $k \to k[\varepsilon] \to k[\varepsilon]/{\varepsilon^2}$ where the first map is canonical inclusion and the second one is given as above. It induces a homotopy cofiber sequence 
+    \[\mathbb{L}_{k[\varepsilon]/k} \otimes_{k[\varepsilon]} k[\varepsilon]/{\varepsilon^2} \to \mathbb{L}_{k[\varepsilon]/{\varepsilon^2}/k} \to \mathbb{L}_{k[\varepsilon]/{\varepsilon^2}/k[\varepsilon]}\]
+    By the induced long exact sequence of the above homotopy cofiber, we get the following exact sequence.
+    \[\cdots \to 0 \to H^{-1}(\mathbb{L}_{k[\varepsilon]/{\varepsilon^2}/k}) \to (\varepsilon^2)k[\varepsilon]/(\varepsilon^4) \xrightarrow{\phi} <d\varepsilon>k[\varepsilon]/\varepsilon^2 \to H^0(\mathbb{L}_{k[\varepsilon]/{\varepsilon^2}/k}) \to 0 \to \cdots\]
+    where $\phi$ is the connecting homomorphism which is defined as a derivation. (i.e. $\phi(p(\varepsilon))=d(p(\varepsilon))$ where $p(\varepsilon) \in k[\varepsilon]({\varepsilon}^2)/({\varepsilon}^4)$ and $d$ is usual derivative. So, we can say that $\mathbb{L}_{k[\varepsilon]/\varepsilon^2/k} \cong (\varepsilon^2)k[\varepsilon]/(\varepsilon^4) \xrightarrow{\phi} k[\varepsilon]/\varepsilon^2$. \\
+    Moreover, we can compute  $H^{-1}(\mathbb{L}_{k[\varepsilon]/{\varepsilon^2}/k})$ and $H^{0}(\mathbb{L}_{k[\varepsilon]/{\varepsilon^2}/k})$ which corresponds to $\ker{\phi}$ and $\mathrm{coker}{\phi}$, respectively.
+    \[ H^{-1}(\mathbb{L}_{k[\varepsilon]/{\varepsilon^2}/k})=\ker{\phi}=<\varepsilon^3>k[\varepsilon](\varepsilon^2)/(\varepsilon^4) \cong k, \
+    H^{0}(\mathbb{L}_{k[\varepsilon]/{\varepsilon^2}/k})=\mathrm{coker}\phi=<d\varepsilon>k[\varepsilon]/\varepsilon^2/(2\varepsilon d\varepsilon) \cong k \] 
+    
+    \rem For the later use, especially classifying the square zero extensions, it would be convenient to take a cofibrant model for $\mathbb{L}_{k[\varepsilon]/{\varepsilon^2}/k}$. 
+    (i.e.quasi-free $k[\varepsilon]/{\varepsilon^2}$-modules.)
+    
+    \rem We can play the same game for $k[\varepsilon]\varepsilon^n$ for any $n>0$. However, the result is different. $\mathrm{H}^{-1}(\mathbb{L}_{k[\varepsilon]/\varepsilon^n/k}) \cong k[\varepsilon](\varepsilon^{n+1})/\varepsilon^{2n}$ and $\mathrm{H}^0(\mathbb{L}_{k[\varepsilon]/\varepsilon^n/k}) \cong <d\varepsilon>k[\varepsilon]/(\varepsilon^n)/\varepsilon^{n-1}d\varepsilon$
+\end{proof}
+
+\begin{proof}[Solution2]
+    
+    We can apply the above lemma to the map $k[X,Y] \to k[X,Y] / (Y^3 - X^2)$. So, 
+    \[\mathbb{L}_{{k[X,Y] / (Y^3 - X^2)} / k[X,Y]}= k[X,Y](Y^3 - X^2)/(Y^3 - X^2)^2[1]\]
+    
+\end{proof}
+
+\begin{proof}[Solution3]
+    \begin{lem*}
+    Let $A, B$ be Tor-independent $R$ algebra where $R$ is a commutative ring. Then the cotangent complex $\mathbb{L}_{{A \otimes_R B}/R}$ of $A \otimes_{R} B$ over $R$ is $\mathbb{L}_{A/R} \otimes_R B \oplus \mathbb{L}_{B/R} \otimes_R A$
+    \end{lem*}
+    Let's consider a sequence of maps $k \xrightarrow{i} k[X,Y] \to k[X,Y]/(Y^3-X^2)$ where $i$ is canonical inclusion. It gives the following homotopy cofiber sequence
+    \[ \mathbb{L}_{k[X,Y]/k} \otimes_{k[X,Y]} k[X,Y]/(Y^3-X^2) \to \mathbb{L}_{k[X,Y]/(Y^3-X^2)/k} \to \mathbb{L}_{k[X,Y]/(Y^3-X^2)/k[X,Y]}\]
+    The last term is given in solution 2. Since $k[X,Y]=k[x] \otimes_k k[Y]$, we can apply the lemma to get the first term. So, $\mathbb{L}_{k[X,Y]/k} \otimes_{k[X,Y]} k[X,Y]/(Y^3-X^2)=<dX, dY>k[X,Y]/(Y^3-X^2)$. Similar to the first problem , we get 
+    \[\mathbb{L}_{k[X,Y]/(Y^3-X^2)/k}= \cdots \to 0 \to k[X,Y](Y^3 - X^2)/(Y^3 - X^2)^2 \xrightarrow{\phi} 
+    <dX, dY>k[X,Y]/(Y^3-X^2)\to 0 \to \cdots\]
+    where $\phi(f)=df$ for any $f \in k[X,Y](Y^3-X^2)/(Y^3-X^2)^2$\\
+    Moreover, $\mathrm{H}^{-1}(\mathbb{L}_{k[X,Y]/(Y^3-X^2)/k}) =\ker{\phi} \cong 0, \ \mathrm{H}^0(\mathbb{L}_{k[X,Y]/(Y^3-X^2)/k})=\mathrm{coker}{\phi} \cong <dX,dY>k[X,Y]/(y^3-X^2)/(3Y^2dY-2XdX)$
+\end{proof}
+\fi
 
 \begin{exercise}
 	Find all the square-zero extensions (up to homotopy) of $R \coloneqq k[\varepsilon] / (\varepsilon^2)$ by $k \simeq R / (\varepsilon)$.
