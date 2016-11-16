@@ -106,7 +106,7 @@ i.e. infinitesimal formal moduli problems. Brackets then allow the complete reco
 The $\infty$-category of rational homotopy types is equivalent to that of dgLie algebras over $\Q$, concentrated in
 positive degrees:
 \[	S_*^{\text{rat}} \cong \text{dgLie}_{\Q}^{\geq 1}	\] 
-This statement is related to item \ref{item:formal_moduli}: Lurie gives nice proof using formal moduli problems, see 
+This statement is related to item \ref{item:formal_moduli}: Lurie gives a nice proof using formal moduli problems, see 
 \cite{DAG-XIII}.
 
 \item To $X \in \Sch_k$, we associate its derived category of quasi-coherent sheaves, $D(X) = D(QCoh(X))$. 
@@ -148,20 +148,20 @@ about isomorphisms in $\cS et$. Classically one solves this problem by replacing
 1-homotopy types.
 \[
 \begin{tikzcd}
-\; & & \cG pd \cong \cS^{\leq 1}\arrow{d} \\
+\; & & \cG pd \cong \cS^{\leq 1} \\
 \cA ff^{\op}\arrow{urr}{\text{stacks}}\arrow[swap]{rr}{\begin{array}{c}\text{naive moduli}\\
-\text{problems}\end{array}} & & \cS et \cong \cS^{\leq 0}
+\text{problems}\end{array}} & & \cS et \cong \cS^{\leq 0}\arrow[hook]{u}
 \end{tikzcd}
 \]
 We can define higher stacks by extending the tower to higher homotopy types, and ultimately to the category of spaces.
 \[
 \begin{tikzcd}
-\; & &  \cS\arrow{d} \\
-\; & &  \vdots\arrow{d} \\
-\; & &  \cS^{\leq 1}\arrow{d} \\
+\; & &  \cS \\
+\; & &  \vdots\arrow[hook]{u} \\
+\; & &  \cS^{\leq 1}\arrow[hook]{u} \\
 \cA ff^{\op}\arrow{uuurr}{\begin{array}{c}\text{higher}\\\text{stacks}\end{array}}
 \arrow{urr}{\text{stacks}}\arrow[swap]{rr}{\begin{array}{c}\text{naive moduli}\\\text{problems}\end{array}} & & 
-\cS et \cong \cS^{\leq 0}
+\cS et \cong \cS^{\leq 0}\arrow[hook]{u}
 \end{tikzcd}
 \]
 In later talks, we'll
@@ -175,9 +175,20 @@ To be attempted in order of desperation:
 \item \label{model_indep} 
 Reason model-independently to get a clean proof. The trick is that there are key statements (not proven model
 independently; some are proven by Lurie and can be found in \cite{HTT}) which behave like a ``non-minimal set of axioms''.
-One should learn a roadmap to \cite{HTT}, in order to know where to find these statements.
+One should learn a roadmap to \cite{HTT}, in order to know where to find these statements. (A good start for this roadmap is
+reading \cite{groth}.)
 
-\item Internal rectification. Cut the number of homotopies necessary to define the object. Example: an $\infty$-category with
+\item 
+\label{item:internal_rectification}
+Internal rectification. 
+\textbf{Rectification} is when something is defined up to homotopy, and we try to reduce the necessary homotopies. Suppose we have
+a 1-category
+$\cM$, and consider $\Fun(\Delta^2,\cM)$ and $\Fun(\Delta^2, \infty( \cM))$. The first is defined by specifying 3 objects and 3 morphisms, while
+the second also requires the specification of a 2-morphism. In fact, these are the same as topological spaces due 
+to \cite{HTT} 4.2.4.4. In this case, once the 1-morphisms are specified, the homotopy is defined up to a contractible space of choices, therefore forgetting it gives an equivalence.
+
+Internal rectification is where we do rectification, while working in the setting of $\infty$-categories.
+ Example: an $\infty$-category with
 products, see it as a symmetric monoidal category with products. $Mon_{E_1}(\cC) \simeq Fun^{\times}(\Delta^{\op}, \cC)
 \to Fun(\Delta^{\op}, \cC)$.
 The reference is \cite{Lurie_Higher_algebra}, 4.1.2.6. 
@@ -185,20 +196,17 @@ The reference is \cite{Lurie_Higher_algebra}, 4.1.2.6.
 \item \label{item:real_rectification}
 Try a ``real rectification'' result, i.e. work with a model-categorical presentation. For example, take $\cS$,
 the $\infty$-category
-of spaces, fix $x,y \in X$, want diagram. $\cS = \infty(sSet_{Kan})$. Theorem 4.2.4.1 in \cite{HTT} says that, in this situation, 
-$\infty$-categorical limits correspond to homotopy limits. We use this theorem to show that $Path_X(x,y)$ is the $\infty$-limit
-of the diagram.
+of spaces,  this is the Dwyer--Kan localization of the simplicial model category $sSet_{Kan}$. Suppose we wish to compute the limit (see \cite{groth} \S 2.5) of the functor $N(F)$, where $F$ maps $\cdot \rightarrow \cdot \leftarrow \cdot$ to $\{x\} \rightarrow X \leftarrow \{y\}$ and $N$ denotes the nerve functor, which takes categories to their associated $\infty$ categories. As
+$\infty$-categorical limits correspond to homotopy limits in the model category (by \cite{HTT}, Theorem 4.2.4.1),  $Path_X(x,y)$ is the $\infty$-limit
+of this diagram. See \cite{vezzosi2013autour} for more on model categories and their links to $\infty$-categories.
 
-Rectification: something is defined up to homotopy, and we try to reduce the necessary homotopies. Suppose we have
-$\cM$, compare $Fun(\Delta^2,\cM)$ to $\Fun(\Delta^2, \infty \cM)$. The first one gives 3 objects and 3 morphisms, while
-the other gives a homotopy between composition and the other map. The theorem is that you can forget the homotopy, and
-just remember the data on the LHS. (HTT 4.2.4.4)
+
 \end{enumerate}
 
 In what follows we give examples where we can get by with procedure \ref{model_indep}. 
 
 \begin{defin}
-An $\infty$-cateogry is a simplicial set $\cC$ such that all inner horns have fillers. In other words, for all $0<i<n$,
+An $\infty$-category is a simplicial set $\cC$ such that all inner horns have fillers. In other words, for all $0<i<n$,
 the dotted arrow in the following diagram exists.
 \[
 \begin{tikzcd}
@@ -209,7 +217,7 @@ the dotted arrow in the following diagram exists.
 \end{defin}
 
 Note that this achieves what we want: inner horn fillings act as composition of morphisms, but this composition is not unique. 
-``Higher Topos Theory is the book where all of category theory is carried out without ever talking about composition.'' 
+``Higher Topos Theory \cite{HTT} is the book where all of category theory is carried out without ever talking about composition.'' 
 A few problems arise
 from here:
 
@@ -229,8 +237,8 @@ Let $f: \cC \to \cD$ be an $\infty$-functor between $\infty$-categories. Then th
 is a \textbf{cartesian fibration}. Moreover, a morphism in the source is $\mathcal{P}$-\textbf{cartesian} iff its image in $\cC$ 
 is an \textbf{equivalence}.
 \end{thm}
-Note that the $\infty$-functors $Fun(\cC,\cD)$ are nothing but the internal $\Hom$ in $s\cS et$. 
-\[	Fun(\cC,\cD)_n = s\cS et(\cC \times \Delta^n, \cD)	\]
+Note that the $\infty$-functors $\Fun(\cC,\cD)$ are nothing but the internal $\Hom$ in $s\cS et$. 
+\[	\Fun(\cC,\cD)_n = s\cS et(\cC \times \Delta^n, \cD)	\]
 It's standard to prove that, if $\cC, \cD$ are $\infty$-categories, then so is $\Hom(\cC, \cD)$.
 
 We will spend much of section \ref{sect:cartesian} defining the terms in bold in Theorem \ref{thm:cartesian_fib}. In Example
@@ -245,29 +253,31 @@ We will spend much of section \ref{sect:cartesian} defining the terms in bold in
 $g : x \to y$ in $\cC$ is an \textbf{equivalence} if any of the following equivalent conditions hold.
 \begin{enumerate}[(a)]
 \item \label{item:inverse_fillers}
-The outer horn which maps $01\mapsto g$ and $02 \mapsto 1_x$ has a filler.
+The map $g': \Lambda_0^2 \to \cC$ given by $\{1 \leftarrow 0 \rightarrow 2\} \mapsto \{y \overset{g}{\leftarrow} x 
+\overset{1_x}{\rightarrow} x\}$ admits an extension:
 \[
 \begin{tikzcd}
-\Lambda^2_0 \arrow{r}{g,1_x}\arrow[hook]{d} & \cC \\
+\Lambda^2_0 \arrow{r}\arrow[hook]{d} & \cC \\
 \Delta^2 \arrow[dotted]{ur} & 
 \end{tikzcd}
 \]
-Morally speaking, the restriction of the dotted arrow to the $12$ face is the right inverse of $g$.
+Morally speaking, the restriction of the dotted arrow to the face $12$ of $\Delta^2$ is the right inverse of $g$.
 
-Moreover, the outer horn which maps $12\mapsto g$ and $02 \mapsto 1_y$ has a filler.
+Moreover, the map $g'': \Lambda_2^2 \to \cC$ given by $\{0 \leftarrow 2 \rightarrow 1\} \mapsto \{y \overset{1_y}{\rightarrow} y 
+\overset{g}{\leftarrow} x\}$ admits an extension:
 \[
 \begin{tikzcd}
-\Lambda^2_2 \arrow{r}{1_y,g}\arrow[hook]{d} & \cC \\
+\Lambda^2_2 \arrow{r}\arrow[hook]{d} & \cC \\
 \Delta^2 \arrow[dotted]{ur} & 
 \end{tikzcd}
 \]
-Morally speaking, the restriction of the dotted arrow to the $01$ face is the left inverse of $g$.
+Morally speaking, the restriction of the dotted arrow to the face $01$ of $\Delta^2$ is the left inverse of $g$.
 
 \item \label{item:infinity_sphere}
 The same as variant \ref{item:inverse_fillers}, but with higher homotopies included. Formally, we introduce the
 Kan complex $S^{\infty}$, defined as 0-coskeleton of the discrete simplicial set with 2 vertices. (For more details see
 the exercises \cite{Mauro_Exercises}.)
-We say $g$ is equivalence if there is a lift in the following diagram.
+We say that $g$ is equivalence if there is a lift in the following diagram.
 \[
 \begin{tikzcd}
 \Delta^1 \arrow{r}{g}\arrow[hook]{d} & \cC \\
@@ -282,7 +292,7 @@ We say that $g$ is an equivalence if its image in the homotopy category $h(\cC)$
 \end{defin}
 
 In the definition, going from version \ref{item:infinity_sphere} to version \ref{item:inverse_fillers} of is a rectification result,
-in the sense of procedure \ref{item:real_rectification} described above.
+in the sense of procedure \ref{item:internal_rectification} described above.
 
 Next, we recall the notions of cartesian morphism and cartesian fibration in the context of 1-categories.
 \begin{defin}
@@ -334,7 +344,7 @@ Theorem 3.2.0.1, the main theorem of Chapter 3 in \cite{HTT}, is the analog of t
 \label{thm:cartesian_equiv}
 For any $\infty$-category $\cC$, there is an equivalence of $\infty$-categories:
 \begin{equation}		
-\text{CartesianFibr}/\cC \simeq \Fun(\cC^{op},\Cat_{\infty}).
+\text{CartFib}/\cC \simeq \Fun(\cC^{op},\Cat_{\infty}).
 \end{equation}
 \end{thm}
 
@@ -349,12 +359,12 @@ where a pair $(f : x \to y, a)$ maps to $x$. We recognize the fiber over $x$ as 
 
 Theorem \ref{thm:cartesian_equiv} then produces an $\infty$-functor:
 \begin{align*}
-\cC^{\op} &\to \infty-\cC at \\
+\cC^{\op} &\to \cC at_{\infty} \\
 x & \mapsto \cC_{x/} \\
 f:x\to y & \mapsto f^* : \cC_{y/} \to \cC_{x/}.
 \end{align*}
 We have obtained a pullback map on undercategories. To obtain the pushforward on overcategories, start with $F : \cC^{\op} \to \cC$
-as the contravariant identity functor instead.
+as the contravariant identity functor instead.\todo{we probably want co-cartesian fibrations actually}
 \end{eg}
 
 Next, we discuss a simpler example. Let $\cC$ be an $\infty$-category, and let $x \in \cC$ be an initial object. 
@@ -366,7 +376,7 @@ by giving a good definition.
 $x \in \cC$ \textbf{initial} if $\forall y \in \cC$, $Map_{\cC}(x,y)$ is contractible.
 \end{defin}
 
-The key result, proved, for example, in \cite{Groth}, is the following.
+The key result, proved, for example, in \cite{groth}, is the following.
 \begin{prop}
 If $\cC$ is an $\infty$ category, then $x \in \cC$ is initial iff the canonical projection $\cC_{x/} \to \cC$ is
 a trivial Kan fibration.
@@ -939,7 +949,7 @@ We must be careful with defining morphisms between spectra: we want squares to c
 Moreover, it's hard to get a monoidal model structure on the category of spectra: this was done only in the 2000s, after Hovey 
 introduced symmetric spectra. Lurie has a very categorical and very nice way of putting a monoidal structure 
 at the level of the $\infty$-category
-directly. See the last chapter of \cite{Groth}, and also 4.8.2 of \cite{Lurie_Higher_algebra}.
+directly. See the last chapter of \cite{groth}, and also 4.8.2 of \cite{Lurie_Higher_algebra}.
 \end{rem}
 
 \begin{thm}
@@ -2425,8 +2435,226 @@ $\Map(\mathcal{X}, \Spec A) \simeq \Map(A, \Gamma(\mathcal{O}_{\mathcal{X}}))$.}
 
 
 \section{Functor of points}
-Soon.
+Recall that we defined $^R Top(T_{disc})$ the $\infty$-category of locally ringed $\infty$-topoi. Then we defined the
+full subcategory: $DM-Stacks \subset ^R Top(T_{disc})$ with objects $(\mathcal{X},\mathcal{O}_{\mathcal{X}})$ satisfying:
+there exist objects $U_i \in \mathcal{X}$ such that:
+\begin{enumerate}
+\item $\coprod U_i \to 1_{\mathcal{X}}$ is an effective epimorphism;
+\item $(\mathcal{X}_{/U_i}, \mathcal{O}_{\mathcal{X}/U_i}) \simeq \Spec (A_i)$, for $A_i \in sCRing$.
+\end{enumerate}
 
+Recall also that, if $A \in sCRing$, then $\Spec A$ was defined as:
+\begin{enumerate}
+\item $\mathcal{X}_A = \Sh (A_{et}, \tau_{et})$;
+\item $\mathcal{O}_A : A_{et} \to scRing_k$
+\end{enumerate}
+
+\begin{thm}[DAG-V, Theorem 2.12]
+If $(\mathcal{X},\mathcal{O}_{\mathcal{X}}) \in $ there is a canonical equivalence: \todo{fill in}
+\end{thm}
+
+\begin{cor}
+$\Spec : sCRing_k \to ^R Top^{loc}(T_{disc})$ is fully faithful.
+\end{cor}
+
+\begin{rem}
+If $(\mathcal{X},\mathcal{O}_{\mathcal{X}})$ is a dDM, then it is a derived algebraic space if the following equivalent
+conditions are satisfied:
+\begin{enumerate}
+\item $U_i \to 1_{\mathcal{X}}$ are homotopy monomorphisms (think inclusion of open components) ;
+\item $\mathcal{X}$ is the etale topos of an ordinary algebraic space
+\end{enumerate}
+\end{rem}
+
+\begin{rem}
+There is no internal characterization of schemes, as opposed to algebraic spaces. The reason is that with these definitions
+the underlying $\infty$-topos of $\Spec A$ is 1-localic and not 0-localic. \todo{this means there's an error in Definition 8.3.7}
+\end{rem}
+
+\begin{rem}
+What we called $\Spec$ is usually denoted $\Spec^{\'et}$, as opposed to $\Spec^{Zar}$, defined as $\Spec^{Zar}(A) 
+= (\mathcal{X}_A^{Zar},\mathcal{O}_{A})$, $\mathcal{X}_A^{Zar} = \Sh(A_{Zar}, \tau_{Zar})$.
+\end{rem}
+
+\begin{rem}
+There's a way of taking the topology into account inside $T_{disc}$. That is, there is a modified version of Lawvere theory
+which takes into consideration also the Grothendieck topology. This is called (pre)geometry. It gives extra flexibility
+that allows to freely switch between different topologies. This language is also used in the analytic setting. (Complex or
+non-archimedian.) Then we get \todo{paper}
+More about this in DAG V.
+\end{rem}
+
+
+Now we actually move on to the functor of points. 
+
+Say $\cC$ is a category of (derived) affines. We want to enlarge $\cC$ in order to allow general gluings.
+
+Step 1 would be to add all colimits to $\cC$, i.e. take the $\infty$-category $\PSh(\cC)$. Step 2, realize that this destroyed
+all geometric information in $\cC$. For example, let $X, Y \in \cC$, and suppose the coproduct $Z = X \coprod Y$ exists.
+Then we have $h_X, h_Y, h_Z \in \PSh(\cC)$. Unfortunately, $h_X \coprod h_Y \neq h_Z$. More concretely, take
+$X = Y = \Spec k[x]$. Then $h_X \coprod h_Y = \Map( --, \bbA^1_k) \coprod \Map(--,\bbA^1_k)$. On the other hand, we have
+$h_Z = \Map(--, \bbA^1_k \coprod \bbA^1_k)$. Evaluate everything on $\Spec k \coprod \Spec k$. The first gives a point on
+each line, while the second also includes two points on one of the lines.
+
+\begin{rem}
+``Geometric relations'' is just another name for Grothendieck topology. The best way to explain this is the following lemma.
+\end{rem}
+
+\begin{lem}
+Let $(\cC, \tau)$ be a Grothendieck site. Then $\tau$ is subcanonical (every representable preseheaf is a sheaf) if and only if
+for all $U^{\bullet} \to X$ $\tau$-cover of $X$ in $\cC$, we have $X \cong \colim U^{\bullet}$.
+\end{lem}
+
+\begin{lem}
+Let $(\cC, \tau)$ be a Grothendieck site. Then $\Sh(\cC, \tau)$ has the following universal property:
+\begin{enumerate}
+\item The functor $j:\cC \to \Sh(\cC, \tau)$ sends Cech nerves of $\tau$-covers to colimits.
+\item $j$ is universal with property (1), i.e. for all $\infty$-categories $\cD$ and $\mathcal{F}: \cC \to \cD$ such that
+$\mathcal{F}$ sends Cech nerves of $\tau$-covers to colimits, there exists a unique up to
+homotopy extension \todo{paper}
+\end{enumerate}
+\end{lem}
+
+Step 3: replace $\PSh(\cC)$ with $\Sh(\cC,\tau)$. In our case, $\cC = dAff$, and $\tau = \tau_{\'et}$.
+
+\begin{rem}
+$\tau_{\'et}$ is subcanonical thanks to the descent for $QCoh$ that we discussed.
+\end{rem}
+
+Often in $\cC$ there are many interesting geometric notions (e.g. properness). It's not clear how to translate them for
+random objects in $\Sh(\cC, \tau)$. Therefore we restrict to a full subcategory $Geom(\cC,\tau, \bbP) \subset
+\Sh(\cC, \tau)$, spanned by ``tame objects'', where the geometric notions transport in
+a painless way. The idea is that every sheaf is a colimit of representable ones, but we want to restrict the diagrams which can
+idex the colimit.
+
+The original idea of geometric stack is due to Artin; it has been generalized by Simpson. Before starting, we fix a collection
+of morphisms $\bbP$ in $\cC$, which are $\tau$\textbf{-local}. I.e. for $f: X \to Y$ in $\cC$, $f\in \bbP$ iff
+$\exists Y_i \to Y$ $\tau$ cover, such that $X \times_{Y} Y_i \to Y_i$ is in $\bbP$. \footnote{Actually this is local on target,
+we may also need local on domain.} In our case, $\tau$ is etale and $\bbP$ is smooth morphisms.
+
+\begin{defin}
+\begin{enumerate}
+\item $F \in \Sh(\cC,\tau)$ is (-1)-geometric if it's representable ($F = \Spec^f(A)$, where $f$ stands for functor).
+\item A morphism $f:F\to G$ is (-1)-geometric if for all $X \in \cC$, for all $h_x \to G$, $h_X \times_G F$ is representable.
+\todo{paper}
+\item An $n$-atlas of $F \in \Sh(\cC,\tau)$ is an epimorphism $\pi : U \to F$ where $U$ is (-1)-geometric and $\pi$ is $n-1$-geometric
+and $n-1$ $\bbP$.
+\item $F \in \Sh(\cC,\tau)$ is $n$-geometric if it has an $n$-atlas $F \to F\times F$ is $n-1$-geometric.
+\item $f:F \to G$ is $n-1$-geometric if for all $h_X \to G$, $h_X \times_G F$ is $n$-geometric.
+\end{enumerate}
+\end{defin}
+
+\begin{rem}
+The level is a bit arbitrary: if you start with affine schemes, 0-geometric is algebraic spaces. If you start with schemes,
+0-geometric is classical stacks?
+\end{rem}
+
+\begin{rem}
+Let $F$ be a geometric stack. Then let $\pi : U \to F$ be an $n$-atlas. $U^{\bullet} = \check{C}(U\to F)$ is a groupoid,
+and each level $U^k$ is $n-1$-geometric. Moreover, $|U^{\bullet}| \simeq F$, and the transition morphisms are in $\bbP$.
+
+The converse is also true: given a groupoid where transition morphisms are in $\bbP$, the geometric realization is a geometric
+stack.
+\end{rem}
+
+\begin{rem}
+In $\cC = dAff_k$, it's not necessary to ask $F \to F \times F$ to be $n-1$-geometric.
+\end{rem}
+
+\begin{rem}
+There's always a cheap way of extending geometric properties of morphisms in $\cC$ to analogous properties of geometric
+stacks. This goes by induction. But caution: this is not necessarily the best thing to do, e.g. properness has to be dealt with
+more cleverly. 
+\end{rem}
+
+\begin{rem}
+In the specific case $\cC = dAff_k$, given $F:dAff_k^{\op} \to \cS$, we can associate the composition \todo{paper}. We call this
+\textbf{truncation}. The truncation functor preserves geometric stacks, as well as finite limits. Moreover, $t_0(\Spec(A))
+= \Spec^f(\pi_0(A))$.
+\end{rem}
+
+\begin{rem}
+If $F$ is a derived geometric stack, then in general $F$ is not truncated. For example, take $A = k[x]$, 
+$F = \Spec A$, $F(B) = \Map(\Spec B,\Spec A) = \Map_{sCR_k}(A,B) \cong B$, the underlying topological space of $B$. This can
+be arbitrarily complicated. However, $t_0(F)$ always factors through $\cS^{\leq n}$ for some $n$. More precisely,
+if $F$ is $n$-geometric, then $t_0(F)$ is $n+1$-truncated. The proof is simple, by induction on the geometric level.
+\footnote{In fact, this is how most proofs go for geometric stacks.}
+\end{rem}
+
+\begin{rem}
+When $\bbP$ is smooth, we call $Geom(dAff_k, \tau_{\'et}, smooth)$ \textbf{derived Artin stacks}. When $\bbP$ is \'etale,
+we call $Geom(dAff_k, \tau_{\'et}, et)$ \textbf{Deligne-Mumford stacks}.
+\end{rem}
+
+From now on, we only consider the case $\cC = dAff_k$.
+
+\begin{lem}
+$F \in Geom$, there exists a functor of the form: \todo{paper}, and this is a Morita equivalence.
+\footnote{This means that the categories of sheaves on them are equivalent.} Note that $F_{\'et}$ is the small
+etale site, which considers derived affines mapping into $F$ via \'etale maps.
+\end{lem}
+
+\begin{cor}
+$F \in Geom$, $F$ is $n$-geometric, then $F_{\'et}$ is an $n$-category.
+\end{cor}
+
+\begin{rem}
+$F,G \in Geom_k$. $f :F \to G$. The pullback $f^*: G_{lis-\'et} \to F_{lis-\'et}$ does not induce a geometric morphism
+of topoi. There is an adjunction, but $f^*$ does not preserve finite limits.
+\end{rem}
+
+
+\section{Comparison of approaches}
+
+\begin{thm}
+Let $dDM^{loc}$ be the $\infty$-category of structured derived DM-stacks $(\mathcal{X}, \mathcal{O}_{\mathcal{X}})$, where
+$\mathcal{X}$ is $n$-localic for some $n$. Let $dDM^f := Geom(dAff_k,\tau_{\'et}, \bbP_{\'et})$ be derived DM-stacks. Then 
+there is an equivalence:
+\[	dDM^{loc} \simeq dDM^f	.\]
+\end{thm}
+\begin{proof}
+The construction $dDM^{loc} \to dDM^f$ takes $(\mathcal{X}, \mathcal{O}_{\mathcal{X}})$ and sends it to
+$F: dAff_k^{\op} \to \cS$, which sends $B$ to $\Map(\Spec^{\'et}(B), (\mathcal{X}, \mathcal{O}_{\mathcal{X}}))$.
+$\mathcal{X}$ localic means that $F$ satisfies hyperdescent.
+
+In the other direction, pick $F$ and send it to $\Sh(F_{\'et},\tau_{\'et}), \mathcal{O}_F$. Thanks to the corrolary,
+$\Sh(F_{\'et},\tau_{\'et})$ is n-localic.
+\end{proof}
+
+
+
+
+\section{Descent and infinitesimal theory}
+Say $F \in Geom_k$. How do we define $QCoh(F)$? Recall that we have: \todo{paper}. Then one defines $QCoh(F)$ as the
+\textbf{mapping stack} $\underline{Map}(F,\underline{QCoh})$. This is the same as setting $QCoh(F) := \lim QCoh(A)$, where
+the limit is taken over $\Spec(A) \to F$.
+
+The mapping stack is defined just as the adjoint of $-- \times F$. That is, we define the functor of points to be
+$\Map(\Spec A, \underline{Map}(F,QCoh)) = \Map(\Spec A \times F, QCoh)$.
+
+\begin{rem}
+This makes sense for every sheaf $F$. If $F$ is geometric, then we can restrict to the lisse-\'etale site when taking the limit.
+\end{rem}
+
+\begin{defin}
+$F \in \Sh(dAff_k, \tau_{\'et})$. Then:
+\begin{enumerate}
+\item Let $x : \Spec A \to F$, we say that $F$ \textbf{has cotangent complex at} $x$ if there exists an object
+$\bbL_{F,x} \in QCoh^-(A)$ such that for all $M \in QCoh(A)$, $\Map_{QCoh(A)}(\bbL_{F,x}, M) \simeq Der_F(A;M)$. 
+Here the $F$\textbf{-linear derivations} $Der_F(A;M)$ are defined as the pullback \todo{paper}
+\item $F$ \textbf{has global cotangent complex} if it has cotangent complex at $x$ for every $x : \Spec(A) \to F$, and there
+exists $\bbL_F \in \underline{QCoh}(F)$ such that for all $x$, $x^* \bbL_F \cong \bbL_{F,x}$. 
+\end{enumerate}
+\end{defin}
+
+\begin{thm}
+If $F$ is geometric, then there exists a global cotangent complex.
+\end{thm}
+
+\begin{rem}
+If $F$ is dDM, then $\bbL_F$ is connective, i.e. concentrated in non-positive degrees. However, if $F$ is Artin $n$-geometric,
+then $\bbL_F$ is concentrated in degrees $(-\infty, n)$. \todo{$\pm 1$}
+\end{rem}
 
 
 \bibliographystyle{plain}
