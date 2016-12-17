@@ -2718,6 +2718,882 @@ then $\bbL_F$ is concentrated in degrees $(-\infty, n]$. \todo{$\pm 1$}
 \end{rem}
 
 
+
+
+
+\chapter{The Stack of Perfect Complexes}
+Talk by Sukjoo Lee.
+
+We first define $\Perf(X)$, then prove the geometricity of $\Perf$ and $\Perf(X)$. We proceed to describe the tangent complex
+of these. Finally, we describe the perfect determinant map and construct the Atiyah class.
+
+\section{The Sheaf Perf}
+Recall we defined $\QCoh : d\Aff^{\op} \to \cS$, and extended it to $\underline{QCoh}: \Sh(d\Aff, \tau_{\'et}) \to \cS$.
+In particular, if $X$ is a scheme, we'll write $\QCoh(X)$ for $\underline{Map}(X,\QCoh)$. We also defined
+$\Map(\Spec A, \underline{Map}(X,\QCoh)) = \Map(X \times \Spec A, \QCoh)$.
+
+Now for $X$ a smooth and proper $k$-scheme, we define $\Perf : d\Aff^{\op} \to \cS$, sending $A \mapsto (A-mod)^{perf}$.
+Morphisms are given by base change, and this is ok, since perfect modules are stable under base change.\footnote{Note that,
+as always, to make this definition rigorous, we need to define the functor using co-cartesian fibrations.}
+Then $\Perf(X) := \Map(X, \Perf)$.
+
+Note that, for smooth schemes, $\Perf$ and $\Coh^b$ are the same, but in our case it's essential that we don't restrict to $A$
+smooth. Moreover, $\Coh^b$ is not functorial, because base change can kill the boundedness. Actually $\Perf$ and $\Coh^-$ are
+the only ones that are functorial.
+
+
+\section{Geometricity}
+\begin{thm}
+$\Perf$ and $\Perf(X)$ are locally geometric and locally of finite presentation.
+\end{thm}
+
+\begin{defin}[Properties of stacks]
+\begin{enumerate}[(a)]
+\item A stack $F$ is \textbf{quasi-compact} if there exists a representable stack $X$ and a covering map $X \to F$.
+\item A morphism of stacks is \textbf{quasi-compact} if for every representable $X$, $X \times_F G$ is quasi-compact.
+\item is \textbf{strongly quasi-compact} if for arbitrary $X, Y$ representable stacks and maps to $X$, the $n-1$-geometric
+stack $X \times_F Y$ is strongly quasi-compact. This is an inductive definition, where at level -1 it just means quasi-compact.
+\item Morphism is strongly quasi-compact.
+\item A representable stack $F \simeq \Spec A$ is \textbf{finitely presented} if for every filtered system of objects
+$B_i \in CAlg_k$ we have:
+\[	\colim_i \Map(A,B_i) \simeq \Map(A, \colim_i B_i).	\]
+\item A stack $F$ is \textbf{locally finitely presented} if there exists n- atlas $\mathcal{X}_i$ such that each is
+finitely presented.
+\item Strongly finitely presented means 1-finitely presented and quasi-compact.
+\end{enumerate}
+\end{defin}
+
+\begin{rem}
+All these definitions are stable by pull-backs and retracts.
+\end{rem}
+
+\begin{defin}
+$F$ is \textbf{locally geometric} if it can be written as a filtered colimit $F \simeq \colim_i F_i$, such that each $F_i$
+is n-geometric ($n$ can depend on $i$!), and $F_i \to F$ is mono (i.e. $F_i \to F_i \times_F F_i$ is iso.)
+\end{defin}
+
+\begin{lem}
+For $f : F \to G$ $n$-representable, if $G$ is n-geometric, then so is $F$.
+\end{lem}
+
+Let's begin the proof of the theorem.
+
+\begin{rem}
+We can define $\Perf^{[a,b]} \subset \Perf$ to consist of the complexes which have tor amplitude contained in $[a,b]$. This
+is an open immersion, which means that amplitude is stable under quasi-isomorphism.
+Note that $\Perf = \cup_{a\leq b} \Perf^{[a,b]}$, which exhibits $\Perf$ as a union of connected components.
+ Moreover, we can define $\Perf(X)^{[a,b]}$ to be the homotopy pullback:
+\[
+\begin{tikzcd}
+\Perf(X)^{[a,b]} \arrow{r}\arrow{d} & \Perf^{[a,b]}\arrow{d} \\
+\Perf(X) \arrow{r} & \Perf .
+\end{tikzcd}
+\]
+
+But we actually need to be careful with how we define the bottom map. We need to choose a compact generator $E$ of
+the $\infty$-category $\Perf(X)$ of perfect complexes on $X$. \todo{Put reference to Toen, Vaquie, Moduli of objects}
+
+We obtain $\Perf(X) = \cup_{a\leq b} \Perf(X)^{[a,b]}$.
+\end{rem}
+
+So the strategy of the proof is:
+\begin{itemize}
+\item $\Perf^{[a,b]}$ is $n$-geometric and locally f.p. for $n = b-a+1$. It follows that $\Perf$ is locally geom and locally f.p.
+\item For $\Perf(X)$, we show that $\Perf(X)^{[a,b]} \to \Perf^{[a,b]}$ is $n$-representable, and then use Lemma. \todo{ref lemma}
+\end{itemize}
+
+Step 1. We want to find a cover $\pi : U \to \Perf^{[a,b]}$ such that $U$ is $n-1$-geometric and l.f.p., and $\pi$ is $n-1$
+representable, smooth covering.
+
+$U : CAlg_k \to \cS$ is defined to map $A$ to the space of morphisms in $A-mod$ consisting of $u: Q \to R$, where
+$Q \in \Perf(A)^{[a,b-1]}$ and $R \in \Perf(A)^{[b-1,b-1]}$. Then $\pi: U \to \Perf^{[a,b]}$ is defined to take
+$u:Q \to R$ to $hofib(u)$.
+
+In order to show that $U$ is n-1 geometric, we build some map $p$ from $U$ to an $n-1$ geometric stack, and then show the map
+is $n-1$ representable. If $a = b$, then $\Perf^{[a,b]} \simeq \underline{Vect}$, which is a 1-geometric stack and
+locally f.p. This is because $\underline{Vect} = \cup_n B GL(n)$, and each of $B GL(n)$ is Artin, by groupoid presentation.
+We make the inductive assumption that $\Perf^{[a,b-1]}$ is n-1-geometric. Then define the map:
+\begin{align*}
+p : U &\to \Perf^{[a,b-1]} \times \underline{Vect} \\
+u:Q \to R &\mapsto (Q, R[b-1]) .
+\end{align*}
+$p$ is n-1 representable; in fact, it's representable. \todo{TV lemma 3.9; maybe add more details about this}
+
+\begin{lem}
+Diagonal of $\Perf^{[a,b]}$ is $n-1$-representable.
+\end{lem}
+
+Smooth: by the infinitesimal criterion for smoothness in HAG II, 2.2.2.
+
+Covering: for all $P \in \Perf^{[a,b]}(A)$, we can find vector bundle $E$ in $\Spec(A)$, and a morphism $E[-b] \to P$ whose
+cofiber $Q$ is contained in $\Perf^{[a,b-1]}$. Writing down the resulting fiber sequence, $P$ is a homotopy fiber
+of $Q \to E[-b+1]$. 
+
+Step 2. We need to show that $\Perf(X)^{[a,b]} \to \Perf^{[a,b]}$ is $n-1$ representable and strongly f.p. 
+First we do a reduction to $X = \Spec B$, where $B$ is homotopically f.p. and:
+\[
+\begin{tikzcd}
+ \pi^{-1}{p} & \Spec A \arrow{d}{p} \\
+\Perf(X)^{[a,b]}\arrow{r}{\pi} & \Perf^{[a,b]}
+\end{tikzcd}
+\]
+$\pi^{-1}(p) = \underline{Map}(B,\epsilon(p))$, where $\epsilon(p) := End_{A-mod^{perf}}(p,p)$;
+\todo{paper} Lemma from TV 3.13 and 3.14, and 3.9 retraction
+
+\section{Tangent complex}
+Since $\Perf$ and $\Perf(X)$ are locally geometric, there exists a tangent complex. Since they are locally f.p., it is a perfect
+complex.
+
+\begin{rem}
+There exists global tangent complex and it is a perfect complex. But for now we only compute it locally.
+\end{rem}
+
+\begin{thm}
+$T_E \Perf(X) = End_{\Perf(X)}(E,E) [1]$. 
+\end{thm}
+\begin{proof}
+$E : * = \Spec k \to \Perf(X)$, construct:
+\begin{align*}
+\Omega_E \Perf(X) : CAlg_k &\to \cS \\
+A &\mapsto 
+\end{align*}
+\end{proof}
+
+
+\begin{rem}
+In particular, this recovers the entire deformation theory for vector bundles, by taking $E$ to be in degree 0. The shift means
+that we recover $\Ext^1$. 
+\end{rem}
+
+
+\section{The Determinant Functor}
+\begin{defin}
+The \textbf{Picard stack} is $\Pic(X) = \Map(X, B G_m)$.
+\end{defin}
+
+Note that $\Pic \simeq Vect_1 \subset \Perf$. We want to construct $detperf: \Perf \to \Pic$, by using Waldhausen K-theory.
+\begin{enumerate}
+\item $\det : Vect \to \Pic$.
+\item Simplicial stacks:
+\end{enumerate}
+
+\todo{paaaaper}
+
+\begin{prop}
+For all points $x_E: \Spec k \to \Perf(X)$, we get \todo{paper}
+\end{prop}
+
+\begin{defin}
+$\mathcal{Y}$ geometric stack having a perfect cotangent complex, $E$ is a perfect complex on $\mathcal{Y}$ is the same as
+$\phi_E : \mathcal{Y} \to \Perf$. \todo{paper}
+\end{defin}
+
+
+\begin{thm}
+There is an equivalence $FMP_k \to dgLie_k$, which sends a formal moduli problem $F$ to $T_F[-1]$. In particular, if we
+take the formal completion $\mathcal{Y}_x$, it gets sent to $x^* T_y[-1]$.
+\end{thm}
+
+Fact: the Lie algebra structure on $x^* T_Y[-1]$ is given by the Atiyah class. Nmely, the bracket is \todo{paper}
+
+
+
+
+\chapter{D-modules}
+Talk by Benedict Morrissey.
+
+\section{Introduction and motivation}
+
+We want to talk about differential equations in the setting of AG. It's all classical AG today, but things will go south starting
+next week. We also want to talk about quantization: replace functions on the classical phase space ($\mathcal{O}(T^*X)$) with
+differential operators on $X$ ($\mathcal{D}(X)$).
+
+There's also motivation from representation theory: Beilinson-Bernstein says roughly that $Rep(\mathcal{U}(\mathfrak g))
+\simeq \mathcal{D}_{G/B} - mod$.
+
+The setting is $X$ smooth complex projective variety. We introduce sheaf of noncommutative algebras: $\mathcal{D}_X
+ = Der_{\mathcal{C}_X}(\mathcal{O}_X)$. Say $U \subset X$ is a coordinate chart, with coordinates $y_1, \dots, y_n$,
+$\mathcal{D}_X$ is generated by $[y_i, \partial_j] = \delta_{ij}$.
+
+First thing to notice is that $\mathcal{D}_X$ acts on $\mathcal{O}_X$ on the left. Therefore $\mathcal{D}_X(U)$ also
+acts on the distributions $\mathcal{O}_X(U)^*$ on the right.\footnote{$\mathcal{O}_X(U)$ should be the analytic sheaf.}
+
+Say $f$ is the solution of a differential equation on $X$, e.g.:
+\[	(\partial_x - \lambda) f = 0. 	\]
+then $\mathcal{D}_X \dot f = \mathcal{D}_X / (\partial_x - \lambda) f$, and we call this $\mathcal{D}$-module
+$M_{e^{\lambda x}}$. Then $\Hom_{\mathcal{D}_X -mod}(M_{e^{\lambda x}}, C^{\infty}(\bbA^1))$ is in bijective
+correspondence with solutions to the differential equation.
+
+Note also that this sheaf of solutions is a local system. 
+
+
+\section{Operations on D-modules}
+\begin{eg}
+We start with pullback. If $f:X \to Y$, and $N \in \mathcal{D}_Y$ is a D-module, we define:
+\[	p^*N = \mathcal{O}_X \otimes_{f^{-1} \mathcal{O}_Y} f^{-1} N.	\]
+So far, this is just a sheaf of $\mathcal{O}_X$ modules. We also need to define an ation by derivations $\theta \in \mathcal{D}_X$,
+as follows. \todo{paper} Taking coordinates $\{y_i\}$ on $Y$,
+\[	\theta(\psi \otimes s) = \theta(\psi) \otimes s + \psi \sum_{i=1}^n \theta(y_i \circ f) \otimes \partial_i(s).	\]
+Note that, if the D-module is one of functions, this is the same as pulling back the function to $X$, and then acting by differentition.
+\end{eg}
+
+Direct image is more annoying; we need to use complexes of D-modules for it to be meaningful. We define:
+\[	f_* M = \mathcal{D}_{Y , X} \otimes^{\bbL}_{\mathcal{D}_X} M.	\]
+Here $\mathcal{D}_{Y , X}$ is a $\mathcal{D}_Y - \mathcal{D}_X$ bimodule defined as follows. \todo{paper}
+
+
+Fourier transform of $\mathcal{D}$-modules. Think about functions first: we pull back functions from $\bbA^1$ to
+$\bbA^2$, multiply with a function (kernel) there, and then push forward to the second factor of $\bbA^1$.
+For $\mathcal{D}$-modules, this is done as follows:
+\[	F(M) = p_{2*} \big( (p_1^* M) \otimes M_{e^{2\pi i xy}} \big) . \]
+
+
+\section{Blah}
+We next investigate how the $D$-module relates to the geometry of the solution set of the associated differential equation.
+We take the associated graded \todo{enter more details here}, and $\Spec (\mathcal{D}_X^{gr}) = T^*X$, as long as $X$ is
+smooth. For any D-module $M$, the associated graded $M^{gr}$ is a coherent $\mathcal{O}(T^*X)$-module. Then we associate
+the \textbf{character variety} $ch(M) =  sup(M^{gr}) \subset T^*X$.
+
+We have a functor $D_X -mod \to \mathcal{O}_X -mod$, $sol_X (M) = \R \Hom_{\mathcal{D}_X}(M,\mathcal{O}_X)$.
+There's an easier functor to work with, the deRHam functor, which does: $DR_X(M) = M \otimes \Omega_X^{\bullet}$.
+There's a duality $DR_X(M) = sol(D_X M)$, where \todo{paper}
+
+\begin{defin}
+$\eta \in T^*_x X$ is \textbf{non-characteristic} if for any division of $X$ into level sets of $h$ such that $dh = \eta$,
+$dR(M)$ is locally constant transverse to level sets.
+\end{defin}
+
+\begin{thm}[Cauchy-Kovalevski]
+The set $\{\eta \in T^*X \text{ characteristic}\} = ch(M)$.
+\end{thm}
+
+We have $\dim(ch(M)) \geq \dim(X)$; if equality holds, we call $M$ \textbf{holonomic}.
+
+If $M$ is holonomic, $dR(M)$ is really nice, in the sense that $H^i(dR(M))$ is locally ocnstant on the strata of some 
+stratification of $X$, $X = \bigsqcup_{\alpha \in \Lambda} X_{\alpha}$. Think about solutions to the logarithm,
+whose associated D-module is locally constant on the strata $\C = \C^{\times} \sqcup \{0\}$.
+
+\begin{defin}
+A D-module $M$ is \textbf{regular} if for all $x\in X$, $\R \Hom_D(M_x, \mathcal{O}_x) \cong \R \Hom_D(M_x, \hat{\mathcal{O}_x})$.
+\end{defin}
+
+\begin{rem}
+This can be promoted to a categorical statement, whereby regular holonomic $\mathcal{D}$-modules correspond under the deRham functor
+to constructible complexes. THis is the Riemann-Hilbert correspondence.
+\end{rem}
+
+
+\section{More general spaces}
+We can embed a singular variety $X$ in a nonsingular $Y$. A theorem of Kashiwara tells us that the following is well-defined:
+\[	\mathcal{D}_X -mod = \{ U \in \mathcal{D}_Y -mod| supp_{\mathcal{O}_Y}(U) \subset X \}.	\]
+
+Quotient stacks: $X = Y / G$, where $Y$ is smooth and $G$ is a reductive algebraic group. We want to relate D-modules on $X$
+to D-modules on $Y$ with a strong equivariance property.
+
+\begin{defin}
+A D-module $M$ on $Y$ is \textbf{strongly equivariant} if there's an equivalence $\alpha : act^* M \to p^* M$ of
+$\mathcal{D}_G \otimes \mathcal{D}_Y$-modules, where the latter is $p_1^* \mathcal{D}_G \otimes p_2^* \mathcal{D}_Y$.
+\footnote{Change to square tensor}. This has to satisfy some compatibility condition \todo{paper}
+\end{defin}
+
+
+\section{Representation theory}
+Beilinson-Bernstein theorem. $G$ acts on $G/B = Fl$. Infinitesimally this gives a map $\mathfrak g \to T_p Fl$, ie.
+$\mathfrak g \to $ Vector fields on $Fl$. This extends to a map:
+\[	\mathcal{U}(\mathfrak g) \to \mathcal{D}_{Fl}.	\]
+Then given a line bundle $\mathcal{L}^{\chi}$ on $G/B$, we get $\mathcal{D}^{\chi}$ acting on the sections of $\mathcal{L}$.
+Note that $Fl$ is the moduli space of Borels. Given a character $\chi : T \to \C$, I get a character on $B$ by
+precomposing with the projection $B\to T$, i.e. the character is trivial on strictly upper-triangular matrices.
+
+There's a theorem by Harish-Chandra saying that, to such a character, we can associate \todo{paper}. Then the theorem says that,
+for $\chi$ regular, we have $\mathcal{U}(\mathfrak g)^{\chi}-mod = \mathcal{D}_{FL}^{\chi} - mod$.
+
+
+\section{Nearby and vanishing cycles}
+Say I have a family of algebraic varieties which degenerate at some point. Say I have the family of tori over $\C$ given by
+$y^2 = x(x-a)(x-2a)$. But over 0 I have the cuspidal cubic $y^2 = x^3$. We want to use data about the nearby nice objects to
+talk about the singular object.
+
+The general setup is:
+\[
+\begin{tikzcd}
+X_0\arrow{r}\arrow{d} & X \arrow{d} & X^{\times} \arrow{l}\arrow{d} \\
+\{0\} \arrow{r} & \C & \C^{\times} \arrow{l}.
+\end{tikzcd}
+\]
+
+Nearby cycle functor: \todo{paper}
+
+Theorem: if $f$ is a proper map, then there exists $U$ of $X_0$ in $X$ such that $q:U \to X_0$ is continuous and homotopes to
+identity on $X_0$. 
+
+
+Silly example: if $X = \C$, $M$ is a $\mathcal{D}$-module on $\C^{\times}$, $K = DR(M)$. If we take $f$ to be the identity, then
+$\psi_f(K) \cong K_{X_{\epsilon}}$. We have a monodromy operator $T: \psi_f(K) \to \psi_f(K)$, sending $a \mapsto a + c$.
+If $K$ comes from logarithm, this is $a \mapsto a + 2\pi$. 
+
+If $M$ is holonomic, from adjunction we have a unit map $M \mapsto p_* p^* M$ (need holonomic to have $p^* = p^!$).
+Then we have an exact triangle in the derived category, $i^*M \to \psi_f(M) \to \Psi_f[K](1) \to \dots$, the 
+latter is the \textbf{vanishing cycle}.
+
+An application to geometric representation theory: \todo{paper}.
+
+More generally, can take parabolic $P \subset G$. We have the projection $q: G[[t]] \to G$, and take $\bar P = q^{-1}(P)$.
+Then $\bar P$-equivariant constructible sheaves on $G((t))/\bar P$ should be equivalent to representations of some other group.
+Now take a family over $X$ a Riemann surface; this is related to the vanishing cycle, but none of us understand this yet.
+
+
+
+\chapter{D-modules: de Rham space perspective}
+Talk by Benedict Morrissey.
+
+We will relate these to crystals, and use this to describe D-modules in DAG. In particular, we work towards the following.
+
+\begin{thm}
+If $X$ is a smooth scheme, then $Crys(\QCoh(X)) \simeq D_X - mod$ is an equivalence of categories.
+\end{thm}
+
+\section{Classical setting}
+\label{sect:dmod_class}
+
+\begin{defin}
+A \textbf{crystal} of quasi-coherent sheaves on $X$ is $\mathcal{F} \in \QCoh(X)$ with the following data. For every map
+from an affine scheme $x : \Spec R \to X$, let $\mathcal{F}_x = x^* \mathcal{F}$. Let $I$ be the nilpotent ideal of $R$,
+and consider the sequence of maps:
+\[	\Spec (R/I) \to \Spec R \overset{x,y}{\to} X.	\]
+We say $x,y$ are \textbf{arbitrarily close} if the associated $R/I$ points are equal. We also need the choice of:
+\[	\eta_{x,y} : \mathcal{F}_x \to \mathcal{F}_y	\]
+an isomorphism of $R$-modules, satisfying a cocycle condition: $\eta_{x,z} = \eta_{y,z} \circ \eta_{x,y}$.
+\end{defin}
+
+\begin{defin}
+The \textbf{de Rham prestack} is defined via the functor of points:
+\[	X_{dR}(R) = X(R/I) .	\]
+\end{defin}
+
+Note that crystals are very similar to quasi-coherent sheaves on $X_{dR}$. That's because the latter have stalks
+over each $\bar x$, and we can pull these back to get stalks at each $x, y$ which are canonically isomorphic.
+
+\begin{rem}
+Recall that we haven't defined $\QCoh$ for a prestack, so what exactly we mean is problematic.
+\end{rem}
+
+\begin{proof}
+\[	\Spec (R/I) \to \Spec(R) \overset{x,y}{\to} X \times X	\]
+The two maps factor through the diagonal. However, the maps from $\Spec R$ don't necessarily factor through the diagonal:
+we can get fat points pointing in directions perpendicular to the diagonal. However, it factors through the completion of
+the diagonal.
+
+Let's define this more precisely. $\Delta_X \in X \times X$ is defined as the vanishing of some sheaf of ideals (such
+as $x-y$, but globally). In other words, $\Delta_X = \Spec_{X\times X}(\mathcal{O}_{X\times X}/I)$. Then we define
+the partial formal completions:
+\[	\Delta^n_X = \Spec_{X\times X} (\mathcal{O}_{X\times X}/I^n) .	\]
+Finally, \textbf{the formal completion of the diagonal} is defined as the ind-scheme:
+\[	\hat \Delta_X = \colim_n \Delta^n_X.	\]
+
+Then we have that $Crys(\QCoh(X)) \cong \QCoh(\hat \Delta_X)$. \todo{not sure how to finish this, but the derived case
+we do in a bit should take care of it}. For each $n$, consider the 2 projections:
+\[
+\begin{tikzcd}
+\; & \Delta^n_X & \\
+X & & X.
+\end{tikzcd}
+\]
+Pulling back and pushing forward gives:
+\[	\mathcal{F} \to \pi^{(n)}_{1*} \pi_2^{(n)*} \mathcal{F} = \mathcal{O}_X^{(n)} \otimes_{\mathcal{O}_X} \mathcal{F}.	\]
+Where $\mathcal{O}_X^{(n)}$ is by definition $\pi_{1*}^{(n)}\mathcal{O}_{\Delta^{(n)}_X}$.
+
+Now let $\mathcal{D}_X^{\leq n}$ be differential operators of order $\leq n$.
+\[	\mathcal{D}_X^{\leq n} \otimes_{\mathcal{O}_X} \mathcal{O}_{X^n} \to \mathcal{O}_X	\]
+given by $(Dg)(x) = Dg(x,x)$. $g$ is a function of $x$ and $y$, consider $X$ fixed, and $y$ is varying locally around it.
+Act the differnetial operators as if it's just a function of $y$. Get a new function, and evaluate it at $(x,x)$.
+\end{proof}
+
+\begin{eg}
+$X = \bbA^1$, $\mathcal{O}_X = k[x]$. $\mathcal{O}_X^{(n)} = k[x,y]/(x-y)^{n+1}$. The latter has a basis as
+a $k[x]$-module, given by $\{(x-y)^k\}_{0\leq k \leq n}$. Moreover:
+\[	\mathcal{D}_X^{\leq n} = \left\{ \frac{1}{k!} \frac{\partial^k}{\partial y^k} \right\}	\]
+as $k[x]$-module.
+\end{eg}
+
+\begin{lem}
+If you act by differential operators twice, you get a commutative diagram:
+\[
+\begin{tikzcd}
+\mathcal{D}_X \otimes_{\mathcal{O}_X} \mathcal{D}_X \otimes_X \mathcal{F} & \mathcal{D}_X \otimes_X \mathcal{F} \\
+\mathcal{D}_X \otimes_X \mathcal{F} & \mathcal{F}.
+\end{tikzcd}
+\]
+\end{lem}
+
+Summing up, we have the chain of equivalences $Crys(\QCoh(X)) \cong \QCoh(\hat \Delta_X) \cong \mathcal{D}_X - mod$.
+
+
+\section{Derived setting}
+Recall $X_{dR}$, which we redefine as:
+\[	X_{dR}(R) = X(R^{red}),	\]
+where $R^{red} = H^0(R) / nil(H^0(R))$.
+
+\begin{defin}
+\textbf{Left D-modules} are:
+\[	D-mod^l (X) := \QCoh(X_{dR}),	\]
+where the latter are restricted to be eventually co-connective. Similarly \textbf{right D-modules} are:
+\[	D-mod^r (X) := IndCoh(X_{dR}),	\]
+wher the latter are restricted to be locally almost of finite type.
+\end{defin}
+
+How about the definition of $\QCoh(X)$? We'll just take $\QCoh(X) = \lim \QCoh(S)$, where the limit is taken over all
+$S \to X$ derived affines. Recall also the definition of IndCoh: it's the colimit completion of $\Coh(Y)$ in
+$\PSh(Y)$. Then we can define a map $\psi_Y$ as a left Kan extension:
+\[
+\begin{tikzcd}
+\Coh(Y) \arrow{r} & \QCoh(X) \\
+\IndCoh(Y) \arrow{ur}{\psi_Y} &
+\end{tikzcd}
+\]
+These are all stable $\infty$-categories with t-structure. 
+
+We have a natural transformation $p_{DR} : I \to DR$, which gives natural transofrmations:
+\begin{align*}
+D-mod^l &\to \QCoh \\
+D-mod^r &\to IndCoh.
+\end{align*}
+\todo{here I and DR are reversed, what's up with that?}
+
+
+
+\section{Properties}
+
+Let's talk about descent. $D-mod^r$ satisfies fpppf, h- and etale descent on $DGSch_{aft}^{aff}$, where the subscript says
+almost of finite type. \footnote{We have no idea what h- is, but it's apparently important. Also, fpppf is not a typo;
+Gaitsgory and Rozenblyum add another condition which gives a third f.}
+
+We also have an adjunction:
+\[	obliv_x^r : D-mod^r(X) \to IndCoh(X) : ind_X^r,	\]
+which is monadic. Therefore $IndCoh(X_{dR}) \cong T-mod (IndCoh(X))$.
+
+T-structure. $\QCoh(Y)$ for $Y$ a prestack has a t-structure, such that for $S \to Y$, $\QCoh(Y) \to \QCoh(S)$ preserves
+the t-structure. Same holds for $IndCoh$.
+
+\begin{prop}
+For $X$ a stack,
+\[	D (D-mod^r(X)^{\heartsuit}) \simeq D-mod(X)	.\]
+\end{prop}
+
+\begin{rem}
+This is not that surprising, since when passing from $X$ to $X_{dR}$ we're throwing out all the derived information.
+\end{rem}
+
+
+\section{Differential operators in the derived setting}
+This relation follows closely the proof from the classical case, in section \ref{sect:dmod_class}
+
+\begin{prop}[GR 3.1.3]
+There's an equivalence:
+\[	IndCoh(X_{dR}) \simeq Tot(IndCoh(X^{\bullet}/X_{dR})).	\]
+The latter is defined by the \v{C}ech nerve of the natural map $X \to X_{dR}$.
+\end{prop}
+
+Let $X,Y \in DGSch_{aft}$.
+\begin{prop}
+$IndCoh(X)$ is cannonically self-dual, in the sense that:
+\[	Funct_{cont}(IndCoh(X), IndCoh(Y)) \simeq IndCoh(X) \otimes IndCoh(Y) \simeq IndCoh(X \times Y).	\]
+$Funct_{cont}$ means limit-preserving functors.
+\end{prop}
+\begin{proof}
+Take $Q \in IndCoh(X \times Y)$. Then consider the projections:
+\[
+\begin{tikzcd}
+\; & X  \times Y\arrow{d}{\Delta \times Id} & \\
+\; & X \times X \times Y & \\
+X & & X \times Y \\
+& & Y .
+\end{tikzcd}
+\]
+Run $Q$ through this to get a map from $X$ to $Y$. You need to say the words $(\Delta \times id)^! (\mathcal{F} \otimes
+Q)$, but the tensor product is square.
+\end{proof}
+
+Recall the monad $T$, define $D_X^r = \alpha^{-1}(T) \in IndCoh(X\times X)$. Moreover $|X^{\bullet}/X_{dR}| \to X \times X$
+is a derived analog of the completion of the diagonal. Now we have $D_X^r \simeq \Delta_*^{Indcoh}(\omega_{X \times_{X_{dR}} X})$.
+\footnote{GR need to modify the pushforward slightly to make it play nicely with Indcoherent sheaves. That's what the
+IndCoh superscript means. Don't worry about it too much.} $\omega$ is some notion of dualizing sheaf, which gives a generalization
+of Serre duality $ - \otimes \omega_Y : IndCoh(Y) \to QCoh(Y)$.
+
+Let $X \in DGSch_{aft}$; by Kashiwara's theorem, it suffices to take it smooth. Let $Diff_X$ be the sheaf of diff operators
+in the sense ofthe previous talk; we would like to identify its action with that of $D_X^r$.
+
+\todo{paper}
+
+Taking $\mathcal{F}_1 = \mathcal{F}_2 = \mathcal{O}_X$, we get $\mathcal{D}_X^l \to Diff_X$.
+
+
+
+
+\chapter{HKR isomorphism and shifted symplectic structures}
+Talk by Matei Ionita.
+
+We have reached the ``structured'' part of our ``structured DAG'' plan for the semester. We want to talk about shifted
+symplectic structures and give examples, following \cite{PTVV}. But first we discuss some prerequisites.
+
+\section{Affine Stacks}
+For this section we follow \cite{vezzosi2013autour}, Expos\'e 10. Recall that we defined derived affine schemes as
+the category opposite to $\cdga_k^{\leq 0}$. We have the following adjoint pair:
+\[
+\begin{tikzcd}
+dSt \arrow[shift left]{r}{\mathcal{O}} & \cdga_k^{\leq 0} \arrow[shift left]{l}{\Spec} .
+\end{tikzcd}
+\]
+The functor of global sections $\mathcal{O}$ is defined as the unique functor such that $\mathcal{O}(\Spec(A)) = A$ and
+commutes with colimits. We want to extend this adjunction to cdga's that are not necessarily connective:
+\[
+\begin{tikzcd}
+dSt \arrow[shift left]{r}{\mathcal{O}} & \cdga_k \arrow[shift left]{l}{\Spec} .
+\end{tikzcd}
+\]
+This $\Spec$ functor is defined by $\Spec(A)(R) = \Map_{\cdga_k}(R,A)$, and then $\mathcal{O}$ is defined as a left adjoint,
+like before.
+
+\begin{defin}
+A derived stack is \textbf{affine} if it is in the essential image of $\Spec$. Some authors use \textbf{co-affine}
+to refer to the essential image of $\cdga_k^{\geq 0}$ under $\Spec$.
+\end{defin}
+
+In particular, we can regard topological spaces as constant sheaves, and thus as elements of $dSt$. Certain topological
+spaces are co-affine. Recall, for example, the Eilenber-Maclane spaces $K(\Z,n) \simeq B^n\bbG_a$.
+
+\begin{prop}
+$B^n\bbG_a \simeq \Spec(\Sym k[-n])$.
+\end{prop}
+\begin{proof}
+The proof in \cite{vezzosi2013autour} is by induction on pushout squares.
+\end{proof}
+
+This leads to a description of $\mathcal{O}(X)$ for $X$ the constant sheaf associated to a CW complex.
+
+\begin{thm}
+\label{thm:global_cochain}
+If $X$ is a CW complex, then there is a quasi-isomorphism $\mathcal{O}(X) \simeq C^*(X)$, where the latter is the singular
+cochain complex.
+\end{thm}
+\begin{proof}
+Write $X$ as the colimit of some diagram of points: $X = \colim \Spec k$. Then consider the map:
+\[	C^*(X) \simeq C^*(\colim \Spec(k)) \to \lim C^*(\Spec(k)) \simeq \lim k \simeq \mathcal{O}(X) .	\]
+This induces an isomorphism in cohomology:
+\[	H^n(X) \cong [X,B^n\bbG_a] \cong \pi_0 \Map_{\cdga_k}(\Sym k[-n], \mathcal{O}(X) ) \simeq H^n(\mathcal{O}(X)).	\]
+\end{proof}
+
+
+
+\section{HKR isomorphism}
+In this section we follow \cite{TV_HKR}; a less technical exposition of these ideas is in \cite{BZN_loop}. We want
+to prove an equivalence between cdga's with an $S^1$ action and, roughly speaking, cdga's with an extra derivation.
+
+\begin{defin}
+Let $S^1-\cdga_k^{\leq 0}$ denote connective cdga's with an action of $S^1$. This definition can be made rigorous by realizing
+the connetive cdga's as simplicial commutative algebras via Dold-Kan, and realizing $S^1$ as a simplicial group, which can
+act on the simplicial algebras.
+\end{defin}
+
+\begin{eg}
+For $A \in \cdga_k^{\leq 0}$, the free $S^1$-algebra is $S^1 \otimes A \simeq A \otimes_{A\otimes A} A$, also known as the
+Hochschild chain complex. The functor $A \mapsto S^1 \otimes A$ is left adjoint to the forgetful functor $S^1-\cdga_k^{\leq 0}
+\to \cdga_k^{\leq 0}$.
+\end{eg}
+
+The second category of interest is the following.
+
+\begin{defin}
+Let $\epsilon-\cdga_k^{\leq 0}$ be the category of cdga's equipped with an extra differential $\epsilon : A \to A[-1]$. This
+definition can be made more rigorous by considering the over-category $k[\epsilon] - dg-mod_k$, where $|\epsilon| = -1$. (These
+are called \textbf{mixed complexes} in \cite{PTVV}.)
+This category has a symmetric monoidal structure, arising from the co-multiplication $k[\epsilon] \to k[\epsilon]
+\otimes k[\epsilon]$. Then we define $\epsilon-\cdga_k^{\leq 0}$ to be the monoids in $k[\epsilon] - dg-mod_k$.
+\end{defin}
+
+\begin{eg}
+\label{eg:de_rham}
+For $A \in \cdga_k^{\leq 0}$, the free $\epsilon$-algebra is \textbf{the de Rham complex} $DR(A) = \Sym_A(\bbL_A[1])$,
+where the extra differential is the de Rham differential.
+\[
+\begin{tikzcd}
+A^{-3}\arrow{d} & \bbL^{-2}\arrow{d} & (\wedge^2 \bbL)^{-1}\arrow{d} & (\wedge^3 \bbL)^0 \\
+A^{-2}\arrow{d}\arrow{ur}{d_{dR}} & \bbL^{-1}\arrow{d}\arrow{ur}{d_{dR}} & (\wedge^2 \bbL)^{0}\arrow{ur}{d_{dR}} & \\
+A^{-1}\arrow{d}\arrow{ur}{d_{dR}} & \bbL^0\arrow{ur}{d_{dR}} & & \\
+A^0\arrow{ur}{d_{dR}} & & &
+\end{tikzcd}
+\]
+The functor $A \mapsto DR(A)$ is left adjoint to the forgetful functor $\epsilon-\cdga_k^{\leq 0}
+\to \cdga_k^{\leq 0}$.
+\end{eg}
+
+We can now state and sketch the proof of the main theorem in \cite{TV_HKR}.
+
+\begin{thm}
+There is an equivalence $\phi$ which commutes with the forgetful functors:
+\[
+\begin{tikzcd}
+S^1 - \cdga_k^{\leq 0}\arrow{rr}{\phi}\arrow{dr} & & \epsilon - \cdga_k^{\leq 0}\arrow{dl} \\
+ & \cdga_k^{\leq 0} & 
+\end{tikzcd}
+\]
+\end{thm}
+\begin{proof}
+   
+\begin{enumerate}
+\item Note first that $S^1-\cdga_k^{\leq 0} \simeq \Fun(BS^1, \cdga_k^{\leq 0})$, where $BS^1$ is the category with a single
+object and 1-morphisms for each element of $S^1$.
+\item Passing to global sections gives a functor $\phi_3$:
+\[
+\begin{tikzcd}
+\Fun(BS^1, \cdga_k^{\leq 0})\arrow{r}{\phi_3}\arrow[swap]{d}{\text{eval}} & k[u]-\cdga_k\arrow{d}{k\otimes_{k[u]} -} \\
+\cdga_k^{\leq 0}\arrow[hook]{r} & \cdga_k .
+\end{tikzcd}
+\]
+Some comments are necessary here. First, the global sections of $BS^1$ are $k[u]$ with $|u| = 2$, due to Theorem
+\ref{thm:global_cochain}. Second, working with non-connective cdga's is necessary in the right hand column, because
+$\cdga_k^{\leq 0}$ is not closed under limits. Third, the diagram is \emph{not} commutative, but becomes so when restricted
+to $\cdga^+_k$, the category of cdga's which are bounded on the left. The proof of commutativity uses an increasing induction
+on Postnikov towers, and the existence of a base case for the induction requires this extra constraint. Moreover,
+the restriction $\phi_3^+$ to left-bounded cdga's is fully faithful, with essential image given by $k[u]-\cdga_k^{+,\leq 0}$.
+\item $k[\epsilon]$ is Koszul dual to $k[u]$, which gives a map:
+\[	\Ext_{k[\epsilon]}(k,-) : k[\epsilon] - dg-mod_k \to k[u] - dg-mod_k.	\]
+Moreover, this map preserves the monoidal structure on the two categories, so it induces a map $\phi_4: \epsilon-\cdga_k^{\leq 0}
+\to k[u] -\cdga_k$, which fits into a diagram:\todo{do this argument more carefully}
+\[
+\begin{tikzcd}
+\epsilon-\cdga_k^{\leq 0}\arrow{r}{\phi_4}\arrow{d} & k[u]-\cdga_k\arrow{d}{k\otimes_{k[u]} -} \\
+\cdga_k^{\leq 0}\arrow[hook]{r} & \cdga_k .
+\end{tikzcd}
+\]
+The comments about commutativity, full faithfulenss and essential image from the previous step also apply here.
+\item Putting these together, we obtain a commutative diagram:
+\[
+\begin{tikzcd}
+\Fun(BS^1, \cdga_k^{+,\leq 0})\arrow{r}{\phi_3^+}\arrow[swap]{d}{\text{eval}} & k[u]-\cdga^+_k\arrow{d}{k\otimes_{k[u]} -}
+& \epsilon-\cdga_k^{+,\leq 0}\arrow[swap]{l}{\phi_4^+}\arrow{d}{\text{forget}} \\
+\cdga_k^{+,\leq 0}\arrow[hook]{r} & \cdga_k^+ & \cdga_k^{+,\leq 0}\arrow[hook]{l} .
+\end{tikzcd}
+\]
+$\phi_3^+$ and $\phi_4^+$ are fully faithful with the same essential image, which gives an equivalence $\phi$ which
+fits into the commutative diagram:
+\[
+\begin{tikzcd}
+\Fun(BS^1, \cdga_k^{+,\leq 0})\arrow{r}{\phi^+}\arrow[swap]{d}{\text{eval}} & \epsilon-\cdga_k^{+,\leq 0}\arrow{d}{\text{forget}} \\
+\cdga_k^{+,\leq 0}\arrow[hook]{r} &  \cdga_k^{+,\leq 0} .
+\end{tikzcd}
+\]
+$\phi^+$ is an equivalence, so in particular it commutes with colimits. Therefore it extends to an equivalence between
+$\Fun(BS^1, \cdga_k^{\leq 0})$ and $\epsilon-\cdga_k^{\leq 0}$.
+\end{enumerate}
+\end{proof}
+
+\begin{thm}
+$\phi$ also commutes with the free functors, i.e. $\phi(S^1\otimes A) \simeq DR(A)$.
+\[
+\begin{tikzcd}
+S^1 - \cdga_k^{\leq 0}\arrow{rr}{\phi} & & \epsilon - \cdga_k^{\leq 0} \\
+ & \cdga_k^{\leq 0}\arrow[swap]{ur}{DR}\arrow{ul}{S^1 \otimes} & 
+\end{tikzcd}
+\]
+\end{thm}
+\begin{proof}
+This just follows from category theory and the fact that $\phi$ commutes with the forgetful functors.
+\end{proof}
+
+\begin{cor}[HKR isomorphism]
+\label{cor:HKR}
+Let $X \in dSt$. \todo{in the paper they state this just for classical schemes, but it clearly works in more generality.
+what assumptions do we need on the stack? finite presentation?}
+\begin{enumerate}
+\item $\mathcal{O}_X \otimes_{\mathcal{O}_X\otimes\mathcal{O}_X} \mathcal{O}_X \simeq \Sym_{\mathcal{O}_X} (\bbL_X[1])$.
+\item If $X$ is a smooth truncated scheme, this specializes to $\mathcal{O}_X \otimes_{\mathcal{O}_X\otimes\mathcal{O}_X} 
+\mathcal{O}_X \simeq \Sym_{\mathcal{O}_X} (\Omega^1_X[1])$. This is the classical version of the HKR isomorphism, enhanced
+to an isomorphism of algebras, as opposed to just complexes.
+\item Let $hS^1$ denote homotopy fixed points of the $S^1$ action, and ev denote the even part of de Rham cohomology. Then:
+\[	(\mathcal{O}_X \otimes_{\mathcal{O}_X\otimes\mathcal{O}_X} \mathcal{O}_X)^{hS^1} \simeq H_{dR}^{ev}(X).	\]
+\end{enumerate}
+\end{cor}
+\begin{proof}
+The first statement is just saying that we can apply the equivalence $\phi$ at the level of sheaves.
+\todo{say something about the last one, maybe even negative cyclic complexes}
+\end{proof}
+
+\begin{rem}
+\label{rem:loop_stack}
+For $X \in dSt$, we can define the \textbf{derived loop stack} $\mathscr{L}X$ as the mapping stack $\Map_{dSt}(S^1,X)$.
+Using tensor-hom adjunction, $\mathcal{O}(\mathscr{L}X) \simeq S^1 \otimes X$. On the other side of the HKR
+isomorphism, $\Sym_{\mathcal{O}_X} (\bbL_X[1])$ has an interpretation as $\mathcal{O}(T[1]X)$, global sections of the
+shifted tangent bundle of $X$. This gives an identification $\mathscr{L}X \simeq T[1]X$. 
+The slogan is that ``forms on $X$ are functions on $\mathcal{L}X$''. More about this in \cite{BZN_loop}.
+\end{rem}
+
+
+\section{Shifted symplectic structures}
+In all remaining sections we follow \cite{PTVV}. For $X$ a smooth scheme over $k$, a symplectic structure is a closed
+2-form
+$\omega \in H^0(X,\Omega^{2,cl}_X)$, which induces an isomorphism $\Theta_\omega : T_X \simeq \Omega^1_X$. We want to
+generalize this for $X$ a derived Artin stack over $k$. Morally speaking, we want an n-shifted symplectic structure
+to be an element $\omega \in H^0(X,\wedge^2\bbL_X [2])$, which is closed and induces an isomorphism
+$\Theta_\omega : \bbT_X \to \bbL_X[n]$. The main technical difficulty is defining what it means for a form to be closed:
+instead of $d_{dR} \omega = 0$, we want $d_{dR} \omega$ to be exact, meaning that it's in the image of the internal
+differential of the complex $\wedge^3\bbL_X[3]$. (See the diagram in \ref{eg:de_rham}; the internal differentials are the
+vertical maps there.) In particular, ``closed'' is now a structure, instead of a property.\todo{explain this better} 
+
+Using the last part of Corollary \ref{cor:HKR}, as well as remark \ref{rem:loop_stack}
+we can translate the closed condition into the condition of being a homotopy fixed point for the action of $S^1$ on $\mathscr{L}X$. 
+However, the difficulty in working with $\mathscr{L}X$ is that loops do not satisfy descent in the \'etale (or smooth) topology.
+As such, one needs to work with infinitesimal loops, which is achieved in \cite{BZN_loop} by introducing the completion
+of $\mathscr{L}X$ around the constant loops, i.e. the zero section $X \to \mathscr{L}X$.
+
+The authors of \cite{PTVV} prefer a different approach, based on the negative cyclic complex, where descent is immediate
+from the definition of forms and closed forms, see \ref{prop:forms_descent}.
+
+\begin{defin}
+Let $E$ be an $\epsilon$-dg-module (or mixed complex) over $k$. The \textbf{negative cyclic complex} of $E$ is a dg-module $NC(E)$
+over $k$, given by:
+\[	NC^n(E) = \prod_{i\geq 0} E^{n-2i} .	\]
+The differential $D$ is the sum of $\epsilon$ and the internal differential $d$:
+\[	D\big(\{m_i\}\big)_j = \epsilon m_{j-1} + d m_j .	\]
+\end{defin}
+
+Consider now the \textbf{weight grading} on $E$, which is $E = \oplus_p E(p)$ such that $\epsilon : E(p) \to E(p+1)$.
+We consider a variant of the negative cyclic complex which uses the weight grading: $NC^n(E)(p) = \prod_{i\geq 0}
+E^{n-2i}(p+i)$.\footnote{When talking about complexes, round parantheses always refer to the weight grading,
+while square brackets refer to the cohomological grading. The confusing bit is that $(p)$ means that we're isolating
+the weight $p$ subspace, while $[n]$ means that we're shifting the cohomological degree by $n$.}
+
+\begin{defin}
+The \textbf{weighted negative cyclic complex} is:
+\[	NC^w(E) = \oplus_p NC(E)(p).	\]
+In other words, we have a double complex whose degree $n$, weight $p$ part is $\prod_{i\geq 0}
+E^{n-2i}(p+i)$.
+\end{defin}
+
+\todo{give some intuition about how this is related to the corollary in HKR}
+
+\begin{rem}
+\label{rem:underlying_form}
+There is a natural map $NC^w(E) \to E$, given by projection to the $i=0$ component:
+\[	NC^w(E)^n(p) = \prod_{i\geq 0} E^{n-2i}(p+i) \to E^n(p) .	\]
+Shortly we will interpret this as assigning to a closed $p$-form its underlying $p$-form.
+\end{rem}
+
+Recall that, for $A \in \cdga_k^{\leq 0}$, we have the de Rham complex $DR(A) = \oplus_p(\wedge^p \bbL_A)[p]$.
+\begin{defin}
+The space of \textbf{p-forms of degree n} on $A$ is\footnote{We're using Dold-Kan to identify a connective complex
+with a simplicial set, and then taking geometric realization to get a space.}:
+\[	\mathcal{A}^p(A,n) = \big| \wedge^p \bbL_A [n-p] \big| \in \cS.	\]
+The space of \textbf{closed p-forms of degree n} on $A$ is:
+\[	\mathcal{A}^{p,cl}(A,n) = \big|NC^w(DR(A))[n-p](p) \big| \in \cS.	\]
+\end{defin}
+
+\begin{rem}
+One may expect $n$-shifted $p$-forms to require a shift by $n$, instead of the $n-p$ that appears in the definition.
+But note that a shift in $p$ is already present in the de Rham complex, as well as its associated weighted negative cyclic
+complex. This brings the total shift to $n-p$.\todo{wait, this doesn't actually work yet, fix it}
+\end{rem}
+
+\begin{rem}
+The map in Remark \ref{rem:underlying_form} induces a map on the geometric realizations $\mathcal{A}^{p,cl}(A,n)
+\to \mathcal{A}^p(A,n)$, which associates to a closed $p$-form its underlying $p$-form.
+\end{rem}
+
+\begin{defin}
+For $w \in \mathcal{A}^p(A,n)$, the homotopy fiber $K(w)$ of $\mathcal{A}^{p,cl}(A,n) \to \mathcal{A}^p(A,n)$ is
+\textbf{the space of keys} of $w$.
+\end{defin}
+
+As advertised, this formalism makes it easy to prove:
+\begin{prop}
+\label{prop:forms_descent}
+$\mathcal{A}^p(-,n)$ and $\mathcal{A}^{p,cl}(-,n)$ are derived stacks for the \'etale topology.
+\end{prop}
+\begin{proof}
+Backtracking through two pairs of adjoint functors we have:
+\[	\mathcal{A}^p(A,n) \simeq \Map_{dg-mod_k}(k, \wedge^p\bbL_A[n]).	\]
+This reduces the problem to showing that $A \mapsto \wedge^p\bbL_A[n]$ satisfies descent, which it does, because it's
+quasi-coherent. Similarly, letting $k(p)$ denote the mixed complex with just a copy of $k$ in degree 0 and weight $p$,
+\[	\mathcal{A}^{p,cl}(A,n) = |NC^w(DR(A))[n-p](p)| \simeq \Hom_{\epsilon-dg-mod_k}\big(k(p),DR(A)[n-p]\big)
+= \Hom_{\epsilon-dg-mod_k} \big(k(p), \oplus_q \wedge^q \bbL_A[n-p+q].	\]
+The middle equivalence follows from Corollary 1.4 in \cite{PTVV}. Hence this problem is also reduced to descent for the
+cotangent complex.
+\end{proof}
+
+This proposition allows us to globalize the definitions. For $F\in dSt_k$, let:
+\begin{align*}
+\mathcal{A}^p(F,n) &= \Map_{dSt_k}\big(F,\mathcal{A}^p(-,n)\big), \\
+\mathcal{A}^{p,cl}(F,n) &= \Map_{dSt_k}\big(F,\mathcal{A}^{p.cl}(-,n)\big).
+\end{align*}
+
+We also have the following nice description for $\mathcal{A}^p(F,n)$, but unfortunately no such thing exists for
+$\mathcal{A}^{p,cl}(F,n)$.
+
+\begin{prop}
+\label{prop:forms_maps}
+Let $F \in dSt_k$, then $\mathcal{A}^p(F,n) \simeq \Map_{QCoh(F)}\big(\mathcal{O}_F,\wedge^p\bbL_F[n]\big)$.
+\end{prop}
+\begin{proof}
+The idea is to induct on the $m$-geometricity level of $F$. That is, choose an atlas for $F$ in terms of $m-1$-geometric
+stacks $\{X_{\alpha}\}$, and look at the following commutative diagram:
+\[
+\begin{tikzcd}
+\Map_{QCoh(F)}\big(\mathcal{O}_F,\wedge^p\bbL_F[n]\big) \arrow{d}\arrow{r} &
+\lim \Map_{QCoh(X_{\alpha})}\big(\mathcal{O}_{X_{\alpha}},\wedge^p\bbL_{X_{\alpha}}[n]\big)\arrow{d} \\
+\mathcal{A}^p(F,n) \arrow{r} & \lim \mathcal{A}^p(X_{\alpha},n) .
+\end{tikzcd}
+\]
+The bottom map is an equivalence by descent, the right map is an equivalence by the inductive hypothesis. The top map
+is also an equivalence, but this is more subtle, see \cite{PTVV} for the details. Therefore the left map is an equivalence.
+\end{proof}
+
+Let $F$ be a derived Artin stack, locally finitely presented over $k$. Then $\bbL_F$ is perfect, so in particular it's
+dualizable in $QCoh(F)$. The dual is the tangent complex $\bbT_F$.
+Using Proposition \ref{prop:forms_maps}, $\omega \in \mathcal{A}^2(F,n)$ determines a map $\mathcal{O}_F \to
+\wedge^2 \bbL_F[n]$, which is dual to a map $ \Theta_{\omega}: \bbT_F \to \bbL_F[n]$.
+
+\begin{defin}
+$\omega \in \mathcal{A}^2(F,n)$ is \textbf{non-degenerate} if $\Theta_{\omega}$ is a quasi-isomorphism. The space of
+\textbf{n-shifted symplectic structures} on $F$ is the pullback of the diagram:
+\[
+\begin{tikzcd}
+Symp(F,n)\arrow{d}\arrow{r} & \mathcal{A}^{2,cl}(F,n)\arrow{d} \\
+\mathcal{A}^2(F,n)^{nd}\arrow{r} & \mathcal{A}^2(F,n).
+\end{tikzcd}
+\]
+\end{defin}
+
+\begin{rem}
+$\mathcal{A}^2(F,n)^{nd}$ is a union of path components of $\mathcal{A}^2(F,n)$, so symplectic structures are the same as
+closed 2-forms whose underlying 2-forms live in these particular components.
+\end{rem}
+
+\begin{rem}
+If $\bbL_X$ has amplitude $(-m,n)$, then shifted symplectic structures on $X$ can only exist in degree $m-n$.
+\end{rem}
+
+\begin{eg}
+If $X$ is a smooth underived scheme, then $\bbL_X = \Omega^1_X[0]$, so the only shifted symplectic structures on $X$
+are symplectic structures in the usual sense.
+\end{eg}
+
+\begin{rem}
+For low values of $n$, an $n$-shifted symplectic structure can be seen as pairing the negative degree terms in $\bbL_X$
+(the derived structure) with the positive degree terms (the stacky structure).
+\end{rem}
+
+
+\section{Examples: BG and Perf}
+This is hard
+
+\section{Examples: Mapping Stacks}
+This is harder
+
+\section{Examples: Lagrangian intersections}
+Probably no time for this
+
+
+
 \bibliographystyle{plain}
 \bibliography{dahema}
 
