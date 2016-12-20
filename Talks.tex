@@ -2721,7 +2721,9 @@ then $\bbL_F$ is concentrated in degrees $(-\infty, n]$. \todo{$\pm 1$}
 
 
 
+
 \chapter{The Stack of Perfect Complexes}
+\label{chap:stack_perf}
 Talk by Sukjoo Lee.
 
 We first define $\Perf(X)$, then prove the geometricity of $\Perf$ and $\Perf(X)$. We proceed to describe the tangent complex
@@ -2849,6 +2851,7 @@ There exists global tangent complex and it is a perfect complex. But for now we 
 \end{rem}
 
 \begin{thm}
+\label{thm:tangent_perf}
 $T_E \Perf(X) = End_{\Perf(X)}(E,E) [1]$. 
 \end{thm}
 \begin{proof}
@@ -2948,7 +2951,7 @@ For $\mathcal{D}$-modules, this is done as follows:
 \[	F(M) = p_{2*} \big( (p_1^* M) \otimes M_{e^{2\pi i xy}} \big) . \]
 
 
-\section{Blah}
+\section{Characteristic Variety}
 We next investigate how the $D$-module relates to the geometry of the solution set of the associated differential equation.
 We take the associated graded \todo{enter more details here}, and $\Spec (\mathcal{D}_X^{gr}) = T^*X$, as long as $X$ is
 smooth. For any D-module $M$, the associated graded $M^{gr}$ is a coherent $\mathcal{O}(T^*X)$-module. Then we associate
@@ -3584,10 +3587,343 @@ For low values of $n$, an $n$-shifted symplectic structure can be seen as pairin
 
 
 \section{Examples: BG and Perf}
-This is hard
+For our first first nontrivial example, we take $X = BG$, for $G$ reductive. Let $\fr g$ be the Lie algebra of $G$.
+
+\begin{prop}
+There exist 2-shifted symplectic structures on $BG$. Moreover, homotopy classes of such correspond to non-degenerate 
+invariant bilinear forms on $\fr g$.
+\end{prop}
+\begin{proof}
+Recall that $\bbL_{BG} \simeq g^* [-1]$, so that $\bbT_{BG} \simeq g[1]$. It's immediate that non-degenerate
+$p$-forms of degree $n$ cannot exist unless $n=2$. Let's see what the spaces of forms look like.
+
+We proved that $\mathcal{A}^p(-,n)$ satisfies descent; this is equivalent to the fact that $DR(-)$ satisfies descent.
+Therefore we can talk about $DR(BG)$, obtained by taking global sections on $BG$, which corresponds to taking
+invariants under $G$. We obtain $DR(BG) \simeq (\Sym_k \fr g^*)^G$, concentrated
+in degree 0, and where $\fr g^*$ has weight 1.
+\[
+\begin{tikzcd}
+0 & 0 & 0 & 0 \\
+k\arrow{ur}{d_{dR}} & \fr g^*\arrow{ur}{d_{dR}} & \Sym^2 \fr g^*\arrow{ur}{d_{dR}} & \\
+0 & 0 & 0 & 
+\end{tikzcd}
+\]
+Now recall that $\mathcal{A}^p(BG,n) = |DR(BG)[n-p](p)|$; in particular:
+\[	\pi_i\big(\mathcal{A}^p(BG,n)\big) = H^{-i} \tau^{\leq 0} DR(BG)[n-p](p) = H^{-i} \tau^{\leq 0} (\Sym^p \fr g^*)^G [n-p]	.	\] 
+This means that we have:
+\begin{equation}
+\label{eq:desc_forms}
+	\mathcal{A}^p(BG,n) = 
+\left\{ \begin{array} {ll} * & \text{if } n<p,  \\ 
+K\big((\Sym^p \fr g^*)^G, n-p\big) & \text{if } n\geq p .  \end{array} \right.
+\end{equation}
+The interesting case is $n=p$, where $\pi_0\big(\mathcal{A}^p(BG,n)\big) \cong (\Sym^p \fr g^*)^G$; in all other cases,
+$\pi_0\big(\mathcal{A}^p(BG,n)\big) = 0$.
+
+The de Rham differential is identically 0 for degree reasons. This means that all forms admit a closed structure. However, this
+need not be canonical. For example, $\pi_0\big(\mathcal{A}^1(BG,3)\big) = 0$, but $\pi_0\big(\mathcal{A}^{1,cl}(BG,3)\big) \cong 
+(\Sym^2 \fr g)^G$. This can be seen from the global sections of the de Rham complex:
+\[
+\begin{tikzcd}
+k & \fr g^* & \Sym^2 \fr g^*\arrow{d} \\
+0 & 0 & 0 \\
+0 & 0\arrow{ur}{d_{dR}} & 0 
+\end{tikzcd}
+\]
+
+Let's determine the spaces of closed forms in more detail:
+\[	\mathcal{A}^{p,cl}(BG,n) = \big| NC^w(DR(BG))[n-p](p)\big|.	\]
+Using the definition of $NC^w$, and then the particular form that $DR(BG)$ takes:
+\begin{align*}
+	NC^w(DR(BG))^m = \oplus_p \prod_{i\geq 0} DR(BG)^{m-2i}(p+i) &= \left\{ \begin{array} {ll}
+0 & \text{for m odd}, \\ \oplus_{p\geq - \frac{m}{2}} DR(BG)^0(p+\frac{m}{2}) & \text{for m even}
+\end{array} \right. \\
+&= \left\{ \begin{array} {ll}
+0 & \text{for m odd}, \\ \oplus_{p\geq - \frac{m}{2}} \big(\Sym^{p+j} \fr g^*\big)^G & \text{for m even}
+\end{array} \right.
+\end{align*}
+We may as well write $m=2j$, and remember that for odd $m$ the result is 0:
+\[	NC^w(DR(BG))^{2j} = \oplus_{p\geq -j} \big(\Sym^{p+j} \fr g^*\big)^G[-2j].	\]
+The final form of the weighted negative cyclic complex is, then:
+\[	NC^w(DR(BG)) = \oplus_j \oplus_{p\geq -j} \big(\Sym^{p+j} \fr g^*\big)^G[-2j].	\]
+Finally, we need to shift by $n-p$, take the weight $p$ part, and take geometric realization:
+\[	\mathcal{A}^{p,cl}(BG,n) = \big|  \oplus_{j\geq -p} \big(\Sym^{p+j} \fr g^*\big)^G[n-p-2j] \big|. \]
+
+It's a bit hard to give a complete description of these spaces, analogous to \ref{eq:desc_forms}. But we make a few comments:
+\begin{enumerate}
+\item If $n<p$, the entire negative cyclic complex gets shifted into positive degrees, which are killed by geometric realization.
+Hence for $n<p$, $\mathcal{A}^{p,cl}(BG,n) = * = \mathcal{A}^{p}(BG,n)$.
+\item To have nontrivial $\pi_0$ we need $n-p \geq 0$ and even. In this case, $\pi_0\big(\mathcal{A}^{p,cl}(BG,n)\big)
+\cong \big(\Sym^{\frac{p+n}{2}} \fr g^*\big)^G$. In particular, $\pi_0\big(\mathcal{A}^{2,cl}(BG,2)\big)
+\cong \big(\Sym^{2} \fr g^*\big)^G$.
+\end{enumerate}
+All this was quite messy, but at least the non-degeneracy condition is what you'd expect.
+\end{proof}
+
+\begin{rem}
+\label{rem:symp_trace}
+If $G \subset GL(n)$, there's a canonical 2-shifted symplectic structure coming from the trace $\Tr(\text{mult})$.
+\end{rem}
+
+We move on to an example which is universal in some sense. Recall the stack $\Perf$ from 
+Chapter \ref{chap:stack_perf}, and in particular the description of its tangent spaces in Theorem \ref{thm:tangent_perf}:
+$T_E \Perf \simeq \End(E)[1]$. We use here without proof the global description of the tangent bundle, which is as
+follows. Let $\mathcal{E}$ be the universal perfect complex over $\Perf$, which is classified by the identity
+map $\Perf \to \Perf$. Then $\bbT_{\Perf} \simeq \End(\mathcal{E}, \mathcal{E})[1]$.
+
+\begin{thm}
+\label{thm:symp_perf}
+There is a 2-shifted symplectic structure on $\Perf$.
+\end{thm}
+\begin{proof}
+The closed 2-form on $\Perf$ is given by the Chern character, which is constructed in \cite{TV_Chern}. We first discuss
+the underlying 2-form and the nondegeneracy condition. 
+
+Recall from \ref{} the Atiyah class:
+\[	a_\mathcal{E} : \mathcal{E} \to \mathcal{E} \otimes_{\mathcal{O}_\Perf} \bbL_{\Perf}[1] .	\]
+Iterating on this construction, we obtain:
+\[	a_\mathcal{E}^i : \mathcal{E} \to \mathcal{E} \otimes_{\mathcal{O}_\Perf} \wedge^i \bbL_{\Perf}[i] .	\]
+Since $\mathcal{E}$ is dualizable \todo{say sth about this}, we can consider the dual map, which we denote by the same
+symbol:
+\[	a_\mathcal{E}^i : \mathcal{O}_{\Perf} \to \mathcal{E}^* \otimes \mathcal{E} \otimes_{\mathcal{O}_\Perf} \wedge^i \bbL_{\Perf}[i].	\]
+Composing with the trace map $\mathcal{E}^* \otimes \mathcal{E} \to \mathcal{O}_\Perf$, we obtain:
+\[	\Ch_i(\mathcal E) = \frac{\Tr(a_\mathcal{E}^i)}{i!} \in \Hom\big(\mathcal{O}_\Perf,\wedge^i \bbL_{\Perf}[i]\big) 
+\cong H^i\big(\wedge^i \bbL_{\Perf}\big) .	\]
+Taking $i=2$ we otain an element of $H^2(\wedge^2 \bbL_{\Perf})$, which is the underlying 2-form that we are looking after.
+
+Now we use the fact that $\bbT_{\Perf} \simeq \End(\mathcal{E})[1]$, so that
+$\bbL_\Perf[1] \simeq \End(\mathcal{E})$. The Atiyah class is, then, the adjoint of the multiplication morphism:
+\[	\text{mult} : \End(\mathcal{E}) \otimes \End(\mathcal{E}) \to \End(\mathcal{E}),	\]
+and we can identify $\Ch_2(\mathcal{E})$ with $\Tr(\text{mult})/2$, which is nondegenerate because the trace is. (Recall that
+the trace is defined as adjoint to the identity map $\mathcal{E} \to \mathcal{E}$.)
+
+It remains to lift $\Ch_2(\mathcal{E})$ to the negative cyclic complex:
+\[
+\begin{tikzcd}
+\; & NC \arrow{d} \\
+\Perf \arrow{r}{\Ch_2}\arrow[dotted]{ur} & DR .
+\end{tikzcd}
+\]
+\todo{finish this}
+\end{proof}
+
+\begin{rem}
+Note that there is an embedding $i: BGL(n) \to \Perf$, obtaining by regarding vector bundles as a sub-category of the perfect
+complexes. Theorem \ref{thm:symp_perf} gives a 2-shifted symplectic structure $\omega_{\Perf}$ on $\Perf$, while 
+\ref{rem:symp_trace} gives
+an explicit form for a 2-shifted symplectic structure $\omega_{BGL(n)}$ on $BGL(n)$. Up to a numerical factor, both 
+expressions are the trace
+of a multiplication map between endomorphisms. It follows that $\omega_{BGL(n)} = i^* \omega_{\Perf}$.
+\end{rem}
+
+
 
 \section{Examples: Mapping Stacks}
-This is harder
+For the next example, we build towards the following AKSZ-type statement, made precise in Theorem \ref{thm:symp_map}.
+If $F \in dSt_k$ is equipped with an n-shifted symplectic structure, and $X \in dSt_k$ 
+is equipped with, roughly, a fundamental class in degree $d$, then the mapping stack $\Map_{dSt}(X,F)$ admits an
+$n-d$ shifted symplectic structure. Together with Theorem \ref{thm:symp_perf}, this proves that various moduli stacks of
+bundles and complexes admit shifted symplectic structures. (See Corollary \ref{cor:symp_moduli}.)
+
+\begin{rem}
+Let us first give a heuristic idea for the AKSZ construction, by working with $C^{\infty}$ manifolds. Let $M$ be a compact
+manifold of dimension $d$, and $(N,\omega)$ a symplectic manifold. Consider the evaluation map:
+\[
+\begin{tikzcd}
+	M \times C^{\infty}(M,N) \arrow{r}{eval} & N .
+\end{tikzcd}
+\]
+Pullback and integration along $M$ give a map:
+\begin{align*}
+\Omega_N^p &\to \Omega^{p-d}_{C^{\infty}(M,N)} \\
+\alpha &\mapsto \int_M eval^* \alpha.
+\end{align*}
+In particular applying it to $\omega$ gives $\int_M eval^*\omega \in \Omega^{2-d}$. \todo{how can this be symplectic if it's no
+longer a 2-form?}
+\end{rem}
+
+To imitate this strategy in the derived context, we need to define appropriate notions of orientability and integration
+along the fibers.
+
+\begin{defin}
+For any $X \in dSt_k$, let $X_A$ denote $X \times \Spec A$.
+\footnote{If, like me, you're not very good with stacks, here's some intuition for considering $X_A$. When making statements
+about the ``points'' of a stack, e.g. in the proof of Theorem \ref{thm:symp_map}, it's not sufficient to consider $k$-valued
+points, but rather those valued in an arbitrary derived affine. That's because stacks are defined as functors on
+$d\Aff$, so information about them is complete only when we've probed with all derived affines.} 
+We say that $X$ is $\mathcal{O}$\textbf{-compact} if:
+\begin{enumerate}
+\item $\mathcal{O}_{X_A}$ is a compact object in $QCoh(X_A)$;
+\item for any perfect complex $E$ on $X_A$, the $A$-dg-module $C(X,E) = \Hom(\mathcal{O}_{X_A},E)$ is perfect.
+\footnote{This is the same as $p_* E$, where $p:X\times \Spec A \to \Spec A$ is the projection.}
+\end{enumerate}
+\end{defin}
+
+The property of being $\mathcal{O}$-compact buys us the following.
+\begin{lem}
+If $X$ is $\mathcal{O}$-compact, there is a natural transformation:
+\[	\kappa_X : DR( - \times X) \to DR(-) \otimes_k C(X,\mathcal{O}_X).	\]
+\end{lem}
+\begin{proof}
+A brief explanation for this is as follows. $C(X,\mathcal{O}_X)$ is perfect over $k$ by the $\mathcal{O}$-compactness
+hypothesis, so the functor $E \mapsto \otimes_k C(X,\mathcal{O}_X)$ commutes with limits. Similarly, $DR$ sends colimits
+to limits (this is descent). Hence both functors send colimits to limits. Now, since every object of $dSt_k$ is a colimit
+of objects in $d\Aff_k$, it suffices to construct a natural transformation between the functors restricted to $d\Aff_k$,
+and then take a left Kan extension in the following diagram.
+\[
+\begin{tikzcd}
+dSt_k^{\op} \arrow[shift left]{rr}{DR(-\times X)}\arrow[shift right,swap]{rr}{DR(-)\otimes_k C(X,\mathcal{O}_X)} 
+& &\epsilon - dg-mod_k^{gr} \\
+d\Aff_k^{\op}\arrow[hook]{u}\arrow[shift left]{urr}\arrow[shift right]{urr} & &
+\end{tikzcd}
+\]
+At the level of derived affines, the natural transformation is obtained essentially from a Kunneth formula: 
+$DR(B)\otimes_k DR(C) \simeq DR(B\otimes_k C)$.
+\end{proof}
+
+An application of the functor $NC^w$ to $\kappa_X$, together with the fact that $C(X,\mathcal{O}_X)$ is perfect,
+gives another natural transformation:
+\[	NC^w(- \times X) \to NC^w\big(DR(-) \otimes_k C(X,\mathcal{O}_X)\big) \simeq NC^w(F) \otimes_k C(X,\mathcal{O}_X) .	\]
+Moreover these commute with the canonical maps from $NC^w$ to $DR$:
+\[
+\begin{tikzcd}
+NC^w( F \times X) \arrow{r}{\kappa_{F,X}}\arrow{d} & NC^w(F) \otimes_k C(X,\mathcal{O}_X)\arrow{d} \\
+DR( F \times X) \arrow[swap]{r}{\kappa_{F,X}} & DR(F) \otimes_k C(X,\mathcal{O}_X) .
+\end{tikzcd}
+\]
+
+\begin{defin}
+Let $X,F \in dSt_k$ with $X$ $\mathcal{O}$-compact. Assume given a morphism $\eta : C(X,\mathcal{O}_X) \to k[-d]$ of
+perfect complexes over $k$. The \textbf{integration map along} $\eta$ is the morphism:
+\[
+\begin{tikzcd}
+\int_{\eta} : NC^w(F\times X) \arrow{r}{K_{F,X}} & NC^w(F) \otimes_k C(X,\mathcal{O}_X) \arrow{r}{id \otimes \eta} &
+NC^w(F)[-d] .
+\end{tikzcd}
+\]
+\end{defin}
+\begin{rem}
+We can define the same for $DR$, and the two integration maps are compatible.
+\end{rem}
+
+Finally, an additional constraint on the morphism $\eta$ makes it an $\mathcal{O}$-orientation on $X$, which we define now.
+For any $E \in \Perf(X)$, we have a natural pairing, which we can compose with $\eta$:
+\[
+\begin{tikzcd}
+C(X,E) \otimes_k C(X,E^*) \arrow{r} & C(X,\mathcal{O}_X)\arrow{r} & k[-d] .
+\end{tikzcd}
+\]
+Dually this gives a ``cap product'' morphism:
+\[	\cap \eta : C(X,E) \to C(X,E^*)^*[-d].	\]
+
+\begin{defin}
+Let $X \in dSt_k$ $\mathcal{O}$-compact. An $\mathcal{O}$\textbf{-orientation of degree d} on $X$ is a morphism of complexes:
+\[	[X] : C(X,\mathcal{O}_X) \to k[-d]	\]
+such that, for every $A \in \cdga_k^{\leq 0}$ and any $E \in \Perf(X_A)$, the morphism
+\[	\cap [X]_A : C(X_A,E) \to C(X_A,E^*)*[-d]	\]
+is a quasi-isomorphism of $A$-dg-modules.
+\end{defin}
+
+The main theorem of this section is:
+
+\begin{thm}[Theorem 2.5 in \cite{PTVV}]
+\label{thm:symp_map}
+Let $F$ be a derived Artin stack equipped with $\omega \in \Symp(F,n)$. Let $X$ be an $\mathcal{O}$-compact derived stack
+equipped with an $\mathcal{O}$-orientation of degree $d$:
+\[	[X] : C(X,\mathcal{O}_X) \to k[-d].	\]
+Assume, moreover, that $\Map_{dSt}(X,F)$ is a derived Artin stack, locally of finite presentation. Then there is a canonical
+$n-d$ shifted symplectic structure on $\Map_{dSt}(X,F)$.
+\end{thm}
+
+\begin{proof}
+Note that $\omega \in \mathcal{A}^{2,cl}(F,n)$ is the same as:
+\[	\omega : k[2-n](2) \to NC^w(F) .	\]
+Pulling back along the evaluation morphism $\pi : X \to \Map(X,F)$ and integrating on $X$ gives:
+\[
+\begin{tikzcd}
+k[2-n](2) \arrow{r}{\omega} & NC^w(F) \arrow{r}{\pi^*} & NC^w\big(X\times \Map(X,F)\big) \arrow{r}{\int_{[X]}} &
+NC^w\big(\Map(X,F)\big)[-d] .
+\end{tikzcd}
+\]
+It remains to see that the underlying 2-form of $\int_{[X]} \pi^* \omega$ is non-degenerate. We can check
+this condition locally. Let $f : \Spec A \to \Map(X,F)$ be an $A$-point of $\Map(X,F)$. The tangent complex at $f$ is:
+\[	\bbT_f \Map(X,F) \simeq C\big(X \times \Spec A, f^*(\bbT_F)\big).	\]
+The underlying 2-form of $\omega$ determines a non-degenerate pairing:
+\[	\bbT_F \wedge \bbT_F \to \mathcal{O}_F[n].	\]
+By pull-back we obtain a non-degenerate pairing of $A$-dg-modules:
+\[	C\big(X \times \Spec A, f^*(\bbT_F)\big) \wedge C\big(X \times \Spec A, f^*(\bbT_F)\big) \to C\big(X \times \Spec A,
+\mathcal{O}_{X\times \Spec A}[n]\big) .	\]
+Composing with the orientation $[X_A]$ gives a non-degenerate pairing:
+\[	C\big(X \times \Spec A, f^*(\bbT_F)\big) \wedge C\big(X \times \Spec A, f^*(\bbT_F)\big) \to A[n-d].	\]
+But this is just the pairing induced by the underlying 2-form of $\int_{[X]} \pi^*\omega$.
+\end{proof}
+
+The following are examples of stacks $X$ which satisfy the $\mathcal{O}$-compactness and $\mathcal{O}$-orientability
+hypotheses of Theorem \ref{thm:symp_map}.
+
+\begin{eg}
+\begin{enumerate}
+\item (Calabi-Yau) Let $X$ be a smooth and proper DM stack over $\Spec k$ with relative dimension $d$, with connected
+geometric fibers. Assume given an isomorphism of line bundles $u:\omega_X \simeq \mathcal{O}_X$. $X$ is $\mathcal{O}$-compact
+automatically \todo{why?}. Moreover, the isomorphism $u$ together with Serre duality give an isomorphism:
+\[	H^d(X,\mathcal{O}_X) \overset{u}{\to} H^d(X,\omega_X) \cong k ,	\]
+which lifts to a quasi-isomorphism of complexes:
+\[	C(X,\mathcal{O}_X) \to k[-d] .	\]
+Theorem \ref{thm:symp_map} also requires that $\Map(X,F)$ be a derived Artin stack when $F$ is one. This follows from 
+Artin-Lurie representability.
+\item (Betti) 
+\item (de Rham)
+\item (Dolbeault) We omit this one.
+\end{enumerate}
+\end{eg}
+
+We have the following existence statements for various moduli spaces of bundles and complexes.
+\begin{cor}[Corollaries 2.6 and 2.13 in \cite{PTVV}]
+\label{cor:symp_moduli}
+Let $G$ be a reductive group scheme over $k$, and fix $\omega \in (\Sym^2 \fr g) ^G$ non-degenerate.
+\begin{enumerate}
+\item (Betti) Let $M$ be a compact, orientable topological manifold of degree $d$. A choice of fundamental class $[M] \in H_d(M,k)$
+determines a $2-d$ shifted symplectic structure on:
+\begin{align*}
+LocSys(M) &= \Map(M,BG), \\
+\Perf(M) &= \Map(M, \Perf) .
+\end{align*}
+
+\item (de Rham) Let $Y$ be a smooth and proper DM stack with connected geometric fibers of relative dimension $d$. A choice of
+fundamental class $[Y] \in H^{2d}_{dR}(Y)$ determines a $2-2d$ shifted symplectic structure on the stacks of bundles/perfect
+complexes with flat connections:
+\begin{align*}
+Loc_{dR}(Y) &= \Map(Y_{dR},BG), \\
+\Perf_{dR}(Y) &= \Map(Y_{dR}, \Perf) .
+\end{align*}
+
+\item (Dolbeault) Let $Y$ be as before. A choice of
+fundamental class $[Y] \in H^{2d}_{\p}(Y)$ determines a $2-2d$ shifted symplectic structure on the stacks of bundles/perfect
+complexes with Higgs fields:
+\begin{align*}
+Higgs(Y) &= \Map(Y_{\p},BG), \\
+\Perf_{\p}(Y) &= \Map(Y_{\p}, \Perf) .
+\end{align*}
+
+\item (Calabi-Yau) Let $Y$ be as before. A choice of trivialization $\omega_{Y/k} \simeq \mathcal{O}_Y$ determines a canonical
+$2-d$ shifted symplectic structure on:
+\begin{align*}
+Bun_G(Y) &= \Map(Y,BG), \\
+\Perf(Y) &= \Map(Y, \Perf) .
+\end{align*}
+\end{enumerate}
+\end{cor}
+
+\begin{rem}
+For $Y$ a K3 or an elliptic surface, we obtain a 0-shifted symplectic structure on $Bun_G(Y)$. This recovers
+a result that was known before the paper \cite{PTVV}, for the locus of simple bundles.\footnote{Simple means that the
+only endomorphisms are constants, and they don't have negative self extensions.} But the fact that this classical 
+symplectic structure extends to the entire moduli space
+is new.
+\end{rem}
+
+\todo{some extensions of the mapping stack result in a paper by Calaque and in the thesis of Ted Spaide}
+
 
 \section{Examples: Lagrangian intersections}
 Probably no time for this
