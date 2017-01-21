@@ -1,0 +1,183 @@
+\chapter{D-modules: de Rham space perspective}
+Talk by Benedict Morrissey.
+
+We will relate these to crystals, and use this to describe D-modules in DAG. In particular, we work towards the following.
+
+\begin{thm}
+If $X$ is a smooth scheme, then $Crys(\QCoh(X)) \simeq D_X - mod$ is an equivalence of categories.
+\end{thm}
+
+\section{Classical setting}
+\label{sect:dmod_class}
+
+\begin{defin}
+A \textbf{crystal} of quasi-coherent sheaves on $X$ is $\mathcal{F} \in \QCoh(X)$ with the following data. For every map
+from an affine scheme $x : \Spec R \to X$, let $\mathcal{F}_x = x^* \mathcal{F}$. Let $I$ be the nilpotent ideal of $R$,
+and consider the sequence of maps:
+\[	\Spec (R/I) \to \Spec R \overset{x,y}{\to} X.	\]
+We say $x,y$ are \textbf{arbitrarily close} if the associated $R/I$ points are equal. We also need the choice of:
+\[	\eta_{x,y} : \mathcal{F}_x \to \mathcal{F}_y	\]
+an isomorphism of $R$-modules, satisfying a cocycle condition: $\eta_{x,z} = \eta_{y,z} \circ \eta_{x,y}$.
+\end{defin}
+
+\begin{defin}
+The \textbf{de Rham prestack} is defined via the functor of points:
+\[	X_{dR}(R) = X(R/I) .	\]
+\end{defin}
+
+Note that crystals are very similar to quasi-coherent sheaves on $X_{dR}$. That's because the latter have stalks
+over each $\bar x$, and we can pull these back to get stalks at each $x, y$ which are canonically isomorphic.
+
+\begin{rem}
+Recall that we haven't defined $\QCoh$ for a prestack, so what exactly we mean is problematic.
+\end{rem}
+
+\begin{proof}
+\[	\Spec (R/I) \to \Spec(R) \overset{x,y}{\to} X \times X	\]
+The two maps factor through the diagonal. However, the maps from $\Spec R$ don't necessarily factor through the diagonal:
+we can get fat points pointing in directions perpendicular to the diagonal. However, it factors through the completion of
+the diagonal.
+
+Let's define this more precisely. $\Delta_X \in X \times X$ is defined as the vanishing of some sheaf of ideals (such
+as $x-y$, but globally). In other words, $\Delta_X = \Spec_{X\times X}(\mathcal{O}_{X\times X}/I)$. Then we define
+the partial formal completions:
+\[	\Delta^n_X = \Spec_{X\times X} (\mathcal{O}_{X\times X}/I^n) .	\]
+Finally, \textbf{the formal completion of the diagonal} is defined as the ind-scheme:
+\[	\hat \Delta_X = \colim_n \Delta^n_X.	\]
+
+Then we have that $Crys(\QCoh(X)) \cong \QCoh(\hat \Delta_X)$. \todo{not sure how to finish this, but the derived case
+we do in a bit should take care of it}. For each $n$, consider the 2 projections:
+\[
+\begin{tikzcd}
+\; & \Delta^n_X & \\
+X & & X.
+\end{tikzcd}
+\]
+Pulling back and pushing forward gives:
+\[	\mathcal{F} \to \pi^{(n)}_{1*} \pi_2^{(n)*} \mathcal{F} = \mathcal{O}_X^{(n)} \otimes_{\mathcal{O}_X} \mathcal{F}.	\]
+Where $\mathcal{O}_X^{(n)}$ is by definition $\pi_{1*}^{(n)}\mathcal{O}_{\Delta^{(n)}_X}$.
+
+Now let $\mathcal{D}_X^{\leq n}$ be differential operators of order $\leq n$.
+\[	\mathcal{D}_X^{\leq n} \otimes_{\mathcal{O}_X} \mathcal{O}_{X^n} \to \mathcal{O}_X	\]
+given by $(Dg)(x) = Dg(x,x)$. $g$ is a function of $x$ and $y$, consider $X$ fixed, and $y$ is varying locally around it.
+Act the differnetial operators as if it's just a function of $y$. Get a new function, and evaluate it at $(x,x)$.
+\end{proof}
+
+\begin{eg}
+$X = \bbA^1$, $\mathcal{O}_X = k[x]$. $\mathcal{O}_X^{(n)} = k[x,y]/(x-y)^{n+1}$. The latter has a basis as
+a $k[x]$-module, given by $\{(x-y)^k\}_{0\leq k \leq n}$. Moreover:
+\[	\mathcal{D}_X^{\leq n} = \left\{ \frac{1}{k!} \frac{\partial^k}{\partial y^k} \right\}	\]
+as $k[x]$-module.
+\end{eg}
+
+\begin{lem}
+If you act by differential operators twice, you get a commutative diagram:
+\[
+\begin{tikzcd}
+\mathcal{D}_X \otimes_{\mathcal{O}_X} \mathcal{D}_X \otimes_X \mathcal{F} & \mathcal{D}_X \otimes_X \mathcal{F} \\
+\mathcal{D}_X \otimes_X \mathcal{F} & \mathcal{F}.
+\end{tikzcd}
+\]
+\end{lem}
+
+Summing up, we have the chain of equivalences $Crys(\QCoh(X)) \cong \QCoh(\hat \Delta_X) \cong \mathcal{D}_X - mod$.
+
+
+\section{Derived setting}
+Recall $X_{dR}$, which we redefine as:
+\[	X_{dR}(R) = X(R^{red}),	\]
+where $R^{red} = H^0(R) / nil(H^0(R))$.
+
+\begin{defin}
+\textbf{Left D-modules} are:
+\[	D-mod^l (X) := \QCoh(X_{dR}),	\]
+where the latter are restricted to be eventually co-connective. Similarly \textbf{right D-modules} are:
+\[	D-mod^r (X) := IndCoh(X_{dR}),	\]
+wher the latter are restricted to be locally almost of finite type.
+\end{defin}
+
+How about the definition of $\QCoh(X)$? We'll just take $\QCoh(X) = \lim \QCoh(S)$, where the limit is taken over all
+$S \to X$ derived affines. Recall also the definition of IndCoh: it's the colimit completion of $\Coh(Y)$ in
+$\PSh(Y)$. Then we can define a map $\psi_Y$ as a left Kan extension:
+\[
+\begin{tikzcd}
+\Coh(Y) \arrow{r} & \QCoh(X) \\
+\IndCoh(Y) \arrow{ur}{\psi_Y} &
+\end{tikzcd}
+\]
+These are all stable $\infty$-categories with t-structure. 
+
+We have a natural transformation $p_{DR} : I \to DR$, which gives natural transofrmations:
+\begin{align*}
+D-mod^l &\to \QCoh \\
+D-mod^r &\to IndCoh.
+\end{align*}
+\todo{here I and DR are reversed, what's up with that?}
+
+
+
+\section{Properties}
+
+Let's talk about descent. $D-mod^r$ satisfies fpppf, h- and etale descent on $DGSch_{aft}^{aff}$, where the subscript says
+almost of finite type. \footnote{We have no idea what h- is, but it's apparently important. Also, fpppf is not a typo;
+Gaitsgory and Rozenblyum add another condition which gives a third f.}
+
+We also have an adjunction:
+\[	obliv_x^r : D-mod^r(X) \to IndCoh(X) : ind_X^r,	\]
+which is monadic. Therefore $IndCoh(X_{dR}) \cong T-mod (IndCoh(X))$.
+
+T-structure. $\QCoh(Y)$ for $Y$ a prestack has a t-structure, such that for $S \to Y$, $\QCoh(Y) \to \QCoh(S)$ preserves
+the t-structure. Same holds for $IndCoh$.
+
+\begin{prop}
+For $X$ a stack,
+\[	D (D-mod^r(X)^{\heartsuit}) \simeq D-mod(X)	.\]
+\end{prop}
+
+\begin{rem}
+This is not that surprising, since when passing from $X$ to $X_{dR}$ we're throwing out all the derived information.
+\end{rem}
+
+
+\section{Differential operators in the derived setting}
+This relation follows closely the proof from the classical case, in section \ref{sect:dmod_class}
+
+\begin{prop}[GR 3.1.3]
+There's an equivalence:
+\[	IndCoh(X_{dR}) \simeq Tot(IndCoh(X^{\bullet}/X_{dR})).	\]
+The latter is defined by the \v{C}ech nerve of the natural map $X \to X_{dR}$.
+\end{prop}
+
+Let $X,Y \in DGSch_{aft}$.
+\begin{prop}
+$IndCoh(X)$ is cannonically self-dual, in the sense that:
+\[	Funct_{cont}(IndCoh(X), IndCoh(Y)) \simeq IndCoh(X) \otimes IndCoh(Y) \simeq IndCoh(X \times Y).	\]
+$Funct_{cont}$ means limit-preserving functors.
+\end{prop}
+\begin{proof}
+Take $Q \in IndCoh(X \times Y)$. Then consider the projections:
+\[
+\begin{tikzcd}
+\; & X  \times Y\arrow{d}{\Delta \times Id} & \\
+\; & X \times X \times Y & \\
+X & & X \times Y \\
+& & Y .
+\end{tikzcd}
+\]
+Run $Q$ through this to get a map from $X$ to $Y$. You need to say the words $(\Delta \times id)^! (\mathcal{F} \otimes
+Q)$, but the tensor product is square.
+\end{proof}
+
+Recall the monad $T$, define $D_X^r = \alpha^{-1}(T) \in IndCoh(X\times X)$. Moreover $|X^{\bullet}/X_{dR}| \to X \times X$
+is a derived analog of the completion of the diagonal. Now we have $D_X^r \simeq \Delta_*^{Indcoh}(\omega_{X \times_{X_{dR}} X})$.
+\footnote{GR need to modify the pushforward slightly to make it play nicely with Indcoherent sheaves. That's what the
+IndCoh superscript means. Don't worry about it too much.} $\omega$ is some notion of dualizing sheaf, which gives a generalization
+of Serre duality $ - \otimes \omega_Y : IndCoh(Y) \to QCoh(Y)$.
+
+Let $X \in DGSch_{aft}$; by Kashiwara's theorem, it suffices to take it smooth. Let $Diff_X$ be the sheaf of diff operators
+in the sense ofthe previous talk; we would like to identify its action with that of $D_X^r$.
+
+\todo{paper}
+
+Taking $\mathcal{F}_1 = \mathcal{F}_2 = \mathcal{O}_X$, we get $\mathcal{D}_X^l \to Diff_X$.
+

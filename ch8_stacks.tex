@@ -1,0 +1,582 @@
+\chapter{Geometric Stacks and Gluing}
+Talk by Mauro Porta.
+
+
+We finally leave the affine world! Only took us 2 months. But first, we mention a
+correction to Lemma \ref{lem:equiv_heart} from the previous talk.
+The statement ``$F^{\heartsuit}$ is an equivalence'' should be taken as ``$F^{\heartsuit}$ is essentially surjective and 
+$F|_{\cC^{\heartsuit}}$ is
+fully faithful''. This means we have to take into account $\Ext$ between discrete objects; an equivalence at the level of
+hearts is not strong enough to guarantee an equivalence on the entire categories.
+
+Otherwise, there's a counterexample to the lemma. Take $A \in cdga^{\leq 0}$, we have the pullback  functor 
+$A-\cM od \overset{f^*}{\to} H^0(A)-\cM od$, $M\mapsto M \otimes_A H^0(A)$, which is not t-exact, so the lemma makes no statement
+about it. However, the forgetful functor $f_* : H^0(A) - \cM od \to A-\cM od$ is t-exact, but it fails to be an equivalence, even if
+$f_*^{\heartsuit}$ is an equivalence between the categories of discrete modules.
+
+
+\section{Gluing: problems and approaches}
+The problem for today is: how do we patch together derived affines? This is difficult for two reasons:
+\begin{enumerate}
+\item If a derived scheme is to be thought of as a gluing of derived affines, we should be able to produce many gluing
+diagrams in $d \cA ff_k$. This means functors $I \to d \cA ff_k$, which is difficult because the latter is an $\infty$-category,
+so we need to specify higher coherencies when defining functors.
+In particular, to define $\bbP^1$, we have:
+\[
+\begin{tikzcd}
+\; & \bbA^1\arrow{dr} &  \\
+\bbG_m \arrow{ur}\arrow{dr} & & \bbP^1 \\
+& \bbA^1\arrow{ur} &
+\end{tikzcd}
+\] 
+as well as a homotopy between the branches. \todo{Am I interpreting this correctly?}
+This is not an existential threat, because we can choose a model-categorical presentation for $d \cA ff_k$.
+\item But we really need an environment category where the gluing is performed; constructing this is tricky. There are 2 ways.
+\begin{itemize}
+\item Structured spaces, i.e. the environment is the category of locally ringed topoi, or similar.
+\item Functor of points, i.e. the environment is the category of presheaves of spaces, $\Fun(d\cA ff \to \cS)$.
+\end{itemize}
+Today we want to address both and compare them.
+\end{enumerate}
+
+First, we look at pros and cons for both:
+\begin{itemize}
+\item Structured spaces. It's fairly easy to think about objects in this way: they are $(X, \mathcal{O}_X)$, where $X$ is some
+sort of topological space (actually $\infty$-topos), and $\mathcal{O}_X$ is a sheaf of cdga's on $X$. Note how similar this is
+to how we think about underived schemes. Moreover, the subdivision $(X, \mathcal{O}_X)$ makes it easy to distinguish the
+derived information from the underived one. For example, $\pi_0(X,\mathcal{O}_X) = (X, \pi_0(\mathcal{O}_X))$, and the Postnikov
+tower discussion carries over to derived schemes:
+\[	\dots \to (X, \tau_{\leq 2} \mathcal{O}_X) \to (X, \tau_{\leq 1} \mathcal{O}_X) \to (X, \pi_0 \mathcal{O}_X).	\]
+Cons: maps are difficult to understand, and only Deligne-Mumford stacks can be described in this way. 
+\footnote{Any structured space has connected cotangent complex, but Artin stacks don't need to. The smooth \'etale
+site is not canonical, while the \'etale site is.}
+Note that the stack of
+perfect complexes, as well as the Eilenberg-Maclane stacks are Artin, but not Deligne-Mumford.
+
+\item Functor of points. It can deal with Artin stacks, and then some more. Sometimes in life we want to deal with objects 
+which are stacks,
+but not geometric stacks; the easiest example is $QCoh : d Aff \to Cat_{\infty}$. We saw last time it has descent, so it's
+a stack, but it's not geometric.\footnote{I.e. it doesn't have an appropriate atlas, we'll see shortly what this means.} 
+We only have one con, but it's pretty bad: it's not clear at all,
+in this language, why schemes should be simpler than Artin stacks. In other words, techniques which hold for schemes but don't
+hold for Artin stacks are obscured.
+\end{itemize}
+
+
+\section{Structured spaces}
+We want a category $\cC$ with the following properties:
+\begin{enumerate}
+\item \label{env1}
+$\cC$ contains $d \cA ff_k$ in a fully faithful way.
+\item \label{env2}
+$\cC$ is big enough to contain all the gluings we'll make. For example, we'd be happy with $\cC$ closed under colimits.
+\item \label{env3}
+$\cC$ is small enough to have a good notion of Grothendieck topology. (Note that any co-complete category has a Grothendieck
+topology, called the \textbf{canonical topology}: for an object $X$, and a collection $\{U\}$ of objects mapping to $X$, 
+call it a covering if
+the geometric realization of the $\check{C}$ech nerve of $\{U\}$ is equivalent to $X$. But this is not a very useful topology; when
+we say ``good Grothendieck topology'', we want to have a better grasp on the coverings: describe them using words such as
+\'etale, smooth, flat, open immersion etc.)
+\end{enumerate}
+
+
+To exemplify this philosophy, recall what we do in classical AG. That is, start with $\cA ff_k$ instead of $d \cA ff_k$. 
+Then we have two choices for $\cC$.
+\begin{itemize}
+\item $(X,\mathcal{O}_X)$ locally ringed spaces. Property \ref{env1} we all know. For \ref{env2}, note that LRS doesn't admit
+all colimits (you can't talk about $\bbP^{\infty}$, for example; that's an IndScheme), but admits enough of them
+to describe schemes. For \ref{env3}, the Grothendieck topology is as follows. We say $(X, \mathcal{O}_X) \to (Y,\mathcal{O}_Y)$ is an
+\textbf{open immersion} if it's an open inclusion at the level of topological spaces, and the induced map $f^{\sharp}
+: f^* \mathcal{O}_Y \to \mathcal{O}_X$ is an isomorphism. Then a collection $\{X_i\}$ is a \textbf{covering} of $Y$ if
+each $X_i \to Y$ is an open immersion, and moreover the induced map $\coprod X_i \to Y$ is surjective at the level of topological
+spaces. \todo{is this definition of covering correct?}
+Then we can define schemes as objects in LRS which are covered, in the above sense, by objects in the essential
+image of $\cA ff_k \to LRS$.
+
+\item Alternatively, we can take locally ringed 1-topoi, in which case we get Deligne-Mumford stacks. Below we make a short
+summary of locally ringed 1-topoi.
+\end{itemize}
+
+\begin{defin}
+A \textbf{Grothendieck site} is a category $\mathcal{D}$ together with a Grothendieck topology. A \textbf{1-topos} $X$
+is a category equivalent to $\Sh(\mathcal{D})$ for some Grothendieck site $\mathcal{D}$.
+\end{defin}
+
+If the gluing environment $\cC$ is the category of locally ringed topoi, then \ref{env1}
+and \ref{env2} are again easy. For the Grothendieck topology on $\cC$, we make the following definitions.
+\footnote{Don't confuse the Grothendieck topology on the category $\cC$ of locally ringed topoi, which we're trying to
+define now, with the Grothendieck topology on the underlying site $\cD$ of an individual topos $\mathcal{X}$. Sometimes
+both topologies have the same name, e.g. \'etale, but it should be clear that they're completely different notions.}
+
+\begin{defin}
+For $\mathcal{X}$, $\mathcal{Y}$ 1-topoi, a \textbf{geometric morphism} $\mathcal{Y} \to \mathcal{X}$ is an adjoint pair:
+\[	f^{-1} : \mathcal{X} \to \mathcal{Y} : f_*,	\] 
+where moreover $f^{-1}$ preserves finite limits.
+\end{defin}
+
+Note that, despite the notation, the geometric morphism goes from $\mathcal{Y}$ to
+$\mathcal{X}$; the ``inverse image'' $f^{-1}$ happens to be the left adjoint. This is motivated by the following example.
+If $X, Y$ topological spaces, take $\mathcal{X} = \Sh(X)$ and $\mathcal{Y} = \Sh(Y)$.
+For any $f: Y \to X$, the usual inverse and direct image functors on sheaves:
+\[	f^{-1}: \Sh(X) \to \Sh(Y) : f_*	\]
+form a geometric morphism. Recall that $f^{-1}$ is defined as a colimit indexed by open subsets containing
+the image of $f$, followed by sheafification. Both these operations are filtered colimits, therefore commute with finite
+limits. Hence $f^{-1}$ commutes with finite limits, and the pair $(f^{-1},f_*)$ is a geometric morphism.
+
+\begin{defin}
+\label{defin:etale_topoi}
+A geometric morphism $f^{-1} : \mathcal{X} \to \mathcal{Y} : f_*$ is \textbf{\'etale} if there exists $U \in \mathcal{X}$
+and an equivalence $\mathcal{X}_{/U}$ making the following diagram commute:
+\[
+\begin{tikzcd}
+\mathcal{X}\arrow{r}{\times U}\arrow[shift left]{dr}{f^{-1}} & \mathcal{X}_{/U}\arrow{d}{\simeq} \\
+ & \mathcal{Y}\arrow[shift left]{ul}{f_*} .
+\end{tikzcd}
+\]
+\end{defin}
+
+To get a feel for this definition, note the following examples.
+
+\begin{lem}
+\label{lem:etale_topoi}
+If $f:Y \to X$ is a local homeomorphism of topological spaces, then the standard $f^{-1}, f_*$ is \'etale. Moreover, if
+$f:Y \to X$ is an \'etale map of schemes, then $f^{-1} : \Sh_{Set}(X_{\'et}, T_{\'et}) \to 
+\Sh_{Set}(Y_{\'et}, T_{\'et})$ is \'etale.\footnote{By $X_{\'et}$ we mean the \'etale site of the scheme $X$, which is the
+subcategory of the comma category $\Sch_X$ given by \'etale morphisms $U \to X$. We endow this site with the Grothendieck
+topology $T_{\'et}$ induced from the \'etale topology on $\cA ff$.}
+\end{lem}
+
+In fact, we can uprgrade the second statement of Lemma \ref{lem:etale_topoi} to a characterization of \'etale morphisms of
+schemes.
+
+\begin{prop}
+$f : X \to Y$ in $Sch_k$ is \'etale iff the induced $(f^{-1},f_*)$ morphism of topoi is \'etale
+and $f^{-1} \mathcal{O}_Y \to \mathcal{O}_X$ is an equivalence.
+\end{prop}
+
+\begin{rem}
+We elaborate on the element $U \in \mathcal{X}$ which appears in Definition \ref{defin:etale_topoi}. If $Y \subset X$ is an
+open subset of the topological space $X$, then $Y$ defines by Yoneda a sheaf $h_Y \in \mathcal{X} = \Sh(X)$, such that:
+\[
+h_Y(V) = \left\{ \begin{array} {ll} * & ,V \subset Y, \\ \emptyset &, V\not \subset Y. \end{array}\right.
+\]
+Then we take $U = h_Y$, and note that we have $\Sh(Y) \simeq \Sh(X)_{/U}$.
+
+We can relax the assumptions and take $f:Y \to X$ a local homeomorphism. Then we define a sheaf $h_f$ by
+$h_f(V) = \Hom_{/V}(V,V \otimes_X Y)$.\footnote{In other words, this is the sheaf of sections of $f:Y \to X$.}
+ This generalizes the sheaf $h_Y$ from the previous paragraph, in the sense that,
+if $f$ is an open immersion, $\Hom_{/V}(V,V \otimes_X Y)$ is nonempty iff $V\cap Y = V$, i.e. $V \subset Y$.
+Moreover, it's a fact that local homeomorphisms are characterized by the property $\Sh(Y) \simeq \Sh(X)_{/h_f}$. So
+we take $U = h_f$.
+\end{rem}
+
+We move on from the idea of gluing in the ambient category of locally ringed 1-topoi to the derived analog. This
+will involve the theory of $\infty$-topoi, which allows us to replace sheaves of sets with sheaves of spaces,
+and obtain higher DM stacks. This is necessary, for example, in order to talk about $K(G,n)$, for $G$ finite abelian
+and $n>1$.\footnote{In algebraic topology, we obtain $K(G,n)$ by de-looping $K(G,n-1)$, a process which almost never
+returns a scheme. So when doing geometry we need to replace de-looping with working with higher groupoids; morally
+speaking, de-looping $n$ times in topology corresponds to increasing the stack level by $n$. For example, the de-looping
+$BG$ of a topological group $G$ corresponds to the stack $BG$ in geometry.}
+
+
+\section{A primer on $\infty$-topoi}
+Note first that the HAG framework \cite{HAG-I} involves hypercomplete $\infty$-topoi, while the DAG framework
+\cite{Lurie_DAG_V} involves non-hypercomplete 
+$\infty$-topoi. The latter make for a nicer theory, but in practice often need to be reduced to the hypercomplete case.
+
+The main difference is that the following hold if $\mathcal{X}$ is hypercomplete, but don't need to otherwise.
+\begin{itemize}
+\item $\mathcal{X} = \Sh(\cC, \cT)$, where $(\cC, \cT)$ is an $\infty$-Grothendieck site.\footnote{From now on,
+sheaves are sheaves of spaces, unless we explicitly say otherwise.}
+\item For $f: \mathcal{F} \to \mathcal{G}$ a morphism in $\mathcal{X}$, $f$ is an equivalence
+iff $\pi_i(f)$ are isomorphisms for all $i$.
+\end{itemize}
+
+\begin{rem}
+\begin{enumerate}
+\item If $\mathcal{X}$ is a 1-topos, viewing it as an $\infty$-category (i.e. taking the nerve) \emph{does not} get us
+an $\infty$-topos. Instead, if $\mathcal{X} = \Sh_{Set}(\cC, \cT)$, we need to replace it with $\Sh(\cC,\cT) :=\Sh_{\cS}(\cS,\cT)$,
+which is an $\infty$-topos. Moreover, we have a fully faithful embedding $\mathcal{X} \subset \Sh(\cC,\cT)$.
+
+\item If $\mathcal{X}$ is an $\infty$-topos, we can look at $\mathcal{X}^{\leq n}$, the $\infty$-category of $n$-truncated 
+objects in $\mathcal{X}$. $\mathcal{F} \in \mathcal{X}$
+is \textbf{n-truncated} if for all $\mathcal{G} \in \mathcal{X}$, $\Map_{\mathcal{X}}(\mathcal{G},\mathcal{F})$ is n-truncated
+as an $\infty$-category. Every $\mathcal{F} \in \mathcal{X}^{\leq n}$ is hypercomplete, i.e. equivalent to the limit of its
+Postnikov tower.
+
+We say that $\mathcal{X}$ is \textbf{n-localic} if we can recover it from $\mathcal{X}^{\leq n}$. More precisely, this means that
+for all $\infty$-topoi $\mathcal{Y}$, $\Map_*(\mathcal{Y}, \mathcal{X}) \simeq \Map_*(\mathcal{Y}^{\leq n}, \mathcal{X}^{\leq n})$.
+The equivalence is implemented as follows. Since $f_*$ is a right adjoint, it preserves truncated objects, which gives the
+bottom arrow in the diagram:
+\[
+\begin{tikzcd}
+\mathcal{Y}\arrow{r}{f_*} & \mathcal{X} \\
+\mathcal{Y}^{\leq n}\arrow[hook]{u}\arrow[dashed]{r} & \mathcal{X}^{\leq n}\arrow[hook]{u}.
+\end{tikzcd}
+\]
+
+\item Sometimes, $\infty$-topoi are ``naturally'' hypercomplete. For example:
+\begin{itemize}
+\item If $X$ is a topological space with finite covering dimension, such as locally compact Hausdorff, then $\Sh(X)$ is
+hypercomplete.
+\item If $X$ is a quasi-compact, quasi-separated, locally Noetherian scheme, then sheaves on $(X_{Zar},\cT_{Zar})$
+are a hypercomplete $\infty$-topos.
+\item With $X$ as before $\Sh(X_{Nis},\cT_{Nis})$ is hypercomplete.
+\item With $X$ as nice a scheme as you want, even a field, $\Sh(X_{\'et},\cT_{\'et})$ is \emph{not} hypercomplete. But it's
+always 1-localic.
+\end{itemize}
+\end{enumerate}
+\end{rem}
+
+\begin{defin}
+An $\mathbf{\infty}$\textbf{-topos} is a left exact, accessible localization of a presentable $\infty$-category.
+(For example, a presentable $\infty$-category of presheaves of spaces.)
+\end{defin}
+
+\begin{rem}
+There exists an analog of Giraud's characterization, giving necessary and sufficient intrinsic conditions for an $\infty$-category
+to be an $\infty$-topos. They are somewhere in \cite{HAG-I}.
+\end{rem}
+
+\begin{rem}
+$\mathcal{X}$ is n-localic iff there exists an n-cateogry $\cC$ such that $\mathcal{X} = \Sh(\cC,\cT)$.
+\end{rem}
+
+We want to construct the category of locally ringed $\infty$-topoi; a reference for this is Chapter 3 of \cite{DAG-V}.
+Recall the definition of derived affines via
+Lawvere theory, explained in \ref{sect:lawvere}: $d \cA ff = \Fun^{\times}(T_{disc}(k), \cS)$, where $T_{disk}(k) = \{\bbA_k^n\}$
+is the $\infty$-category of affine spaces with morphisms of schemes. To get locally ringed $\infty$-topoi, we change the target $\cS$
+to something else. Let $^L Top$ be the $\infty$-category of $\infty$-topoi with geometric morphisms; there is a forgetful
+functor $^L Top \to \cC at_{\infty}$. Using the Grothendieck construction, this buys us a Cartesian fibration
+$\overline{^L Top} \to ^L Top$.
+
+\begin{defin}
+The $\infty$-category of locally ringed $\infty$-topoi is a subcategory:
+\[	^L Top(T_{disc}(k)) \subset \Fun(T_{disc}(k), \overline{^L Top}) \times_{\Fun(T_{disc}(k),^L Top)} {^L Top}.	\]
+Its objects are pairs $(\mathcal{X}, \mathcal{O} : T_{disc}(k) \to \mathcal{X})$, where $\mathcal{O}$ commutes with products
+and $\pi_0(\mathcal{O})$ is a sheaf of local rings. Its morphisms are pairs $(f,f^{\sharp}) : (\mathcal{X},\mathcal{O}_{\mathcal{X}})
+\to (\mathcal{X},\mathcal{O}_{\mathcal{X}})$, such that $f^{\sharp} : f^{-1} \mathcal{O}_{\mathcal{Y}} \to \mathcal{O}_{\mathcal{X}}$
+induces a local morphism on $\pi_0$.
+\end{defin}
+
+\begin{defin}
+A \textbf{derived Deligne-Mumford stack} is a pair $(\mathcal{X},\mathcal{O}_{\mathcal{X}}) \in ^L Top(T_{disc}(k))$,
+such that locally $(\mathcal{X},\mathcal{O}_{\mathcal{X}})$ is of the form $\Spec A = (\Sh(A_{\'et}), \mathcal{O}_A)$,
+for some derived ring $A$.
+\end{defin}
+
+In practice, $(\mathcal{X},\mathcal{O}_{\mathcal{X}})$ is a derived DM stack if there exist $U_i \in \mathcal{X}$ such that:
+\begin{enumerate}
+\item $(\mathcal{X}_{/U_i}, \mathcal{O}_{\mathcal{X}}|_{U_i}) \cong \Spec A_i$;
+\item $U= \coprod_i U_i \to 1_{\mathcal{X}}$ is an effective epimorphism (i.e. $\pi_*(U) \to \pi_*(1_{\mathcal{X}})$ is surjective).
+\end{enumerate}
+
+\begin{defin}
+We say that $(\mathcal{X},\mathcal{O}_{\mathcal{X}})$ is a \textbf{derived algebraic space} if we can take $U_i$ as above such that
+$U_i \to 1_{\mathcal{X}}$ is a monomorphism for all $i$.
+\end{defin}
+
+A key property of maps of derived schemes:
+\begin{prop}
+The following diagram is a homotopy pullback:
+\[
+\begin{tikzcd}
+\Map_{\Sh_{cdga}(\mathcal{X})} (f^{-1}\mathcal{O}_{\mathcal{Y}}, \mathcal{O}_{\mathcal{X}}) \arrow{r}\arrow{d} &
+\Map_{d Sch} \big( (\mathcal{X},\mathcal{O}_{\mathcal{X}}), (\mathcal{Y},\mathcal{O}_{\mathcal{Y}}) \big)\arrow{d} \\
+(f^{-1},f) \arrow{r} & \Map_{^L Top}(\mathcal{X}, \mathcal{Y})
+\end{tikzcd}
+\]
+\end{prop}
+
+So far so good; but recall that requirement \ref{env1} for the environment gluing category was that it admits a fully
+faithful embedding from the affine category. The following, Theorem 2.1.12 in \cite{DAG-V}, addresses this. Note that
+the proof is difficult.\todo{understand and say why}
+
+\begin{thm}
+The embedding $\Spec : sc\cA lg_k \to ^L Top(T_{disc}(k))$ is fully faithful.\footnote{Essentially one needs to prove that
+$\Map(\mathcal{X}, \Spec A) \simeq \Map(A, \Gamma(\mathcal{O}_{\mathcal{X}}))$.}
+\end{thm}
+
+
+
+\section{Functor of points}
+Recall that we defined $^R Top(T_{disc})$ the $\infty$-category of locally ringed $\infty$-topoi. Then we defined the
+full subcategory: $DM-Stacks \subset {^R Top}(T_{disc})$ with objects $(\mathcal{X},\mathcal{O}_{\mathcal{X}})$ satisfying:
+there exist objects $U_i \in \mathcal{X}$ such that:
+\begin{enumerate}
+\item $\coprod U_i \to 1_{\mathcal{X}}$ is an effective epimorphism;
+\item $(\mathcal{X}_{/U_i}, \mathcal{O}_{\mathcal{X}/U_i}) \simeq \Spec (A_i)$, for $A_i \in sCRing$.
+\end{enumerate}
+
+Recall also that, if $A \in sCRing$, then $\Spec A$ was defined as:
+\begin{enumerate}
+\item $\mathcal{X}_A = \Sh (A_{et}, \tau_{et})$;
+\item $\mathcal{O}_A : A_{et} \to scRing_k$
+\end{enumerate}
+
+\begin{thm}[DAG-V, Theorem 2.12]
+If $(\mathcal{X},\mathcal{O}_{\mathcal{X}}) \in {^R Top}^{loc}(T_{disc})$, there is a canonical equivalence:
+\[	\Map_{{^R Top}^{loc}(T_{disc})}\big( (\mathcal{X},\mathcal{O}_{\mathcal{X}}), \Spec A\big)
+\simeq \Map_{sCRing_k}\big.(A,\Gamma(\mathcal{O}_{\mathcal{X}})\big)	\]
+\end{thm}
+
+\begin{cor}
+$\Spec : sCRing_k \to {^R Top}^{loc}(T_{disc})$ is fully faithful.
+\end{cor}
+
+\begin{rem}
+If $(\mathcal{X},\mathcal{O}_{\mathcal{X}})$ is a dDM, then it is a derived algebraic space if the following equivalent
+conditions are satisfied:
+\begin{enumerate}
+\item $U_i \to 1_{\mathcal{X}}$ are homotopy monomorphisms (think inclusion of open sets);
+\item $\mathcal{X}$ is the \'etale topos of an ordinary algebraic space.
+\end{enumerate}
+\end{rem}
+
+\begin{rem}
+There is no internal characterization of schemes, as opposed to algebraic spaces. The reason is that with these definitions
+the underlying $\infty$-topos of $\Spec A$ is 1-localic and not 0-localic.
+However, note the following.
+What we called $\Spec$ is usually denoted $\Spec^{\'et}$, as opposed to $\Spec^{Zar}$, defined as $\Spec^{Zar}(A) 
+= (\mathcal{X}_A^{Zar},\mathcal{O}_{A})$, where $\mathcal{X}_A^{Zar} = \Sh(A_{Zar}, \tau_{Zar})$. If we use $\Spec^{Zar}$,
+derived schemes can be characterized as derived DM stacks which are covered by monomorphisms.
+\end{rem}
+
+\begin{rem}
+There's a way of taking the topology into account inside $T_{disc}$. That is, there is a modified version of Lawvere theory
+which takes into consideration also the Grothendieck topology. This is called (pre)geometry. It gives extra flexibility
+that allows to freely switch between different topologies. This language is also used in the analytic setting. (Complex or
+non-archimedian.) Then we get:
+\[
+\begin{tikzcd}
+^R Top(T_{Zar})\arrow{r}{\Spec_{Zar}^{\'et}} & ^R Top(T_{\'et})\arrow{r}{\Spec_{\'et}^{an}} & ^R Top(T_{an}(\C)) \\
+d Sch\arrow[hook]{u} & dDM\arrow[hook]{u} & d An_{\C}\arrow[hook]{u}
+\end{tikzcd}
+\]
+Moreover, the ``\'etalification'' functor takes $\Spec^{Zar}$ to $\Spec^{\'et}$. 
+Note also that the analytification functor can be constructed by hand, but we need the abstract machinery to prove
+that the construction is correct. More details about this are in \cite{DAG-V}.
+\end{rem}
+\todo{the stuff so far should be merged with the previous section}
+
+
+Now we actually move on to the functor of points. Say $\cC$ is a category of (derived) affines. We want to enlarge 
+$\cC$ in order to allow general gluings. This can be performed in 3 steps:
+\begin{enumerate}
+\item Add all colimits to $\cC$, i.e. take the $\infty$-category $\PSh(\cC)$.
+\item Realize that this destroys all geometric information in $\cC$.
+\item Replace presheaves $\PSh(\cC)$ with sheaves $\Sh(\cC,\tau)$, for an appropriate Grothendieck topology $\tau$.
+\end{enumerate}
+
+For an example of why presheaves lose geometric information in $\cC$, consider $X, Y \in \cC$, and suppose 
+the coproduct $Z = X \coprod Y$ exists.
+Then we have $h_X, h_Y, h_Z \in \PSh(\cC)$. Unfortunately, $h_X \coprod h_Y \neq h_Z$. More concretely, take
+$X = Y = \Spec k[x]$ to be affine lines. Then $h_X \coprod h_Y = \Map( -, \bbA^1_k) \coprod \Map(-,\bbA^1_k)$. On the other hand, we have
+$h_Z = \Map(-, \bbA^1_k \coprod \bbA^1_k)$. Evaluating both on $\Spec k \coprod \Spec k$, $h_X \coprod h_Y$ gives
+a point on each affine line, while $h_Z$ allows two points on the same affine line. This problem doesn't arise
+when working with sheaves, rather than presheaves, because then $h_X \coprod h_Y$ is defined by applying sheafification
+to the coproduct of presheaves.
+
+\begin{rem}
+A moment's thought should convince you that these ``geometric relations'' in $\cC$ are the same as a Grothendieck topology. 
+The best way to explain this is the following lemma.
+\end{rem}
+
+\begin{lem}
+Let $(\cC, \tau)$ be a Grothendieck site. Then $\tau$ is subcanonical (every representable preseheaf is a sheaf) if and only if
+for all $U^{\bullet} \to X$ $\tau$-cover of $X$ in $\cC$, we have $X \cong \colim U^{\bullet}$.
+\end{lem}
+
+\begin{lem}
+Let $(\cC, \tau)$ be a Grothendieck site. Then $\Sh(\cC, \tau)$ has the following universal property:
+\begin{enumerate}
+\item The functor $j:\cC \to \Sh(\cC, \tau)$ sends Cech nerves of $\tau$-covers to colimits.
+\item $j$ is universal with property (1), i.e. for all $\infty$-categories $\cD$ and $F: \cC \to \cD$ such that
+$F$ sends Cech nerves of $\tau$-covers to colimits, there exists a unique up to
+homotopy extension $\tilde F$ making the following diagram commute.
+\[
+\begin{tikzcd}
+\cC \arrow{r}{j}\arrow[swap]{dr}{F} & \Sh(\cC, \tau)\arrow[dashed]{d}{\tilde F} \\ & \cD
+\end{tikzcd}
+\]
+\end{enumerate}
+\end{lem}
+
+Thus, we need to replace $\PSh(\cC)$ with $\Sh(\cC,\tau)$. The case we're primarily interested in is
+ $\cC = dAff_k$, and $\tau = \tau_{\'et}$.
+
+\begin{rem}
+$\tau_{\'et}$ is subcanonical thanks to the descent for $QCoh$ that we discussed.
+\end{rem}
+
+Often in $\cC$ there are many interesting geometric notions (e.g. properness). It's not clear how to translate them for
+random objects in $\Sh(\cC, \tau)$. Therefore we restrict to a full subcategory $\Geom(\cC,\tau, \bbP) \subset
+\Sh(\cC, \tau)$, spanned by ``tame objects'', where the geometric notions transport in
+a painless way. The idea is that every sheaf is a colimit of representable ones, but we want to restrict the diagrams which can
+idex the colimit.
+
+The original idea of geometric stack is due to Artin; it has been generalized by Simpson. Before starting, we fix a collection
+of morphisms $\bbP$ in $\cC$, which are $\tau$\textbf{-local}. I.e. for $f: X \to Y$ in $\cC$, $f\in \bbP$ iff
+for all $\tau$-covers $Y_i \to Y$, $X \times_{Y} Y_i \to Y_i$ is in $\bbP$. \footnote{Actually this is local on target,
+we may also need local on domain.} In our case, $\tau$ is \'etale and $\bbP$ is smooth morphisms.
+
+\begin{defin}
+\begin{enumerate}
+\;
+\item $F \in \Sh(\cC,\tau)$ is (-1)-geometric if it's representable ($F = \Spec^f(A)$, where $f$ stands for functor).
+\item A morphism $f:F\to G$ is (-1)-geometric if for all $X \in \cC$ and all $h_X \to G$, $h_X \times_G F$ is representable.
+In other words, there is some $Y$ making the following diagram cartesian.
+\[
+\begin{tikzcd}
+h_Y \arrow{r}\arrow{d} & F\arrow{d} \\ h_X \arrow{r} & G
+\end{tikzcd}
+\]
+\item An $n$-atlas of $F \in \Sh(\cC,\tau)$ is an epimorphism $\pi : U \to F$ such that $U$ is (-1)-geometric,
+$\pi$ is $n-1$-geometric and $\pi$ is $n-1$-$\bbP$.
+\item $F \in \Sh(\cC,\tau)$ is $n$-geometric if it has an $n$-atlas and $F \to F\times F$ is $n-1$-geometric.
+\item A morphism $f:F \to G$ is $n$-geometric if for all $h_X \to G$, $h_X \times_G F$ is $n-1$-geometric.
+\end{enumerate}
+\end{defin}
+
+\begin{rem}
+If you start with affine schemes, 0-geometric is algebraic spaces.
+\end{rem}
+
+\begin{rem}
+Let $F$ be a geometric stack, and let $\pi : U \to F$ be an $n$-atlas. Then $U^{\bullet} = \check{C}(U\to F)$ is a groupoid,
+and each level $U^k$ is $n-1$-geometric. Moreover, $|U^{\bullet}| \simeq F$, and the transition morphisms are in $\bbP$.
+The converse is also true: given a groupoid where transition morphisms are in $\bbP$, the geometric realization is a geometric
+stack.
+\end{rem}
+
+\begin{rem}
+In $\cC = d\Aff_k$, it's not necessary to ask $F \to F \times F$ to be $n-1$-geometric.
+\end{rem}
+
+\begin{rem}
+There's always a cheap way of extending geometric properties of morphisms in $\cC$ to analogous properties of geometric
+stacks. This goes by induction. But caution: this is not necessarily the best thing to do, e.g. properness has to be dealt with
+more cleverly. 
+\end{rem}
+
+\begin{rem}
+In the specific case $\cC = d\Aff_k$, given $F:d\Aff_k^{\op} \to \cS$, we consider the composition:
+\[
+\begin{tikzcd}
+\Aff_k^{\op} \arrow[hook]{d} \arrow{r}{t_0(F)} & \cS \\ d\Aff_k^{\op} \arrow[swap]{ur}{F} &
+\end{tikzcd}
+\]
+We call this
+\textbf{truncation}. The truncation functor preserves geometric stacks, as well as finite limits. Moreover, $t_0(\Spec(A))
+= \Spec^f(\pi_0(A))$.
+\end{rem}
+
+\begin{rem}
+If $F$ is a derived geometric stack, then in general $F$ is not truncated. For example, take $A = k[x]$, 
+$F = \Spec A$, $F(B) = \Map(\Spec B,\Spec A) = \Map_{sCR_k}(A,B) \cong B$, the underlying topological space of $B$. This can
+be arbitrarily complicated. However, $t_0(F)$ always factors through $\cS^{\leq n}$ for some $n$. More precisely,
+if $F$ is $n$-geometric, then $t_0(F)$ is $n+1$-truncated. The proof is simple, by induction on the geometric level.
+\footnote{In fact, this is how most proofs go for geometric stacks.}
+\end{rem}
+
+\begin{rem}
+When $\bbP$ is smooth, we call $\Geom(d\Aff_k, \tau_{\'et}, \bbP)$ \textbf{derived Artin stacks}. When $\bbP$ is \'etale,
+we call $\Geom(d\Aff_k, \tau_{\'et}, \bbP)$ \textbf{ derived Deligne-Mumford stacks}.
+\end{rem}
+
+From now on, we only consider the case $\cC = d\Aff_k$.
+
+\begin{lem}
+$F \in \Geom(d\Aff_k, \tau_{\'et}, \bbP)$, there exists a functor of the form: 
+\begin{align*}
+F_{\'et} &\to t_0(F)_{\'et} \\
+\big(G \overset{\'et}{\to} F\big) & \mapsto \big( t_0(G) \overset{\'et}{\to} t_0(F)\big),
+\end{align*}
+which is a Morita equivalence.
+\footnote{This means that the categories of sheaves on them are equivalent.} Note that $F_{\'et}$ is the small
+\'etale site, which considers derived affines mapping into $F$ via \'etale maps.
+\end{lem}
+
+\begin{cor}
+\label{cor:stack_ncat}
+For $F \in \Geom(d\Aff_k, \tau_{\'et}, \bbP)$, if $F$ is $n$-geometric, then $F_{\'et}$ is an $n$-category.
+\end{cor}
+
+\begin{rem}
+Let $F,G \in \Geom(d\Aff_k, \tau_{\'et}, \bbP)$ and $f :F \to G$. The pullback $G_{lis-\'et} \to F_{lis-\'et}$
+\footnote{These sites are called \textbf{lisse-\'etale}, which means that $\bbP$ is the class of smooth morphisms but the
+topology $\tau$ is \'etale.} does not induce a geometric morphism of topoi. There is an adjunction:
+\[	f^* : \Sh(G_{lis-\'et}, \tau_{\'et}) \to \Sh(F_{lis-\'et}, \tau_{\'et}) : f_*,	\]
+but $f^*$ does not preserve finite limits. The reason for this, approximately, is that certain pullbacks don't exist
+in the lisse-\'etale site. If we use the \'etale site, given two \'etale morphisms $X \to G$, $Y\to G$,
+any morphism between them is forced to be \'etale as well. But this is no longer true when using the lisse-\'etale site.
+This is a thorny problem, but it can be avoided if one is content with working with
+coherent sheaves.
+\end{rem}
+
+
+\section{Comparison of approaches}
+
+\begin{thm}
+Let $dDM^{loc}$ be the $\infty$-category of structured derived DM-stacks $(\mathcal{X}, \mathcal{O}_{\mathcal{X}})$, where
+$\mathcal{X}$ is $n$-localic for some $n$. Let $dDM^f := \Geom(d\Aff_k,\tau_{\'et}, \bbP_{\'et})$ be derived DM-stacks
+obtained from the functor of points. Then there is an equivalence:
+\[	dDM^{loc} \simeq dDM^f	.\]
+\end{thm}
+\begin{proof}
+The construction $dDM^{loc} \to dDM^f$ takes $(\mathcal{X}, \mathcal{O}_{\mathcal{X}})$ and sends it to the functor
+$F: dAff_k^{\op} \to \cS$, which maps $B$ to $\Map(\Spec^{\'et}(B), (\mathcal{X}, \mathcal{O}_{\mathcal{X}}))$.
+$\mathcal{X}$ localic means that $F$ satisfies hyperdescent.
+
+In the other direction, pick $F$ and send it to $\big(\Sh(F_{\'et},\tau_{\'et}), \mathcal{O}_F\big)$. Thanks to Corrolary
+\ref{cor:stack_ncat} $\Sh(F_{\'et},\tau_{\'et})$ is n-localic.
+\end{proof}
+
+
+
+
+\section{Descent and infinitesimal theory}
+How do we define $QCoh(F)$ for a sheaf $F$? We would like it to be the dashed arrow in the diagram: 
+\[
+\begin{tikzcd}
+d\Aff_k^{\op}\arrow{d}\arrow{r}{QCoh} & \Pr^L \\
+\Sh(d\Aff_k, \tau_{\'et})\arrow[dashed, swap]{ur}{\underline{QCoh}}
+\end{tikzcd}
+\]
+Then one defines $\underline{QCoh}(F)$ as the
+\textbf{mapping stack} $\underline{Map}(F,QCoh)$. In turn, this is defined as the adjoint of $- \times F$. 
+That is, the functor of points of a mapping stack is:
+\[	\Map(\Spec A, \underline{Map}(F,QCoh)) = \Map(\Spec A \times F, QCoh) .	\]
+
+This is the same as setting $\underline{QCoh}(F) := \lim QCoh(A)$, where
+the limit is taken over $\Spec(A) \to F$.
+
+\begin{rem}
+This makes sense for every sheaf $F$. If $F$ is geometric, then we can restrict to the lisse-\'etale site when taking the limit.
+\end{rem}
+
+\begin{defin}
+Let $F \in \Sh(d\Aff_k, \tau_{\'et})$. Then:
+\begin{enumerate}
+\item Let $x : \Spec A \to F$, we say that $F$ \textbf{has a cotangent complex at} $x$ if there exists an object
+$\bbL_{F,x} \in QCoh^-(A)$ such that for all $M \in QCoh(A)$, $\Map_{QCoh(A)}(\bbL_{F,x}, M) \simeq Der_F(A;M)$. 
+Here the $F$\textbf{-linear derivations} $Der_F(A;M)$ are defined as the pullback:
+\[
+\begin{tikzcd}
+Der_F(A;M)\arrow{d}\arrow{r} & \Map\big(\Spec(A\oplus M), F\big)\arrow{d}{0} \\ * \arrow[swap]{r}{x} & \Map(\Spec(A),F) .
+\end{tikzcd}
+\]
+\item $F$ \textbf{has a global cotangent complex} if it has a cotangent complex at $x$ for every $x : \Spec(A) \to F$, and 
+moreover there exists $\bbL_F \in \underline{QCoh}(F)$ such that for all $x$, $x^* \bbL_F \cong \bbL_{F,x}$. 
+\end{enumerate}
+\end{defin}
+
+\begin{thm}
+If $F$ is geometric, then it has a global cotangent complex.
+\end{thm}
+
+\begin{rem}
+If $F$ is dDM, then $\bbL_F$ is connective, i.e. concentrated in non-positive degrees. However, if $F$ is Artin $n$-geometric,
+then $\bbL_F$ is concentrated in degrees $(-\infty, n]$. \todo{$\pm 1$}
+\end{rem}
+

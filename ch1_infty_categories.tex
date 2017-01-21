@@ -1,0 +1,307 @@
+\chapter{$\infty$-category theory}
+Talk by Mauro Porta.
+
+\section{Why $\infty$-categories?}
+
+Our main reason for studying $\infty$-categories in this seminar is that derived schemes form an $\infty$-category.
+Some other applications of $\infty$-categories are the following.
+
+
+\begin{enumerate}
+\item \label{item:formal_moduli}
+Formal moduli problems over a field $k$ of characteristic 0 are equivalent to $\text{dgLie}_{k}$, but this is
+an equivalence of $\infty$-categories. We can see explicitly why this equivalence is plausible. For $F$ a formal moduli problem, 
+$T_xF[1]$ is a dgLie algebra. Conversely, Maurer-Cartan elements on the RHS determine $F(k[\epsilon])$, 
+i.e. infinitesimal formal moduli problems. Brackets then allow the complete recovery of $F$. 
+
+\item 
+The $\infty$-category of rational homotopy types is equivalent to that of dgLie algebras over $\Q$, concentrated in
+positive degrees:
+\[	S_*^{\text{rat}} \cong \text{dgLie}_{\Q}^{\geq 1}	\] 
+This statement is related to item \ref{item:formal_moduli}: Lurie gives a nice proof using formal moduli problems, see 
+\cite{DAG-XIII}.
+
+\item To $X \in \Sch_k$, we associate its derived category of quasi-coherent sheaves, $D(X) = D(QCoh(X))$. 
+It's a powerful invariant of $X$, especially when $X$ is not
+smooth. For example, it contains the cotangent complex and dualizing complex, $\bbL_X , \omega_X \in D(X)$, which are not 
+necessarily bounded if $X$ is not smooth.
+
+The problem is that we cannot reconstruct $D(X)$, the derived category in the classical sense, by patching: $D(X) \not \simeq 
+\lim_{\{U\} \text{ Zariski cover }} D(U)$. For example, take $X = \bbP^1_k$, and its standard cover by 2 open affines $U_0, U_1$.
+We show that the functor:
+\[	D(\bbP^1) \to D(U_0) \times_{D(U_{01})} D(U_1)	\]
+is not faithful, by exhibiting a morphism in $D(\bbP^1)$ which gets mapped to 0. Start from the observation that morphisms
+from the structure sheaf $\mathcal{O}_{\bbP^1}$ are the same as sections of the target sheaf, which implies:
+\[	\R(\Hom) \big(\mathcal{O}_{\bbP^1},\mathcal{O}_{\bbP^1}(-2)[1]\big) \cong \R \Gamma\big(\mathcal{O}_{\bbP^1}(-2)[1]\big) .	\]
+This complex has nontrivial cohomology in degree 0:
+\begin{equation}
+\label{eq:derived_counterex}
+	H^0 \R \Gamma\big(\mathcal{O}_{\bbP^1}(-2)[1]\big) \cong H^1\big(\mathcal{O}_{\bbP^1}(-2)\big) \cong k.
+\end{equation}
+However, when passing to the affine patches, $D(U_i) \simeq D(k[T]-Mod)$, and the complexes corresponding to the
+restrictions of $\mathcal{O}_{\bbP^1}$ and $\mathcal{O}_{\bbP^1}(-2)[1]$ are the following.
+\[
+\begin{tikzcd}
+0\arrow{r} & 0\arrow{r} & k[T]\arrow{r} & 0 \\
+0\arrow{r} & k[T]\arrow{r} & 0\arrow{r} & 0
+\end{tikzcd}
+\]
+As such, there are no non-zero morphisms between the restrictions. Equivalently, when restricting to affine opens,
+the first cohomology in equation \ref{eq:derived_counterex} is 0.
+
+On the other hand, we will see that the $\infty$-derived category of $X$ (which we temporarily 
+denote by $L_{\text{qcoh}}(X)$) can be patched using the homotopy fiber product:
+\[	L_{qcoh}(\bbP^1_k) \simeq  L_{qcoh}(U_0) \times_{L_{qcoh}(U_{01})} L_{qcoh}(U_1) .\]
+
+\item Let $\mathcal{M}_{ell}$ be the moduli stack of elliptic curves, i.e. the functor $F$ sending
+$\Spec(A)$ to the classes of elliptic curves over $\Spec(A)$. It is not a sheaf, because two elliptic curves can become
+isomorphic after a base extension. The problem here is that we were trying to take $F : \cA ff^{\op} \to \cS et$, and we can't talk
+about isomorphisms in $\cS et$. Classically one solves this problem by replacing sets by groupoids, which are equivalent to
+1-homotopy types.
+\[
+\begin{tikzcd}
+\; & & \cG pd \cong \cS^{\leq 1} \\
+\cA ff^{\op}\arrow{urr}{\text{stacks}}\arrow[swap]{rr}{\begin{array}{c}\text{naive moduli}\\
+\text{problems}\end{array}} & & \cS et \cong \cS^{\leq 0}\arrow[hook]{u}
+\end{tikzcd}
+\]
+We can define higher stacks by extending the tower to higher homotopy types, and ultimately to the category of spaces.
+\[
+\begin{tikzcd}
+\; & &  \cS \\
+\; & &  \vdots\arrow[hook]{u} \\
+\; & &  \cS^{\leq 1}\arrow[hook]{u} \\
+\cA ff^{\op}\arrow{uuurr}{\begin{array}{c}\text{higher}\\\text{stacks}\end{array}}
+\arrow{urr}{\text{stacks}}\arrow[swap]{rr}{\begin{array}{c}\text{naive moduli}\\\text{problems}\end{array}} & & 
+\cS et \cong \cS^{\leq 0}\arrow[hook]{u}
+\end{tikzcd}
+\]
+In later talks, we'll
+see that the perfect complexes $\cP erf$ form an $\infty$-stack which doesn't factor through finite homotopy types.
+\end{enumerate}
+
+
+\section{Three ways of working with $\infty$-categories}
+To be attempted in order of desperation:
+\begin{enumerate}
+\item \label{model_indep} 
+Reason model-independently to get a clean proof. The trick is that there are key statements (not proven model
+independently; some are proven by Lurie and can be found in \cite{HTT}) which behave like a ``non-minimal set of axioms''.
+One should learn a roadmap to \cite{HTT}, in order to know where to find these statements. (A good start for this roadmap is
+reading \cite{groth}.)
+
+\item 
+\label{item:internal_rectification}
+Internal rectification. 
+\textbf{Rectification} is when something is defined up to homotopy, and we try to reduce the necessary homotopies. Suppose we have
+a 1-category
+$\cM$, and consider $\Fun(\Delta^2,\cM)$ and $\Fun(\Delta^2, \infty( \cM))$. The first is defined by specifying 3 objects and 3 morphisms, while
+the second also requires the specification of a 2-morphism. In fact, these are the same as topological spaces due 
+to \cite{HTT} 4.2.4.4. In this case, once the 1-morphisms are specified, the homotopy is defined up to a contractible space of choices, therefore forgetting it gives an equivalence.
+
+Internal rectification is where we do rectification, while working in the setting of $\infty$-categories.
+ Example: an $\infty$-category with
+products, see it as a symmetric monoidal category with products. $Mon_{E_1}(\cC) \simeq Fun^{\times}(\Delta^{\op}, \cC)
+\to Fun(\Delta^{\op}, \cC)$.
+The reference is \cite{Lurie_Higher_algebra}, 4.1.2.6. 
+
+\item \label{item:real_rectification}
+Try a ``real rectification'' result, i.e. work with a model-categorical presentation. For example, take $\cS$,
+the $\infty$-category
+of spaces,  this is the Dwyer--Kan localization of the simplicial model category $sSet_{Kan}$. Suppose we wish to compute the limit (see \cite{groth} \S 2.5) of the functor $N(F)$, where $F$ maps $\cdot \rightarrow \cdot \leftarrow \cdot$ to $\{x\} \rightarrow X \leftarrow \{y\}$ and $N$ denotes the nerve functor, which takes categories to their associated $\infty$ categories. As
+$\infty$-categorical limits correspond to homotopy limits in the model category (by \cite{HTT}, Theorem 4.2.4.1),  $Path_X(x,y)$ is the $\infty$-limit
+of this diagram. See \cite{vezzosi2013autour} for more on model categories and their links to $\infty$-categories.
+
+
+\end{enumerate}
+
+In what follows we give examples where we can get by with procedure \ref{model_indep}. 
+
+\begin{defin}
+An $\infty$-category is a simplicial set $\cC$ such that all inner horns have fillers. In other words, for all $0<i<n$,
+the dotted arrow in the following diagram exists.
+\[
+\begin{tikzcd}
+\Lambda^{n}_{i}\arrow[hook]{d}\arrow{r} & \cC \\
+\Delta^n\arrow[dotted]{ur} & 
+\end{tikzcd}
+\]
+\end{defin}
+
+Note that this achieves what we want: inner horn fillings act as composition of morphisms, but this composition is not unique. 
+``Higher Topos Theory \cite{HTT} is the book where all of category theory is carried out without ever talking about composition.'' 
+A few problems arise
+from here:
+
+\begin{enumerate}
+\item How do we define Yoneda? A morphism $X \to Y$ is supposed to determine a morphism $h_X \to h_Y$ by composition, which
+is not well-defined.
+\item Let $\cC$ be an $\infty$-category. We want $f: x \to y$ in $\cC$ to determine a functor $f_*: \cC_{/X} \to \cC_{/Y}$
+between over-categories, where, morally speaking, $g: Z \to X$ is sent to the composition $f \circ g$.
+Again, this composition is not well-defined.
+\end{enumerate}
+
+To the rescue comes Corollary 2.4.7.12 in \cite{HTT}. 
+\begin{thm}
+\label{thm:cartesian_fib}
+Let $f: \cC \to \cD$ be an $\infty$-functor between $\infty$-categories. Then the projection
+\[	\mathcal{P} : Fun(\Delta^1, \cD) \times_{Fun(\{1\},\cD)} \cC \to Fun(\{0\}, \cD) 	\]
+is a \textbf{cartesian fibration}. Moreover, a morphism in the source is $\mathcal{P}$-\textbf{cartesian} iff its image in $\cC$ 
+is an \textbf{equivalence}.
+\end{thm}
+Note that the $\infty$-functors $\Fun(\cC,\cD)$ are nothing but the internal $\Hom$ in $s\cS et$. 
+\[	\Fun(\cC,\cD)_n = s\cS et(\cC \times \Delta^n, \cD)	\]
+It's standard to prove that, if $\cC, \cD$ are $\infty$-categories, then so is $\Hom(\cC, \cD)$.
+
+We will spend much of section \ref{sect:cartesian} defining the terms in bold in Theorem \ref{thm:cartesian_fib}. In Example
+\ref{eg:composition}, we will use Theorem \ref{thm:cartesian_fib} to obtain the desired pushforward map between overcategories.
+
+
+
+\section{Equivalences and Cartesian fibrations}
+\label{sect:cartesian}
+
+\begin{defin}
+$g : x \to y$ in $\cC$ is an \textbf{equivalence} if any of the following equivalent conditions hold.
+\begin{enumerate}[(a)]
+\item \label{item:inverse_fillers}
+The map $g': \Lambda_0^2 \to \cC$ given by $\{1 \leftarrow 0 \rightarrow 2\} \mapsto \{y \overset{g}{\leftarrow} x 
+\overset{1_x}{\rightarrow} x\}$ admits an extension:
+\[
+\begin{tikzcd}
+\Lambda^2_0 \arrow{r}\arrow[hook]{d} & \cC \\
+\Delta^2 \arrow[dotted]{ur} & 
+\end{tikzcd}
+\]
+Morally speaking, the restriction of the dotted arrow to the face $12$ of $\Delta^2$ is the right inverse of $g$.
+
+Moreover, the map $g'': \Lambda_2^2 \to \cC$ given by $\{0 \leftarrow 2 \rightarrow 1\} \mapsto \{y \overset{1_y}{\rightarrow} y 
+\overset{g}{\leftarrow} x\}$ admits an extension:
+\[
+\begin{tikzcd}
+\Lambda^2_2 \arrow{r}\arrow[hook]{d} & \cC \\
+\Delta^2 \arrow[dotted]{ur} & 
+\end{tikzcd}
+\]
+Morally speaking, the restriction of the dotted arrow to the face $01$ of $\Delta^2$ is the left inverse of $g$.
+
+\item \label{item:infinity_sphere}
+The same as variant \ref{item:inverse_fillers}, but with higher homotopies included. Formally, we introduce the
+Kan complex $S^{\infty}$, defined as 0-coskeleton of the discrete simplicial set with 2 vertices. (For more details see
+the exercises \cite{Mauro_Exercises}.)
+We say that $g$ is equivalence if there is a lift in the following diagram.
+\[
+\begin{tikzcd}
+\Delta^1 \arrow{r}{g}\arrow[hook]{d} & \cC \\
+S^{\infty}\arrow[dotted]{ur} & 
+\end{tikzcd}
+\]
+
+\item \label{item:iso_homcat}
+We say that $g$ is an equivalence if its image in the homotopy category $h(\cC)$ is an isomorphism.
+\footnote{Recall that this is a 1-category with objects Ob$(\cC)$ and morphisms $\Hom(x,y) = \pi_0(\cC(x,y))$.}
+\end{enumerate}
+\end{defin}
+
+In the definition, going from version \ref{item:infinity_sphere} to version \ref{item:inverse_fillers} of is a rectification result,
+in the sense of procedure \ref{item:internal_rectification} described above.
+
+Next, we recall the notions of cartesian morphism and cartesian fibration in the context of 1-categories.
+\begin{defin}
+Let $\mathcal{P} : C \to D$ be a functor between 1-categories. If $x \in Ob(C)$ and $f\in \Hom(x,y)$, we use the notation
+$\bar x := \mathcal{P}(x)$, $\bar f = \mathcal{P}(f)$. In the following diagram, the first 2 rows are in $C$, while the
+third one is in $D$. However, we would like to think about the ``square'' as a pullback square.
+\[
+\begin{tikzcd}
+z\arrow[dashed]{dd}{\mathcal{P}} & & \\
+& x\arrow{r}{f}\arrow[dashed]{d}{\mathcal{P}} & y\arrow[dashed]{d}{\mathcal{P}} \\
+\bar z & \bar x \arrow{r}{\bar f} & \bar y
+\end{tikzcd}
+\]
+We say that $f$ is a $\mathcal{P}$-\textbf{cartesian morphism} if the data of a morphism $z \to y$ in $C$ and a 
+morphism $\bar z \to \bar x$
+in $D$ uniquely determine a morphism $z \to x$ in $C$, such that the ``diagram'' commutes.
+
+We say that $\mathcal{P}$ is a \textbf{cartesian fibration} if for all $y \in C$ and all $\bar x \overset{\bar f}{\to} \bar y$ 
+morphism in $D$, $\exists f : x \to y \in \mathcal{C}$ such that $\mathcal{P}(f) = \bar f$ and $f$ is $\mathcal{P}$-cartesian.
+\end{defin}
+
+The analogous definitions for $\infty$-categories are the following.
+
+\begin{defin}
+Let $\mathcal{P} : \cC \to \cD$ be an $\infty$-functor. A 1-morphism in $\cC$, which is the same as an edge $f: \Delta^1
+\to \cC$, is $\mathcal{P}$\textbf{-cartesian} if for all $n\geq 2$, the following outer horn has a filler.
+\[
+\begin{tikzcd}
+\Delta^1 = \Delta^{\{n-1,n\}}\arrow{d}\arrow{dr}{f} & \\
+\Lambda^n_n\arrow{d}\arrow{r} & \cC \arrow{d}{\mathcal{P}} \\
+\Delta^n \arrow{r}\arrow[dashed]{ur} & \cD
+\end{tikzcd}
+\]
+Morally speaking, when $n=2$, this says that for any edge $g: z \to f(1)$ and edge $\bar h : \bar z \to \overline{f(0)}$,
+there exist an edge $h : z \to f(0)$ and a homotopy $g \simeq f \circ h$, such that $\mathcal{P}(h) = \bar h$.
+
+We say that $\mathcal{P}$ is a \textbf{cartesian fibration} if for every edge $a : \bar x \to \bar y$ of $\cD$, and every
+object $y$ of $\cC$ such that $\mathcal{P}(y) = \bar y$, there exists a $\mathcal{P}$-cartesian edge $f : x \to y$ such that
+$\mathcal{P}(f) = a$.
+\end{defin}
+
+Recall that, in the study of fibered 1-categories, one proves that cartesian fibrations with base $D$ are the same as
+lax 2-functors from $D$ to the 2-category of 1-categories. (This is known as the ``Grothendieck construction'', see
+for example, Proposition I.3.26 in \cite{FGAex}.) Explicitly, given a cartesian fibration $\mathcal{P} : C \to D$,
+the corresponding lax 2-functor maps an object $d \in D$ to the fiber $\mathcal{P}^{-1}(d)$.
+Theorem 3.2.0.1, the main theorem of Chapter 3 in \cite{HTT}, is the analog of this result for the setting of $\infty$-categories.
+
+\begin{thm}
+\label{thm:cartesian_equiv}
+For any $\infty$-category $\cC$, there is an equivalence of $\infty$-categories:
+\begin{equation}		
+\text{CartFib}/\cC \simeq \Fun(\cC^{op},\Cat_{\infty}).
+\end{equation}
+\end{thm}
+
+\begin{eg}
+\label{eg:composition}
+Recall that we started out by trying to construct an $\infty$-functor $f_* : \cC_{/x} \to \cC_{/y}$ between overcategories,
+given an 1-morphism $f: x \to y$ in $\cC$. Taking $F : \cC \to \cC$ as the identity, Theorem \ref{thm:cartesian_fib} gives
+a Cartesian fibration over $\cC$:
+\[	  \big\{ (f : x \to y, a) | \{f :x \to y\} \in \cC, F(a) \cong y \big\} \to \cC,	\]
+where a pair $(f : x \to y, a)$ maps to $x$. We recognize the fiber over $x$ as the undercategory $\cC_{x/}$:
+\[	\Hom_{sSet}(\Delta^n, \cC_{x/}) = \big\{\alpha: \Delta^{n+1} \to \cC | \alpha_{\Delta^{[0,\dots,n}} = x \big\}.	\]
+
+Theorem \ref{thm:cartesian_equiv} then produces an $\infty$-functor:
+\begin{align*}
+\cC^{\op} &\to \cC at_{\infty} \\
+x & \mapsto \cC_{x/} \\
+f:x\to y & \mapsto f^* : \cC_{y/} \to \cC_{x/}.
+\end{align*}
+We have obtained a pullback map on undercategories. To obtain the pushforward on overcategories, start with $F : \cC^{\op} \to \cC$
+as the contravariant identity functor instead.\todo{we probably want co-cartesian fibrations actually}
+\end{eg}
+
+Next, we discuss a simpler example. Let $\cC$ be an $\infty$-category, and let $x \in \cC$ be an initial object. 
+We want to construct a functor $\cC \to \cC_{x/}$. Note that this is silly in 1-category theory, since there's a unique 
+morphism $x \to y$. To aid us in the context of $\infty$-categories, we start
+by giving a good definition. 
+
+\begin{defin}
+$x \in \cC$ \textbf{initial} if $\forall y \in \cC$, $Map_{\cC}(x,y)$ is contractible.
+\end{defin}
+
+The key result, proved, for example, in \cite{groth}, is the following.
+\begin{prop}
+If $\cC$ is an $\infty$ category, then $x \in \cC$ is initial iff the canonical projection $\cC_{x/} \to \cC$ is
+a trivial Kan fibration.
+\end{prop}
+
+To solve our problem, note that $\cC$ is cofibrant in the Kan model structure, so there exists a lift in the diagram:
+\[
+\begin{tikzcd}
+\emptyset\arrow{d}\arrow{r} & \cC_{x/}\arrow{d} \\
+\cC \arrow{r}{\id}\arrow[dashed]{ur} & \cC .
+\end{tikzcd}
+\]
+
+In the exercises, we also encounter the following problem. Suppose $\cC$ has pushouts and a zero object. Construct 
+an $\infty$-functor $\cC \to \cC$ sending $x$ to the pushout of 0 and 0 over $x$. \todo{write this up, either here or in the
+exercises}

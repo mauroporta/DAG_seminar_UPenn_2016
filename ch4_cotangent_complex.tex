@@ -1,0 +1,333 @@
+\chapter{The Cotangent Complex}
+Talk by Sukjoo Lee.
+
+\section{Motivation}
+\label{sect:cc_motivation}
+
+We recall from classical AG: if $f:A \to B$ is a homomorphism between commutative rings and $M$ is a $B$-module, 
+an A-\textbf{derivation} of $B$ into $M$ is a map $d : B \to M$ such that:
+\begin{itemize}
+\item $d\big( f(a)\big) = 0$, for all $a\in A$;
+\item $d(bb') = db\; b' + b\; db'$ (Leibniz rule).
+\end{itemize}
+We denote by $Der_A(B,M)$ the set of all derivations of $B$ into $M$. There is also an absolute version, where
+we take $f:0 \to A$, and the first condition is automatic.
+
+\begin{defin}
+The \textbf{module of relative K\"ahler differentials} of $B$ over $A$ is a derivation $(\Omega^{1}_{B/A}, d_A)$ 
+over $A$ satisfying the universal property:
+\[
+\begin{tikzcd}
+B \arrow{r}{d_A}\arrow[swap]{rd}{d'} & \Omega^1_{B/A}\arrow[dotted]{d}{\exists !} \\
+ & M.
+\end{tikzcd}
+\]
+Equivalently, $\Hom_{B-Mod}(\Omega^1_{B/A}, M) \simeq Der_A(B,M)$. (+ absolute version).
+\end{defin}
+
+\begin{prop}
+If $A \to B \to C$ is a sequence of maps of commutative rings, then the following sequence of $C$-modules is exact:
+\begin{equation}
+\label{eq:ses_omegas}
+	\Omega^1_{B/A} \otimes_B C \to \Omega^1_{C/A} \to \Omega^1_{C/B} \to 0.
+\end{equation}
+\end{prop}
+
+One of the goals for this talk is to extend the sequence to the left. If $CRing$ was an Abelian category, we would
+attempt to derive the functor $\Omega^1$; however, this is not the case. Instead, what we do is generalize the notion of
+K\"ahler differential to the $\infty$-categorical setting, and show that this gives an extension to the left of the sequence
+\ref{eq:ses_omegas}. Slogan: ``$\infty$-category theory allows us to do derived functors in a non-linear setting''. 
+
+
+
+\section{Generalization and definition}
+\label{sect:cc_def}
+
+Note that generalizing the Leibniz rule to the $\infty$-category setting is hard, because we'd have to replace the 
+equality with a homotopy.
+Instead, consider the following idea. For a ring homomorphism $\phi : A \to B$, we want a new homomorphism $\phi': A \to B$ 
+``sufficiently close'' to $\phi$. For example, take $I \subset B$ an ideal
+with $I^2 = 0$. Then ``sufficiently close'' means that $\phi' : A \to B$ is congruent to $\phi$ modulo $I$, i.e.:
+\[	\forall\; a \in A,\; \phi(a) - \phi'(a) \in I.	\]
+For a fixed $\phi$, we have a bijective correspondence:
+\begin{equation}
+\label{eq:corresp_derivations}
+\left\{ \begin{array} {c} \phi': A \to B \text{ such that} \\ \phi' \equiv \phi \text{ mod } I \end{array} \right\}
+\longleftrightarrow
+\left\{ \begin{array} {c} d: A \to I \text{ satisfying} \\ \text{the Leibniz rule} \end{array} \right\} .
+\end{equation}
+
+
+If $M$ an $A$-module, take $B := A \oplus M$ equipped with 
+the ring structure such that $M^2 = 0$:
+\[	(a_1, m_1) (a_2,m_2) = (a_1 a_2, a_1 \dot m_2 + a_2\dot m_1).	\]
+We fix $\phi : A \to B$ the natural inclusion of $A$ into the coproduct (as abelian groups); with the given ring structure,
+$\phi$ is also a ring homomorphism. Take the ideal $I = M$. Then the correspondence \ref{eq:corresp_derivations} becomes:
+\begin{equation}
+\label{eq:derivations_classical}
+\Map_{/A}(A, A\oplus M) \cong Der(A,M).
+\end{equation}
+
+
+This is something we can generalize. We work with $A \in SCR_k$, and the category of $A-\cM od$; all categories in the rest of
+the talk are $\infty$-categories. Take $M \in A-\cM od$ and construct $A \oplus M$, whose underlying simplicial set is the
+coproduct, and whose ring structure is defined levelwise (see \cite{HAG-II}, 1.2.1.1 for details).
+
+We adapt equation \ref{eq:derivations_classical} to this setting, by defining:
+\[	\cD er(A,M) = \Map_{/A}(A,A\oplus M) \in \cS.	\]
+Moving from the absolute version of derivations to the relative one, for $f : A \to B$ in $SCR_k$ and $M \in B-\cM od$, we 
+define: 
+\[	\cD er_A (B,M) = \Map_{A-Alg/B}(B, B\oplus M)\in \cS.	\]
+
+
+We obtain functors $\cD er(A,-) : A-Mod \to \cS$ and $\cD er_A(B,-) : B-Mod \to \cS$. We claim that these functors are corepresentable,
+and call the corepresenting objects the \textbf{absolute cotangent complex} $\bbL_A$ and \textbf{relative cotangent complex}
+$\bbL_{B/A}$, respectively. Equivalently, this means:
+\begin{align*}
+\Map_{A-Mod}(\bbL_{A}, M) &\cong \Map_{/A}(A, A\oplus M), \\
+\Map_{B-Mod}(\bbL_{B/A}, M) &\cong \Map_{A-Alg/B}(B, B\oplus M).
+\end{align*}
+
+The proof of corepresentability relies on the following lemma.
+\begin{lem}
+\item $Der_A(B,-)$ and $Der(A,-)$ commute with limits and $K$-filtered colimits.\footnote{
+$\omega$-filtered would mean that the representing guy can be given by presentation with gen and relation. Otherwise we just
+mean for everything strictly less than cardinality $K$, which could be continuum or more.} \todo{explain the footnote better}
+\end{lem}
+
+Then the result follows by Theorem 5.5.2.7 in \cite{HTT}, which we reproduce here.\footnote{Related to this is the Adjoint
+Functor Theorem 5.5.2.9, which is one of the most important theorems in $\infty$-category theory. It's also the reason
+we love presentable $\infty$-categories.}
+
+\begin{thm}
+Let $\cC$ be a presentable $\infty$-category and $F : \cC \to \cS$ a functor. Then $F$ is corepresentable by an object of
+$\cC$ if and only if $F$ preserves $K$-filtered colimits and all small limits.
+\end{thm}
+
+\begin{rem}
+Note that preserving small limits is obviously necessary in order to be corepresentable, since $\Hom$ is a right adjoint,
+and thus preserves small limits.\todo{think more about the small hypothesis} Let's explain this in more detail
+for 1-category theory. We have the diagram:
+\[
+\begin{tikzcd}
+A-Mod \arrow{r}{\simeq} & Ab(CRing_{/A})\arrow{d}{\text{forget}} & \\
+ & CRing_{/A} \arrow{r}{\Hom(A, -)} & Set .
+\end{tikzcd}
+\]
+The equivalence on the first line works by sending an $A$-module $M$ to $A \oplus M$, and a ring $B$ over $A$ to the kernel
+of $B \to A$. \todo{finish this}
+
+For $\infty$-category theory, the relevant diagram is:
+\[
+\begin{tikzcd}
+A-\cM od \arrow{r}{\simeq} & \cS p(SCR_{/A})\arrow{d}{\text{forget}} & \\
+ & SCR_{/A} \arrow{r}{\Map_{/A}(A, -)} & \cS .
+\end{tikzcd}
+\]
+The reference for this is \cite{Lurie_Higher_algebra}, section 7.4.\todo{wait, where exactly? can't find it}
+\end{rem}
+
+
+In \cite{HAG-II}, Chapter 1, we find an explicit (although not useful in practice, according to Mauro) model 
+for $\bbL_A$. Take a simplicial resolution $\tilde A \to A$, which is also a cofibrant replacement. Then we have:
+\[	 \Omega_{\tilde A}^1 \otimes^{\bbL}_{\tilde A} A \in A-Mod	\]
+is a model for $\bbL$, where the complex $\Omega_{\tilde A}^1$ is build by taking K\"ahler differentials degree-wise:
+\[	(\Omega_{\tilde A}^1)_{\bullet} := \Omega^1_{\tilde A_{\bullet}}.	\]
+
+
+
+
+
+\section{Examples and Properties}
+\label{sect:cc_eg}
+
+In this section we compute $\bbL_{k[x]/k}$ and $\bbL_{k/k[x]}$, where $x$ is in degree -1, as opposed to 1, by our 
+cohomological convention. (See remark \ref{rem:degree_convention} for what this implies; $k[x]$ is not what it seems.)
+In the process we go over some of the properties of cotangent complexes.
+
+\begin{lem}
+Let $A \in SCR_k$ and $M \in A-\cM od$. The cotangent complex of $f: A \to \Sym_A M$ is:
+\[	\bbL_{\Sym_A M /A}\cong M \otimes^{\bbL}_A \Sym_A M .	\]
+\end{lem}
+\begin{proof}
+For all $\Sym_A M$-module $N$,
+\begin{align*}
+	\Map_{\Sym_A M -\cM od}(\bbL_{\Sym_A M/A}, N) &\cong \Map_{A-\cM od}(\Sym, \Sym\oplus N ) \cong \Map_{A-\cM od}(M, f_* N) \\
+&\cong \Map_{\Sym_A M - \cM od}(M \otimes^{\bbL}_A \Sym_A M ,N).
+\end{align*}
+Here the first equivalence is definitional, the second follows from the universal property of $\Sym_A M$, and the third is
+the adjunction \ref{tikz:adjunction}.
+\end{proof}
+
+For our first example, note that $k[x] \cong \Sym_k(k[1])$. Then the answer is $k[1] \otimes^{\bbL}_k k[x]$, which is just 
+$k[x]$ concentrated in degree $-1$.
+
+\begin{rem}
+\label{rem:degree_convention}
+Note that, since $k[1]$ is concentrated in degree $-1$, so is $\Sym_k(k[1])$; it does not have information in all 
+nonnegative degrees, as the notation may mislead one into thinking. We just get a copy of $k$ in degree 0 and one
+in degree -1,
+and this is what we call $k[x]$. This is because multiplication in the symmetric algebra is graded commutative:
+\[	x y = (-1)^{|x||y|} yx,	\]
+so in particular for $x$ of degree 1 we get $x^2 = -x^2 = 0$. If we started with $k[2]$ instead,
+$\Sym_k(k[2])$ would be nontrivial in all negative even degrees and commutative in the classical sense. More generally, 
+$\Sym(k[n])$ gives what we would classically
+call a symmetric algebra if $n$ is even, or an alternating algebra if $n$ is odd.
+\end{rem}
+
+Some properties of cotangent complex:
+\begin{prop}
+\;
+\begin{enumerate}
+\item For $A \to B \to C$ in $SCR_k$, there is a homotpy cofiber sequence in $C-Mod$:
+\[	\bbL_{B/A} \otimes^{\bbL}_B C \to \bbL_{C/A} \to \bbL_{C/B}.	\]
+\item Base change: given a homotopy pullback square
+\[
+\begin{tikzcd}
+A\arrow{r}\arrow{d} & B\arrow{d} \\
+A'\arrow{r} & B',
+\end{tikzcd}
+\]
+there is an equivalence $\bbL_{B/A} \otimes^{\bbL}_B B' \simeq \bbL_{B'/A'}$.
+\end{enumerate}
+\end{prop}
+
+To compute $\bbL_{k/k[x]}$, use the cofiber sequence associated to the sequence of maps $k \to k[x] \to k$. We get the
+cofiber sequence in $k-\cM od$:
+\begin{equation}
+\label{eq:cofiber_poly}
+	\bbL_{k[x]/k} \otimes^{\bbL}_{k[x]} k \to \bbL_{k/k} \to \bbL_{k/k[x]}.
+\end{equation}
+By our previous computation, the first term is:
+\[ \bbL_{k[x]/k} \otimes^{\bbL}_{k[x]} k \simeq k[1] \otimes_k^{\bbL} k[x] \otimes^{\bbL}_{k[x]} k \simeq k[1].	\]
+(Using associativity for derived tensor product.) The second term in \ref{eq:cofiber_poly} is 0, so the cofiber sequence
+is actually a suspension diagram. 
+\[
+\begin{tikzcd}
+k[1]\arrow{r}\arrow{d} & 0\arrow{d} \\
+0\arrow{r} & \bbL_{k/k[x]}
+\end{tikzcd}
+\]
+Then $\bbL_{k/k[x]}\simeq k[2]$. 
+%That this is consistent with our intuition from the classical case: 
+%if, to begin with, $k$ is in degree 0 to begin with, and
+%$\bbL_{k/k[x]} = k[1]$, concentrated in degree -1. It's great that it doesn't have anything in degree 0, since Kahler differentials
+%of a closed immersion are 0.
+
+Going back to Section \ref{sect:cc_motivation}, we complete the exact sequence \ref{eq:ses_omegas} on the left. 
+Using stability of $C-\cM od$, the cofiber sequence gives a long exact sequence on homology (recall proposition
+\ref{prop:stable_les_homology}; in particular, $H^i(X) = \tau^{\geq i} \circ \tau^{\leq i}(X)$).
+\[
+\begin{tikzpicture}[descr/.style={fill=white,inner sep=1.5pt}]
+\label{tikz:les}
+        \matrix (m) [
+            matrix of math nodes,
+            row sep=1em,
+            column sep=2.5em,
+            text height=1.5ex, text depth=0.25ex
+        ]
+        { \dots & H^{-1}(\bbL_{B/A} \otimes^{\bbL}_{B} C) & H^{-1}(\bbL_{C/A}) & H^{-1}(\bbL_{C/B}) & \\
+            & H^0(\bbL_{B/A} \otimes^{\bbL}_{B} C) & H^0(\bbL_{C/A}) & H^0(\bbL_{C/B}) & \\
+            & H^1(\bbL_{B/A} \otimes^{\bbL}_{B} C) & H^1(\bbL_{C/A}) & H^1(\bbL_{C/B}) & \dots \\
+        };
+
+        \path[overlay,->, font=\scriptsize,>=latex]
+        (m-1-1) edge (m-1-2)
+        (m-1-2) edge (m-1-3)
+        (m-1-3) edge (m-1-4)
+        (m-1-4) edge[out=350,in=170]  (m-2-2)
+        (m-2-2) edge (m-2-3)
+        (m-2-3) edge (m-2-4)
+        (m-2-4) edge[out=350,in=170]  (m-3-2)
+        (m-3-2) edge (m-3-3)
+        (m-3-3) edge (m-3-4)
+				(m-3-4) edge (m-3-5);
+\end{tikzpicture}
+\]
+We claim that:
+\begin{enumerate}
+\item \label{item:h0_underived}
+\textit{For underived rings}, $H^i(\bbL_{B/A}) = 0$ if $i>0$;
+\item \textit{For underived rings}, $H^0(\bbL_{B/A}) \simeq \Omega^1_{B/A}$;
+\item \textit{In general}, $H^0(\bbL_{B/A}) \simeq \Omega^1_{\pi_0(B)/\pi_0(A)}$.
+\end{enumerate}
+An application of these facts is the desired extension
+to the left of the sequence \ref{eq:ses_omegas}. The facts are proved in \cite{Lurie_Higher_algebra}, section 7.4.3. 
+We will say more about claim \ref{item:h0_underived}, but first we need to talk about connectivity. 
+
+
+
+\section{Connectivity}
+\label{sect:cc_connectivity}
+
+\begin{defin}
+A space $X$ is \textbf{n-connective} if $\pi_i(X,x) = 0$ for all $x \in X$ and $i<n$. We say $X$ is \textbf{connective}
+if it's 0-connective, \textbf{connected} if it's 1-connective. $f:X \to Y$ is \textbf{n-connective} if fiber$(f)$ is n-connective.
+\end{defin}
+
+The following is in \cite{Lurie_Higher_algebra}, 7.4.3.2, and it's VERY important.
+\begin{thm}[Connectivity estimate]
+\label{thm:connectivity_estimate}
+Assume $f : A \to B$ is a map in $SCR_k$ and cofib$(f)$ is $n$-connective. Then there exists a map:
+\[	\mathcal{E}_f: B \otimes_A^{\bbL} Cofib(f) \to \bbL_{B/A}	\]
+in $B-Mod$, which is $2n$-connective.
+\end{thm}
+
+\begin{rem}
+The proof is not hard; the only difficulty is constructing the map, which we can do after we learn Postnikov towers.
+\todo{reference once we have the postnikov notes}
+\end{rem}
+
+\begin{cor}
+The hypothesis of Theorem \ref{thm:connectivity_estimate} implies $\bbL_{B/A}$ is $n$-connective.
+\end{cor}
+\begin{proof}
+We look at the fiber sequence:
+\[	fib(\mathcal{E}_f) \to B\otimes^{\bbL}_A cofib(f) \to \bbL_{B/A},	\]
+and get a long exact sequence of homotopy groups. So it suffices to show that:
+\begin{enumerate}
+\item \label{item:cofiber_connective}
+ $B\otimes_A^{\bbL} Cofib(f)$ is $n$-connective;
+\item \label{item:epsilon_connective}
+$fib(\mathcal{E}_f)$ is $n-1$-connective.
+\end{enumerate}
+\ref{item:epsilon_connective} is implied by Theorem \ref{thm:connectivity_estimate}; note that theorem is actually considerably
+stronger. Property \ref{item:cofiber_connective} is proved in \cite{Sq0}. The proof there uses a spectral sequence due to 
+Quillen: for $M,N \in A-Mod$, $A \in SCR_k$,
+\[	\Tor_p^{\pi_q(A)}(\pi_qM, \pi_qN) \Longrightarrow \pi_{p+q}(M \otimes^{\bbL}_A N).	\]
+\end{proof}
+
+\begin{rem}
+In particular, cotangent complexes are 0-connective for commutative rings. This gives a proof of fact
+\ref{item:h0_underived} at the end of the previous section.
+\end{rem}
+
+\begin{cor}
+For $A \in SCR_k$, $\bbL_A$ is 1-connective. Moreover, $f:A \to \pi_0(A)$ is 1-connective, so $\bbL_{\pi_0(A)/A}$ is
+1-connective.
+\end{cor}
+
+The most important corollary:
+\begin{cor}
+$f: A \to B$ is an equivalence iff $\pi_0(f) : \pi_0(A) \to \pi_0(B)$ is and $\bbL_{B/A} \simeq 0$. One direction obvious, the
+other comes from the fact that $\bbL_{B/A}$ is $n$-connected for all $n$.
+\end{cor}
+
+\begin{rem}
+Slogan: ``DAG = classical AG + DDT''.
+Lurie's representability theorm is a great example of the philosophy: it says that a derived stack is representable iff
+its truncation is representable and its cotangent complex is nice enough. We won't get to see this in the seminar, since we'll
+change course towards structured DAG instead.
+\end{rem}
+
+
+\begin{rem}
+Cotangent complexes we glue for free, which was not possible before $\infty$-categories. This allows to reduce many questions
+to the affine setting, where we may have to do actual computations if things go wrong.
+\end{rem}
+
+We have one talk on Postnikov tower, and one on perfect complexes, then we leave the affine setting forever.
+
+\todo{look at last 2 exercises from stable $\infty$-category}
+
+

@@ -1,0 +1,244 @@
+\chapter{The Stack of Perfect Complexes}
+\label{chap:stack_perf}
+Talk by Sukjoo Lee.
+
+We first define $\Perf$ and $\Perf(X)$ and prove their geometricity. Then we proceed to describe the tangent complex
+of these. Finally, we describe the perfect determinant map and construct the Atiyah class.
+
+\section{Construction}
+Recall that we defined $\QCoh : d\Aff^{\op} \to \cS$, and extended it to $\underline{QCoh}: \Sh(d\Aff, \tau_{\'et}) \to \cS$.
+In particular, if $X$ is a scheme, we'll write $\QCoh(X)$ for $\underline{Map}(X,\QCoh)$. We also defined
+$\Map(\Spec A, \underline{Map}(X,\QCoh)) = \Map(X \times \Spec A, \QCoh)$.
+
+Now for $X$ a smooth and proper $k$-scheme, we define a functor $\Perf : d\Aff^{\op} \to \cS$, sending $A \mapsto (A-mod)^{perf}$.
+(Recall the definition of perfect complexes over a derived affine from \ref{chap:perfect_complexes}.)
+The action on morphisms is given by base change, which makes sense, since perfect modules are stable under base change.
+\footnote{Note that,
+as always, to define a functor rigorously we need to use co-cartesian fibrations.}
+$\Perf$ satisfies \'etale descent for the same reason that $\QCoh$ does; it follows that $\Perf$ is a derived stack.
+Furthermore, we define perfect complexes on a given stack $X$ as the mapping stack:
+\[	\Perf(X) := \Map_{\dSt}(X, \Perf) .	\]
+
+\begin{rem}
+For smooth schemes, $\Perf$ and $\Coh^b$ are the same. But in order to define the stack $\Perf$, it's essential that we 
+don't restrict to $A$
+smooth. Moreover, in general $\Coh^b$ is not functorial, because base change can kill the boundedness condition. 
+In fact, $\Perf$ and $\Coh^-$ make sense functorially, while $\Coh^+$ or $\Coh^b$ do not.
+\end{rem}
+
+
+\section{Geometricity}
+In this section we work towards proving:
+\begin{thm}
+\label{thm:perf_geometric}
+$\Perf$ and $\Perf(X)$ are locally geometric and locally of finite presentation.
+\end{thm}
+
+\begin{defin}[Properties of stacks, Definition 1.3.6.4 in \cite{HAG-II}]
+\hfill
+\begin{enumerate}[(a)]
+\item A stack $F$ is \textbf{quasi-compact} if there exists a finite family of representable stacks $X_i$ and an
+epimorphism $\bigsqcup_i X_i \to F$.
+\footnote{Throughout this definition, ``representable'' means representable by a derived affine.}
+\item A morphism of stacks $G \to F$ is \textbf{quasi-compact} if for every representable $X$, $X \times_F G$ is quasi-compact.
+\item An $n$-geometric stack $F$ is \textbf{strongly quasi-compact} if for arbitrary $X, Y$ representable stacks and 
+maps to $X$, the $n-1$-geometric
+stack $X \times_F Y$ is strongly quasi-compact. This is an inductive definition, where at level -1 it just means quasi-compact.
+\item A morphism of stacks $G \to F$ is \textbf{strongly quasi-compact} if for every representable $X$, $X \times_F G$ is quasi-compact.
+\item A stack $F$ is \textbf{finitely presented} if for every filtered system of objects
+$B_i \in \cdga_k$ we have:
+\[	\colim_i \Map(\Spec B_i, F) \simeq \Map\big(\Spec(\colim_i B_i), F\big).	\]
+\item A stack $F$ is \textbf{locally finitely presented} if there exists an n-atlas $\{\mathcal{X}_i\}$ such that each 
+$\mathcal{X}_i$ is finitely presented.
+\item A stack $F$ is \textbf{strongly finitely presented} if it is locally finitely presented and quasi-compact.
+\end{enumerate}
+\end{defin}
+
+\begin{rem}
+All these definitions are stable by pull-backs and retracts.
+\end{rem}
+
+\begin{defin}
+\label{defin:locally_geometric}
+$F$ is \textbf{locally geometric} if it can be written as a filtered colimit $F \simeq \colim_i F_i$, such that each $F_i$
+is n-geometric ($n$ can depend on $i$!), and $F_i \to F$ is a monomorphism (equivalently, $F_i \to F_i \times_F F_i$ is iso.)
+\end{defin}
+
+We will use without proof the following lemma.\todo{give a reference for the proof though}
+
+\begin{lem}
+\label{lem:representable_geometric}
+For $f : F \to G$ $n$-representable, if $G$ is n-geometric, then so is $F$.
+\end{lem}
+
+Let's begin the proof of Theorem \ref{thm:perf_geometric}.
+\begin{proof}
+We can define $\Perf^{[a,b]} \subset \Perf$ to consist of the complexes which have tor amplitude contained in $[a,b]$. This
+is an open immersion, which means that amplitude is stable under quasi-isomorphism.
+Note that $\Perf = \cup_{a\leq b} \Perf^{[a,b]}$, which exhibits $\Perf$ as a union of connected components.
+Moreover, we can define $\Perf(X)^{[a,b]}$ to be the homotopy pullback:
+\[
+\begin{tikzcd}
+\Perf(X)^{[a,b]} \arrow{r}\arrow{d} & \Perf^{[a,b]}\arrow{d} \\
+\Perf(X) \arrow{r} & \Perf .
+\end{tikzcd}
+\]
+
+But we actually need to be careful with how to define the bottom map. We need to choose a compact generator $E$ of
+the $\infty$-category $\Perf(X)$ of perfect complexes on $X$, see \cite{moduli_objects}. \todo{be more specific}
+We obtain $\Perf(X) = \cup_{a\leq b} \Perf(X)^{[a,b]}$.
+
+So the strategy is to prove:
+\begin{enumerate}
+\item that $\Perf^{[a,b]}$ is $n$-geometric and locally finitely presented for $n = b-a+1$. 
+Due to definition \ref{defin:locally_geometric}, it follows that $\Perf$ is locally geometric and locally finitely presented.
+\item that $\Perf(X)^{[a,b]} \to \Perf^{[a,b]}$ is $n$-representable. Due to Lemma \ref{lem:representable_geometric}, it follows
+that $\Perf(X)$ is locally geometric and locally finitely presented.
+\end{enumerate}
+
+It remains to prove the two assertions.
+\begin{enumerate}
+\item We want to find a cover $\pi : U \to \Perf^{[a,b]}$ such that $U$ is $n-1$-geometric and l.f.p., and $\pi$ is an $n-1$
+representable, smooth epimorphism.
+
+The functor $U : \cdga_k \to \cS$ is defined to map $A$ to the space of morphisms in $A\Mod$ consisting of $u: Q \to R$, where
+$Q \in \Perf(A)^{[a,b-1]}$ and $R \in \Perf(A)^{[b-1,b-1]}$. Then $\pi: U \to \Perf^{[a,b]}$ is defined to take
+$u:Q \to R$ to $\hofib(u)$.
+
+In order to show that $U$ is $n-1$ geometric, we build a map $p$ from $U$ to an $n-1$ geometric stack, then show that $p$
+is $n-1$ representable, and invoke Lemma \ref{lem:representable_geometric}. If $a = b$, then 
+$\Perf^{[a,b]} \simeq \underline{Vect}$, which is a 1-geometric l.f.p. stack. This is because 
+$\underline{Vect} = \cup_n B GL(n)$, and each of $B GL(n)$ is Artin, as follows from the groupoid presentation.
+We make the inductive assumption that $\Perf^{[a,b-1]}$ is n-1-geometric. Then define the map:
+\begin{align*}
+p : U &\to \Perf^{[a,b-1]} \times \underline{Vect} \\
+\{u:Q \to R\} &\mapsto \big(Q, R[b-1]\big) .
+\end{align*}
+$p$ is $n-1$ representable; in fact, it's representable, which is a consequence of Sub-Lemma 3.11 in \cite{moduli_objects}.
+It follows that $U$ is $n-1$ geometric.
+\begin{lem}
+The diagonal of $\Perf^{[a,b]}$ is $n-1$-representable.
+\end{lem}
+\todo{this is part of the definition of an Artin stack, but not sure where the result is coming from}
+
+The smoothness of $\pi: U \to \Perf^{[a,b]}$ is proved using the infinitesimal criterion for smoothness, which
+is Corollary 2.2.5.3 in \cite{HAG-II}. One needs to check that, for every $A \in \cdga_k$ and map $x: \Spec A \to \Perf$,
+the cotangent complex $\bbL_{\Perf^{[a,b]}/U,x}$ is perfect in $A\Mod$ and concentrated in non-negative degrees.
+
+Finally, we show that $\pi: U \to \Perf^{[a,b]}$ is an epimorphism. For all $P \in \Perf^{[a,b]}(A)$, we can find a 
+vector bundle $E$ in $\Spec(A)$ and a morphism $E[-b] \to P$ whose
+cofiber $Q$ is contained in $\Perf^{[a,b-1]}$. Writing down the resulting fiber sequence, $P$ is a homotopy fiber
+of $Q \to E[-b+1]$. 
+
+\item We need to show that $\Perf(X)^{[a,b]} \to \Perf^{[a,b]}$ is $n-1$ representable and strongly f.p. \todo{strongly?
+did I mean to write locally?}
+First we do a reduction to $X = \Spec B$, where $B$ is homotopically f.p. and:
+\[
+\begin{tikzcd}
+ \pi^{-1}{p} & \Spec A \arrow{d}{p} \\
+\Perf(X)^{[a,b]}\arrow{r}{\pi} & \Perf^{[a,b]}
+\end{tikzcd}
+\]
+$\pi^{-1}(p) = \underline{Map}(B,\epsilon(p))$, where $\epsilon(p) := End_{A-mod^{perf}}(p,p)$;
+ Lemma from TV 3.13 and 3.14, and 3.9 retraction \todo{help! someone clear this up}
+\end{enumerate}
+\end{proof}
+
+
+
+\section{Tangent complex}
+Since $\Perf$ and $\Perf(X)$ are locally geometric, they admit a cotangent complex. Since they are locally f.p., it is a perfect
+complex, hence dualizable, and we can talk about a tangent complex. Even though the tangent complex exists globally, we only
+compute it locally for now.
+
+
+\begin{thm}
+\label{thm:tangent_perf}
+Let $E : * = \Spec k \to \Perf(X)$ be a perfect complex on $X$. Then $T_E \Perf(X) = End_{\Perf(X)}(E,E) [1]$. 
+\end{thm}
+\begin{proof}
+Given $E$, we construct:
+\begin{align*}
+\Omega_E \Perf(X) : \cdga_k &\to \cS \\
+A &\mapsto \Map\big(k, \End(E,E) \otimes A\big) .
+\end{align*}
+\todo{finish this}
+\end{proof}
+
+
+\begin{rem}
+In particular, this recovers the entire deformation theory for vector bundles, by taking $E$ to be in degree 0. The shift means
+that we recover $\Ext^1$. 
+\end{rem}
+
+
+\section{The Determinant Functor}
+\begin{defin}
+The \textbf{Picard stack} is $\Pic(X) = \Map(X, B G_m)$.
+\end{defin}
+
+Note that $\Pic \simeq \Vect_1 \subset \Perf$. We want to construct $\det: \Perf \to \Pic$, by using Waldhausen K-theory.
+The steps are as follows.
+\begin{enumerate}
+\item We have $\det : \Vect \to \Pic$.
+\item Construct the simplicial stacks:
+\begin{align*}
+&B_{\bullet}\Pic : \Delta^{\op} \ni [n] \mapsto \Pic^n, \\
+&B_{\bullet}\Vect: \Delta^{\op} \ni [n] \mapsto wS_n(\Vect), \\
+&B_{\bullet}\Perf: \Delta^{\op} \ni [n] \mapsto wS_n(\Perf). \\
+\end{align*}
+The simplicial set $wS_n(\Vect)$ is the nerve of the category which has objects sequences of split monomorphisms:
+\[		0 \to M_1 \to \dots \to M_k \to 0,	\]
+and morphisms are weak equivalences. $wS_n(\Perf)$ is defined analogously.
+\item Extend $\det$ to a map $B_{\bullet}\Vect \to B_{\bullet}\Pic$.
+\item Pass to Waldhaussen K-theory, applying the functor $K = \Omega \circ | - |$, where the latter denotes geometric
+realization.
+\item We obtain:
+\[	K(\det) : K(B_{\bullet}\Vect) \to K(B_{\bullet}\Pic) \simeq \Pic.	\]
+The latter isomorphism is an analog of the familiar $\Omega|B_{\bullet}G|\simeq G$.
+\item The inclusion $\Vect \to \Perf$ determines a map $\mu: K(B_{\bullet}\Vect) \to K(B_{\bullet}\Perf)$; we claim that this
+is an isomorphism. The general principle at play is: given categories $C$ and $D$, if each object of $C$ has a resolution by objects
+of $D$, then the K-theory of the two categories is the same.
+\item The perfect determinant map is the composition of:
+\[
+\begin{tikzcd}
+\Perf\arrow{r} & K(B_{\bullet}\Perf) \arrow{r}{\mu} & K(B_{\bullet}{\Vect}) \arrow{r}{K(\det)} & K(B_{\bullet}\Pic)\simeq \Pic.
+\end{tikzcd}
+\]
+\end{enumerate}
+
+Infinitesimally the perfect determinant induces a trace map, as follows. For $x_E : \Spec k \to \Perf(X)$, there is
+an induced morphism on tangent spaces:
+\[
+\begin{tikzcd}
+T_{\Perf(X),E} \arrow{r}\arrow[swap]{d}{\cong} & T_{\Pic(X), \det(E)}\arrow{d}{\cong} \\
+\End(E,E)[1]\arrow{r}{\tr_E[1]} & \End(\det(E),\det(E))[1] .
+\end{tikzcd}
+\]
+
+\begin{defin}
+Let $\mathcal{Y}$ be a geometric stack having a perfect cotangent complex, $E$ a perfect complex on $\mathcal{Y}$,
+which is the same as $\phi_E : \mathcal{Y} \to \Perf$. There is an induced map:
+\[
+\begin{tikzcd}
+T_{\phi_E} : \bbT_{\mathcal{Y}} \arrow{r} & \phi_E^* \bbT_{\Perf} \simeq E^* \otimes E[1].
+\end{tikzcd}
+\]
+The \textbf{Atiyah class} is the morphism dual to the above:
+\[
+\begin{tikzcd}
+\at_E : E \arrow{r} & \bbL_{\mathcal{Y}} \otimes E[1].
+\end{tikzcd}
+\]
+\end{defin}
+
+For example, $\at_{\det(E)} = \tr_{E[1]}$.
+
+
+\begin{thm}
+There is an equivalence $FMP_k \to dgLie_k$, which sends a formal moduli problem $F$ to $T_F[-1]$. In particular, if we
+take the formal completion $\mathcal{Y}_x$, it gets sent to $x^* T_y[-1]$.
+\end{thm}
+
+Fact: the Lie algebra structure on $x^* T_Y[-1]$ is given by the Atiyah class. Nmely, the bracket is \todo{finish this section}
+

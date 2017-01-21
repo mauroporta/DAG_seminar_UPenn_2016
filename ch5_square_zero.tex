@@ -1,0 +1,313 @@
+\chapter{Square Zero Extensions}
+Talk by Matei Ionita.
+
+\section{Square Zero Extensions}
+\label{sect:sq0_sq0}
+
+Recall that, given $A \in cdga^{\leq 0}_k$ and $M \in A-\cM od$, we defined derivations from $A$ into $M$ as:
+\[	\cD er_k(A,M) = \Map_{A-\cA lg / k} (A, A \oplus M) .	\]
+Alternatively, these are the same as sections of the projection map $A \oplus M \to A$. Morally speaking, we'd
+like to define square-zero extensions as homotopy fibers of derivations, i.e. $f: A^{\eta} \to A$ is a square-zero
+extension of $A$ by $M$ if there is a homotopy pullback square:
+\[
+\begin{tikzcd}
+A^{\eta}\arrow{r}{f}\arrow{d} & A\arrow{d}{d_{\eta}} \\
+0\arrow{r} & M[1].
+\end{tikzcd}
+\]
+The problem is that the above diagram doesn't make sense, because a derivation is not a morphism in $cdga^{\leq 0}_k$.
+In section 7.4.1 of \cite{Lurie_Higher_algebra}, Lurie addresses this by using the category of tangent 
+correspondences, which acts
+like a ``tangent bundle'' of the category $cdga^{\leq 0}_k$, with $A-\cM od$ acting as the tangent space 
+$T_A cdga^{\leq 0}_k$. In this new category
+the diagram makes sense. However, we don't introduce all this technology here, and instead translate Lurie's (more general)
+definition of square zero extensions into a more accessible version.
+
+\begin{defin}
+\label{defin:sq0}
+A map $\tilde f: \tilde A \to A$ is a \textbf{square-zero extension} of $A$ by $M$ if it's equivalent in the category
+$cdga^{\leq 0}_{/A}$ to a map $f: A^{\eta} \to A$ such that there is a homotopy pullback diagram in $cdga^{\leq 0}_k$:
+\[
+\begin{tikzcd}
+A^{\eta}\arrow{r}{f} \arrow{d} & A\arrow{d}{d_{\eta}} \\
+A\arrow{r}{d_0} & A \oplus M[1].
+\end{tikzcd}
+\]
+Here $d_0$ is the zero derivation.
+\end{defin}
+
+\begin{rem}
+We explain why the shift by 1 is necessary in definition \ref{defin:sq0}, by studying the split square-zero extension.
+We claim that, with the shift in place, the following diagram is a homotopy pullback.\todo{replace with better explanation}
+\[
+\begin{tikzcd}
+A \oplus M \arrow{r}\arrow{d} & A\arrow{d} \\
+A\arrow{r} & A\oplus M[1] 
+\end{tikzcd}
+\]
+To see this, extend the diagram by considering the map $0 \to A$, and the resulting pullback square in the category
+$A-\cM od$:
+\[
+\begin{tikzcd}
+M\arrow{r}\arrow{d} & A \oplus M \arrow{r}\arrow{d} & A\arrow{d} \\
+0\arrow{r} & A\arrow{r} & A\oplus M[1] .
+\end{tikzcd}
+\]
+Indeed, the vertical map $A\oplus M \to A$ is surjective, hence a fibration in $A-\cM od$, and then the naive pullback $M$ 
+is a homotopy pullback. Moreover, the outer square is also a homotopy pullback in $A-\cM od$, because it's equivalent to:
+\[
+\begin{tikzcd}
+M\arrow{r}\arrow{d} & 0\arrow{d} \\
+0\arrow{r} & M[1].
+\end{tikzcd}
+\]
+It follows that the square on the right is a homotopy pullback in $A-\cM od$. But all maps in this square are maps of
+$A$-algebras, so we claim that the square is actually a homotopy pullback in $A-\cA lg$.
+\end{rem}
+
+\begin{rem}
+Definition \ref{defin:sq0} is easy and clean, but it is hard to see whether a given map satisfies it. For example, if
+$A \to B$ is a square zero extension of commutative rings by a $B$-module $M$, in the classical sense, the shift
+$M[1]$ makes us leave the classical category of modules. Moreover, it's hard to prove that the given map $A \to B$
+comes from the fiber product structure of $A$.
+\end{rem}
+
+We would like to construct a functor $\Phi : \cD er (A,M) \to \Fun(\Delta^1, cdga^{\leq 0}_k)$ whose essential image are the square-zero
+extensions. Morally speaking, $\Phi$ sends $d_{\eta} : A \to A \oplus M$ to its homotopy fiber. The rest of this section makes
+this construction precise.
+
+\begin{defin}
+The $\infty$-category $\cD er_A$ of \textbf{derivations of A} has objects derivations $d : A \to M$ and spaces of morphisms
+$\cD er_A(M_1, M_2) = A-\cM od_{/A}(M_1,M_2)$. The $\infty$-category $ \tilde \cD er_A$ of \textbf{extended derivations of A}
+has objects consisting of homotopy pullback squares:
+\[
+\begin{tikzcd}
+A^{\eta}\arrow{r}{f} \arrow{d} & A\arrow{d}{d_{\eta}} \\
+A\arrow{r}{d_0} & A \oplus M,
+\end{tikzcd}
+\]
+and spaces of morphisms consisting of morphisms of squares.
+\end{defin}
+
+Note that $\tilde \cD er_A$ can be described as the full $\infty$-subcategory of $\Fun(\Delta^1 \times \Delta^1, cdga^{\leq 0}_{/A})$
+whose objects are homotopy pullback squares and have prescribed restrictions: $F(\{0,0\}) = A$ and $F(\{1\}\times \Delta_1) = 
+d_0 : A \to A\oplus M$.
+
+There are two functors $F_1, F_2 : \tilde \cD er_A : \Fun(\Delta^1, cdga^{\leq 0}_{/A})$ obtained by restricting to $\Delta_1 \times \{1\}$
+and $\{0\} \times \Delta^1$, respectively. Note that their essential images are A-derivations and square-zero extensions of $A$,
+respectively, so that we have:
+\[
+\begin{tikzcd}
+\; & \tilde \cD er_A \arrow[swap]{ld}{F_1}\arrow{rd}{F_2} & \\
+\cD er_A & & \Fun(\Delta_1, cdga_{/A}).
+\end{tikzcd}
+\]
+We prove that $F_1$ is a trivial Kan fibration, which implies that it has a section $s$. This will allow us to define
+$\Phi = F_2 \circ s$.
+
+\begin{lem}
+$F_1$ is a trivial Kan fibration.
+\end{lem}
+\begin{proof}
+Consider the decomposition:
+\[
+\begin{tikzcd}
+\Fun(\Delta^1 \times \Delta^1, cdga_{/A})\arrow{rr}{R}\arrow{rd}{R_1} & & \Fun(\Delta^1 \times \{1\}, cdga_{/A}) \\
+& \Fun(\Lambda^2_2, cdga_{/A})\arrow{ur}{R_2} & 
+\end{tikzcd}
+\]
+$F_1$ is the restriction of $R$ to $\tilde \cD er_A$. Then we have:
+\begin{enumerate}
+\item Using Proposition 4.3.2.15 in \cite{HTT}, a restriction functor $\Fun(\cC, \cD) \to \Fun(\cC_0, \cD)$ is a trivial
+Kan fibration as long as all functors in $\Fun(\cC, \cD)$ are Kan extensions of those in $\Fun(\cC_0, \cD)$. We apply this twice.
+\item The pullback squares in $\Fun(\Delta^1 \times \Delta^1, cdga^{\leq 0}_{/A})$ are Kan extensions, because all limits are Kan
+extensions. It follows that $R_1|_{\tilde \cD er_A}$ is a trivial Kan fibration.
+\item $R_1(\tilde \cD er_A)$, the images of extended derivations in $\Fun(\Lambda^2_2, cdga^{\leq 0}_{/A})$, are left Kan extensions.
+It follows that $R_2$ restricted to the images of extended derivations is a trivial Kan fibration.
+\end{enumerate}
+\end{proof}
+
+Then we invoke the theorem saying that every trivial Kan fibration has a section \todo{reference this}, and define
+$\Phi = F_2 \circ s$.
+
+
+
+
+\section{n-small extensions}
+\label{sect:sq0_nsmall}
+
+Let $f: A \to B$ be a map in $cdga^{\leq 0}_k$, and let $I = \textbf{hofib}(f)$. In other words, $I$ is the homotopy pullback of
+the following diagram of non-unital commutative monoid objects in $A-\cM od$:
+\[
+\begin{tikzcd}
+I\arrow{r}\arrow{d} & A\arrow{d}{f} \\
+0 \arrow{r} & B.
+\end{tikzcd}
+\]
+This induces a non-unital commutative monoid structure on $I$; in particular, $I$ is an $A$-module, and
+there is a multiplication map $I \otimes_A I \to I$. The following is proposition 7.4.1.14. in \cite{Lurie_Higher_algebra}.
+
+\begin{prop}
+\label{prop:mult_nullhomotopic}
+The multiplication map $I \otimes_{A^{\eta}} I \to I$ is nullhomotopic.
+\end{prop}
+
+
+This motivates our definition of n-small extensions.
+The following definition and remarks are 7.4.1.18-7.4.1.21 in
+\cite{Lurie_Higher_algebra}.
+
+\begin{defin}
+Let $f : A \to B$ be a map in $cdga_k^{\leq 0}$, and let $n\geq 0$. We say that $f$ is an \textbf{n-connective extension}
+if $hofib(f) \in cdga_k^{\leq -n}$. We say that $f$ is an \textbf{n-small extension} if it is an n-connective extension and,
+moreover:
+\begin{enumerate}
+\item \label{item:mult_nullhomotopic}
+$hofib(f) \in cdga_k^{\geq -2n}$;
+\item the multiplication map $hofib(f) \otimes hofib(f) \to hofib(f)$ is nullhomotopic.
+\end{enumerate}
+\end{defin}
+
+\begin{rem}
+If $f:A \to B$ is an n-connective extension, from the long exact sequence on homotopy groups we see that 
+$\pi_0(A) \to \pi_0(B)$ is surjective.
+\end{rem}
+
+\begin{rem}
+Suppose that $f:A \to B$ is an n-connective extension with $hofib(f) \in cdga_k^{\geq -2n}$. Since $hofib(f) \in cdga_k^{\leq -n}$,
+we also have that $hofib(f) \otimes hofib(f) \in cdga_k^{\leq -2n}$. It follows that, at the level of homotopy groups,
+the only potentially nonzero map is:
+\begin{equation}
+\label{eq:pi2n_vanish}
+	\pi_{2n}\big(hofib(f) \otimes hofib(f)\big) \to \pi_{2n}\big(hofib(f)\big).
+\end{equation}
+Therefore condition \ref{item:mult_nullhomotopic} in the definition of an n-small extension simply requires that the map
+\ref{eq:pi2n_vanish} is 0.
+\end{rem}
+
+\begin{eg}
+Let $A$ be a commutative ring, which we regard as a discrete commutative dga. A map $\tilde A \to A$ in $cdga_k^{\leq 0}$
+is a 0-small extension if and only if:
+\begin{enumerate}
+\item $\tilde A$ is also discrete;
+\item $f: \tilde A \to A$ is a surjective commutative ring homomorphism;
+\item if $I$ is the kernel of $f$, then $I^2 = 0$, as a consequence of \ref{eq:pi2n_vanish}.
+\end{enumerate}
+So we recover the square-zero extensions in classical AG.
+\end{eg}
+
+We want to prove that all n-small extensions are square-zero extensions. (But not vice-versa!) First, we identify
+what n-smallness should correspond to in terms of derivations. It's what you'd expect.
+
+\begin{defin}
+Let $\cD er_{\text{n-con}}(A)$ denote the full subcategory of derivations $\eta : A \to M[1]$ such that $M \in A-\cM od^{\leq -n}$.
+Let $\cD er_{\text{n-sm}}(A)$ denote the full subcategory of derivations $\eta : A \to M[1]$ such that 
+$M \in A-\cM od^{\leq -n} \cap A-\cM od^{\geq -2n}$.
+\end{defin}
+
+The following is Theorem 7.4.1.23 in \cite{Lurie_Higher_algebra}, and is the main result of this talk.
+
+\begin{thm}
+Let $\Phi : \cD er(A) \to \Fun(\Delta^1, cdga_k^{\leq 0})$ be the functor constructed in section \ref{sect:sq0_fib}. For
+each $n\geq 0$, it induces an equivalence of categories:
+\[	\Phi_{\text{n-sm}} : \cD er_{\text{n-sm}} \to \Fun_{\text{n-sm}}(\Delta^1, cdga_k^{\leq 0}).	\]
+\end{thm}
+
+\begin{proof}
+We just give a sketch. First, note that for a derivation $d_\eta : A \to A \oplus M[1]$, there is an equivalence
+between the homotopy fiber of the square-zero extension $A^{\eta} \to A$ and $M$. Moreover, multiplication on
+the fiber of a square-zero extension is nullhomotopic, by Proposition \ref{prop:mult_nullhomotopic}.
+ It follows that the functor $\Phi$ restricts indeed to a functor
+$\Phi_{\text{n-sm}} : \cD er_{\text{n-sm}} \to \Fun_{\text{n-sm}}(\Delta^1, cdga_k^{\leq 0})$. 
+
+$\Phi$ admits a left adjoint $\Psi$, which sends a square-zero extension $A^{\eta} \to A$ to the derivation classified
+by $\bbL_A \to \bbL_{A/A^{\eta}}$. This restricts to a left adjoint of $\Phi_{\text{n-conn}}$, but we need to truncate in
+order to get an adjoint $\tau \circ \Psi_{\text{n-conn}}$ for $\Phi_{\text{n-sm}}$. Then we prove that this adjoint pair
+is an equivalence.
+\end{proof}
+
+
+\begin{cor}
+Every n-small extension is a square-zero extension.
+\end{cor}
+
+\begin{cor}
+Let $A \in cdga_k^{\leq 0}$, then every map in the Postnikov tower:
+\[	\dots \to \tau^{\geq -2}(A) \to \tau^{\geq -1}(A) \to \tau^{\geq 0} (A) 	\]
+is a square-zero extension.
+\end{cor}
+
+This is because the n-th stage is obviously an n-small extension, the homotopy fiber being equal to $\pi_{n}(A)[n]$ 
+concentrated in degree $n$.  This corollary is highly important, as it allows statements about derived affines $A$ to be proved
+by induction on the Postnikov tower. The base step, for $\pi_0(A)$, is a classical AG statement, which is proved by classical
+methods. The inductive step reduces to a linear problem involving the derivation
+associated to the square-zero extension $\tau^{\geq i}(A) \to \tau^{\geq i-1}(A)$. The next section exemplifies this
+philosophy.
+
+
+
+
+\section{Induction on Postnikov tower}
+\label{sect:sq0_induction}
+
+\begin{prop}
+Let $A\in sCA_{k}$, Assume we are given $j:\Spec(\pi_{0}(A))\to \mathbb{A}^{n}$, then there exists a lift 
+of the map $j$ to a map $\Spec(A)\rightarrow \mathbb{A}^{n}$.
+\end{prop}
+
+\begin{proof}
+We use induction on the Postnikov tower. Suppose that there is a map $j_{n}: Spec(\tau^{\leq n}A)\rightarrow 
+\mathbb{A}^{n}$, we show that there is a lifting $j_{n+1}$ from $Spec(\tau^{\leq n+1}A)$ to $\mathbb{A}^{n}$.  
+If we can prove this then as $A=lim(\tau^{\leq n}A)$ and there thus exists a lifting of the map $j$ to a map 
+from $Spec(A)$. 
+
+We show how this works for the first stage, the construction of $j_1 : \Spec(\tau^{\leq 1}(A)) \to \bbA^n$.
+\[
+\begin{tikzcd}
+\label{tikz:postnikov_pullback}
+k[x_1, \dots, k_n]\arrow{drr}{j}\arrow[swap]{ddr}{j}\arrow[dashed]{dr} & & & \\
+ & \tau^{1}(A)\arrow{r}\arrow{d} & \pi_0(A)\arrow{d}{d_{\eta}}\arrow[bend left]{ddr}{=} & \\
+ & \pi_0(A)\arrow[swap, bend right]{drr}{=} \arrow{r}{d_0} & \pi_0(A) \oplus \pi_1(A)[2]\arrow{dr}{p} & \\
+ & & & \pi_0(A) .
+\end{tikzcd}
+\]
+
+In order to invoke the universal property of the homotopy pullback, we need a homotopy between two maps
+$k[x_1, \dots, k_n] \to \pi_0(A) \oplus \pi_1(A)[2]$:
+\[	d_{\eta} \circ j \cong d_{0} \circ j.	\]
+It suffices to show that this homotopy exists, i.e. that the space $X$ of such homotopies is nonempty. However,
+we will accomplish more: we find the homotopy type of $X$, which allows us to comment on the (non-)uniqueness
+of the lift $j_1$. Note that, in an $\infty$-category, the derivations $d_0$ and $d_{\eta}$ come with the data which expresses
+them as sections of the projection $p:\pi_0(A) \oplus \pi_1(A)[2] \to \pi_0(A)$, i.e. homotopies $p\circ d_0
+\Rightarrow \id_A$ and $p\circ d_{\eta} \Rightarrow id_A$; this is the bottom-right part of diagram \ref{tikz:postnikov_pullback}.
+Moreover, giving a map $k[x_1, \dots, k_n] \to \pi_0(A) \oplus \pi_1(A)[2]$ (such as $d_{\eta} \circ j$ or $\cong d_{0} \circ j$)
+is, using the universal property of pullbacks, equivalent to giving a section of the pullback map $B \to k[x_1, \dots, k_n]$:
+\[
+\begin{tikzcd}
+k[x_1, \dots, k_n]\arrow{dr} & & k[x_1, \dots, k_n]\arrow{dl} & \pi_0(A)\arrow{dr} & & \pi_0(A)\arrow{dl} \\
+& B\arrow{d} & & & \pi_0(A) \oplus \pi_1(A)[2]\arrow{d} & \\
+& k[x_1, \dots, k_n] \arrow{rrr}{j} & & & \pi_0(A) & 
+\end{tikzcd}
+\]
+Note that $\pi_0(A) \oplus \pi_1(A)[2] \to \pi_0(A)$ is a degreewise surjection, hence a fibration in the model structure
+of $cdga_k^{\leq 0}$. (See \ref{rem:transfer_model_structure} for how this model structure is obtained, via the free-forgetful
+adjunction.) It follows that the homotopy pullback by $j$ is the same as the naive pullback, so $B = k[x_1, \dots, k_n]
+\oplus j_*\pi_1(A)[2]$.
+
+Putting everything together, a lift $j_1 : \Spec \tau^{\leq 1}(A) \to \bbA^1$ is the same as a homotopy between $d'_0$
+and $ d'_{\eta}$, the images of $d_0$ and $d_{\eta}$ under pullback. 
+But $d'_{0},d'_{\eta} \in Map_{cdga_k^{\leq 0} / k[x_{1},...,x_{n}]}(k[x_{1},...,x_{n}]), k[x_{1},...,x_{n}]\oplus 
+j_{*}\pi_{1}(A)[2])\cong Map_{k[x_{1},...,x_{n}]-Mod}(\bbL_{k[x_{1},...,x_{n}]}, j_{*}\pi_{1}(A)[2])$; denote this space
+by $X$. We compute its homotopy type. 
+
+Since $k[x_1, \dots, x_n]$ is discrete and smooth over $k$, $\bbL_{k[x_1, \dots, x_n]} \cong \Omega^1_{k[x_1, \dots, x_n]}[0]$.
+On the other hand, the functor $j_*$ is t-exact (see \ref{eg:modules_t_exact}), so $j_* \pi_1(A)[2]$ is concentrated in degree 2.
+It follows that we have:
+\[	\pi_i(X) = \left\{ \begin{array} {l} 0 \text{ if } i \neq 2, \\ 
+\Hom\big(\Omega^1_{k[x_1, \dots, x_n]}, \pi_1(A)\big) \cong \pi_1(A)^{\oplus n} \text{ if } i = 2 \end{array}\right. .	\]
+So $X \simeq K(\pi_1(A)^{\oplus n}, 2)$. In particular, $X$ is path connected, so the required path between $d'_0$ and $d'_{\eta}$
+exists. We can say more:
+\[	\{ \text{homotopies between } d'_0 \text{ and } d'_{\eta} \} \simeq \Omega X \simeq K(\pi_1(A)^{\oplus n}, 1).	\]
+We conclude that any two lifts $j_1, j_1' : k[x_1, \dots, x_n] \to \tau^{\leq 1}(A)$ are homotopic, but not coherently
+homotopic.
+\end{proof}
