@@ -129,21 +129,41 @@ Let $CDGA_{k}^{\leq n} \hookrightarrow CDGA_{k}$ denote the subcategory of $CDGA
 
 We move on to approach \ref{item:lawvere} to derived affines, the Lawvere Theory description. 
 This is important because
-it's the only one of the 3 procedures which carries through in the analytic setting (see e.g. \cite{Porta_Yu_Higher_analytic_stacks_2014}). You get holomorphic rings, smooth rings,
-and much of the theory of DAG can be carried in this setting.\todo{clear this part up}
+it's the only one of the 3 procedures which carries through in the analytic setting (see e.g. \cite{Porta_Yu_Higher_analytic_stacks_2014}).
 
-The idea of Lawvere theory is to describe all objects with some type of algebraic structure as functors between the free objects and the category $Set$.
-For example,
-\[	AbGps \cong \Fun^{\times}(FAb^{\op}, Set).	\]
-There's a map $\Z \to \Z \times \Z$, which sends $1\mapsto 1\times 1$. Since $F$ preserves products, $F(\Z) \times F(\Z)
-\cong F(\Z \times \Z) \to F(\Z)$.  In fact $F(\Z)$ has the structure of an abelian group, and the equivalence of categories above is realized on objects by $F \mapsto F(Z)$.  We denote by $T_{disc}$ the opposite category of free commutative rings.  Free commutative rings are the rings $k[x_1, \dots, x_n]$. Hence $T_{disc}$ is the subcategory of the category of affine schemes with objects the planes $\{\bbA^n\}$.
-$\Fun^{\times}(T_{disc}, Set) \cong CRing$. On objects we map a functor to it's value on the group ring $\bbA^{1}$, $F\mapsto F(\bbA^{1})$.  The addition and multiplication on $\bbA^{1}$ give $F(\bbA^{1})$ the structure of a (commutative) ring.  
+The idea of Lawvere theory is to describe all objects with some type of algebraic structure as functors between the free objects and the category $Set$, or in the $\infty$-categorical case $\mathcal{S}$ --- the infinity category of (topological) spaces.
+\begin{eg}  Let $Ab$ be the category of abelian groups, and let $FAb$ be the category of free abelian groups. There is an equivalence of categories
+\[	Ab \cong \Fun^{\times}(FAb^{\op}, Set).	\]
 
-Now pass to $SCR_k \cong s\Fun^{\times}(T_{disc}, Set) \cong \Fun^{\times}(T_{disc}, sSet) \cong \Fun^{\times}
-(T_{disc}, S)$, where $S$ is the infinity category of spaces. The last step is a very hard rectification theorem, proved
-by Lurie-Bergner.\footnote{HTT Propositions 5.5.9.2} 
+To an abelian group $G$, we associate the functor $Hom(-,G)$.  Note that we have an equality $Hom(\Z, G) =_{Sets}G $ (considering $\Z$ as an additive group), by mapping a homomorphism $f:\Z\rightarrow G$ to $f(1)$.  Furthermore $Hom(\Z\times \Z, G)=G\times G$.  Let $f\in Hom(\Z\times \Z, G)=G\times G$ map $(1,0)$ and $(0,1)$ to $a$ and $b$ respectively.  Precomposing with the map $\mathbb{Z}\rightarrow \mathbb{Z}\times \mathbb{Z}$ given by $1\mapsto (1,1)$ gives the map $Z\rightarrow G$ which maps $1\mapsto ab$.
 
- %$\Fun^{\times}(T_{disc}, sSet)_{projective}$. 
+For a functor $F$, we can associate an abelian group as follows.  There's a map $\Z \to \Z \times \Z$, which sends $1\mapsto 1\times 1$. Since $F$ preserves products, we have a map $F(\Z) \times F(\Z)
+\cong F(\Z \times \Z) \to F(\Z)$.  This endows $F(\Z)$ with the structure of an abelian (by definition of the multiplication) group.
+
+To a morphism of groups $G\rightarrow H$ we gain a natural transformation of functors $Hom(-,G)\rightarrow Hom(-,H)$ by composing an element of $Hom(-,G)$ with this morphism.  A natural transformation of functors $F_{1}\rightarrow F_{2}$ gives a map $F_{1}(Z)\rightarrow F_{2}(Z)$ such that the diagram
+\[
+\begin{tikzcd}
+F_{1}(\Z \times \Z) \arrow{r} \arrow{d} & F_{1}(\Z) \arrow{d} \\    
+F_{2}(\Z\times \Z) \arrow{r} & F_{2}(\Z)
+\end{tikzcd}
+\]
+commutes.  This shows that the map $F_{1}(Z)\rightarrow F_{2}(Z)$ is a group homomorphism.
+\end{eg}
+
+We denote by $T_{disc}$ the opposite category of free commutative rings over $k$.  Free commutative rings (over $k$) are the rings $k[x_1, \dots, x_n]$. Hence $T_{disc}$ is the subcategory of the category of affine schemes with objects the planes $\{\bbA^n\}$.  We denote by $CRing$ the category of commutative rings.
+
+\begin{prop}
+There is an equivalence of categories:
+\[\Fun^{\times}(T_{disc}, Set) \cong CRing.\] 
+\end{prop}
+
+On objects we map a functor to it's value on the group ring $\bbA^{1}$, $F\mapsto F(\bbA^{1})$.  The inverse map is given by taking a ring $R$ to the functor $Hom_{CRing}(-,R)$.  The (commutative) addition and multiplication on $\bbA^{1}$ ($\bbA^{1}\times \bbA^{1}\rightarrow \bbA^{1}$ given on points by $(x,y)\mapsto x+y$ and $(x,y)\mapsto xy$ respectively) give $F(\bbA^{1})$ the structure of a (commutative) ring.  
+
+Now pass to 
+\[SCR_k \cong s\Fun^{\times}(T_{disc}, Set) \cong \Fun^{\times}(T_{disc}, sSet) \cong \Fun^{\times}
+(T_{disc}, S),\] 
+where $S$ is the infinity category of spaces. The last step is a very hard rectification theorem, proved
+by Lurie-Bergner.\footnote{HTT Propositions 5.5.9.2}  
 
 \section{Derived Affines as Ringed Spaces}
 
