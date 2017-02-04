@@ -1,0 +1,112 @@
+\pdfoutput=1
+%The other issue is that some packages, such as microtype, produce different output under pdflatex. By default the arXiv goes from dvi to ps to pdf, so if you need pdflatex you have to set the \pdfoutput flag in the TeX file.
+\newif\ifpersonal
+\newif\ifarxiv
+\personaltrue % comment to remove personal notes
+\arxivtrue % comment to display shortened version for journal submissions
+\RequirePackage[l2tabu, orthodox]{nag} %detect whether obsolete packages are used
+\documentclass[10pt,a4paper,reqno,oneside]{book} %reqno places equation numbers on the right
+\linespread{1.2}
+%\allowdisplaybreaks[1]
+\usepackage{calligra}
+\usepackage{amsmath,amsthm,amssymb,mathrsfs,mathtools,bm,eucal,tensor} % math related
+\usepackage{microtype,fixltx2e} % latex technical issues
+\usepackage[scaled]{beramono,berasans}
+\usepackage{enumerate,comment,braket,xspace,tikz-cd} %utilities
+\usepackage[all,cmtip]{xy} % utilities
+\usepackage[utf8]{inputenc} % input encoding
+\usepackage[T1]{fontenc} % font encoding
+\usepackage{lmodern}
+\definecolor{linkcolor}{HTML}{005050}
+\usepackage[centering,vscale=0.7,hscale=0.7]{geometry}
+\usepackage{hyperref}
+\usepackage[capitalize]{cleveref}
+\usepackage{graphicx}
+\usepackage{xparse}
+\usepackage{url}
+
+%\makeevenhead{headings}{\thepage}{}{\leftmark}
+%\setlrmarginsandblock{3cm}{3.5cm}{*}
+%\setlength\marginparwidth{2.5cm}
+%\checkandfixthelayout
+%
+%\setlength\headheight{24pt}
+
+\usepackage{vmargin}
+\setpapersize{A4}
+\setmarginsrb{25mm}{10mm}{25mm}{10mm}%
+{12mm}{10mm}{5mm}{10mm}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+%%%Settings
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\fancyhf{}
+\fancyhead[LE,RO]{\bfseries\thepage}
+\fancyhead[RE]{\bfseries\footnotesize\nouppercase{\leftmark}}
+\fancyhead[LO]{\bfseries\footnotesize\nouppercase{\rightmark}}
+
+\theoremstyle{plain}
+\newtheorem{thm-intro}{Theorem}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem*{thm*}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem*{lem*}{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{cor-intro}[thm-intro]{Corollary}
+\newtheorem{assumption}[thm]{Assumption}
+\theoremstyle{definition}
+\newtheorem{defin}[thm]{Definition}
+\newtheorem{exercise}[thm]{Exercise}
+\newtheorem{defin-intro}[thm-intro]{Definition}
+\newtheorem{notation}[thm]{Notation}
+\theoremstyle{remark}
+\newtheorem*{rem*}{Remark}
+\newtheorem{eg}[thm]{Example}
+\newtheorem{eg-intro}[thm-intro]{Example}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rem-intro}[thm-intro]{Remark}
+\numberwithin{equation}{section}
+\newtheorem{construction}[thm]{Construction}
+
+\input{newcommands_all}
+
+\title{Derived Algebraic Geometry Seminar: UPenn 2017}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction} \markboth{INTRODUCTION}{}
+
+This contains notes for the Derived Algebraic Geometry Seminar currently being held at the University of Pennsylvania 
+math department in the 2016-17 academic year. Having introduced the machinery of Derived Algebraic Geometry the previous semester,
+we investigate its applications to producing Virtual Fundamental Cycles. Initially we will focus on moduli spaces of stable
+maps, with various boundary conditions, and how VFCs for these can be used to construct Gromov-Witten invariants and Floer-type
+theories.
+
+This is a draft and errors should be expected.
+
+
+
+
+\input{vfc_ch1_gw}
+\input{vfc_ch2_obs}
+
+
+
+
+
+\bibliographystyle{plain}
+\bibliography{dahema}
+
+\end{document}
+
+
+
+

@@ -1,0 +1,309 @@
+\chapter{Stable Maps and Gromov-Witten Invariants}
+\label{ch:gw}
+
+\section{The Counting Problem}
+\label{sect:counting}
+Basic idea of ennumerative geometry, as explained in \cite{invitation} 3.1: set up a moduli space M
+for the objects, e.g. curves,
+one wants to count: $\mathcal{M}_{g,n}(X,\beta)$, equipped with (flat) evaluation maps
+$\nu_i : \mathcal{M}_{g,n}(X,\beta) \to X$, given by $\big(C, p_1, \dots p_n, \mu\big) \mapsto \mu(p_i)$. 
+Each constraint $\nu_i \in \Gamma_i$, where $\Gamma_i \in H_*(X,\Z)$, gives a subscheme, of $\mathcal{M}_{g,n}(X,\beta)$.
+We take the intersection of all these: 
+\begin{equation}
+\label{eq:intersection_count}
+	\bigcap_{i=1}^m \nu_i^* \Gamma_i .
+	\footnote{This pullback is an umkehr map and we need some assumptions; is properness of $\mu_i$ enough?}
+\end{equation}
+If the intersections are transverse and the result has dimension 0, can count the number of points. We would like to set up $\Gamma_i$
+such that:
+\[	\sum_{i=1}^m \codim \Gamma_i = \dim \mathcal{M}_{g,n}(X,\beta).	\]
+Thus the ennumerative problem is reduced to intersection theory in M. In order to
+do intersection theory successfully, M needs to be compact (proper), and we need to understand
+its Chow ring, where the subschemes live.
+
+A first modification: in order to drop the transversality assumption on $\Gamma_i$, we replace them with the Poincar\'e dual
+cohomology classes $\gamma_i$, and take cup products then \ref{eq:intersection_count} is replaced by a first naive definition
+of the \textbf{Gromov-Witten invariants}:
+\begin{equation}
+\label{eq:gw_naive_def}
+	I_{g,n,\beta} := \int_{[\mathcal{M}_{g,n}(X,\beta)]} \bigwedge_i \nu_i^* \gamma_i.
+\end{equation}
+If $\mathcal{M}_{g,n}(X,\beta)$ is smooth and proper, then $[\mathcal{M}_{g,n}(X,\beta)]$ is the fundamental class, against
+which it makes sense to evaluate cohomology classes. $I_{g,n,\beta}$ is defined to be 0 unless $\sum_i \deg \gamma_i =
+\dim \mathcal{M}_{g,n}(X,\beta)$.
+
+
+
+
+
+\section{Axiomatic Definition of GW}
+\label{sect:axiom}
+
+The axiomatic approach of Kontsevich and Manin in \cite{km_gw} is as follows. Let $\overline{\mathcal{M}}_{g,n}$ denote the
+Deligne-Mumford compactification by stable curves of the moduli stack of genus $g$ curves with $n$ marked points.
+We take this as a well-understood object and explain the rest.
+
+\begin{defin}[2.2 in \cite{km_gw}]
+A \textbf{system of Gromov-Witten classes for X} is a family of linear maps:
+\[	I_{g,n,\beta}^X : H^*(X,\Q)^{\otimes n} \to H^*(\overline{\mathcal{M}}_{g,n},\Q)	\]
+defined for $n+2g-3\geq 0$, and satisfying the following axioms.
+\begin{enumerate}
+\item \textbf{Effectivity}: $I_{g,n,\beta} = 0$ for $\beta$ non-effective, i.e. not in the dual of the K\"ahler cone.
+
+\item $S_n$\textbf{-covariance}: equivariant with respect to the obvious $S_n$ action on the domain and target.
+
+\item \textbf{Grading}: $ \deg I_{g,n,\beta} =  - 2 \int_{\beta} c_1(X) + (2-2g) \dim X$. More precisely, this means that
+we set $|\gamma| = i$ for $\gamma \in H^i(X,\Q)$ and we require that:
+\[	\left| I_{g,n,\beta}^X(\gamma_1, \dots, \gamma_m)\right| = \sum_{j=1}^m |\gamma_j| - 2 \int_{\beta} c_1(X) + (2g-2) \dim X. 	\]
+Some comments on the grading axiom:
+\begin{itemize}
+\item Following the convention in \cite{km_gw}, we use the real, not complex, dimension.
+\item Informally we think of $I_{g,n,\beta}^X(\gamma_1, \dots, \gamma_m)$ as obtained by pushing forward via the natural map:
+\[	\mathcal{M}_{g,n}(X,\beta) \to \mathcal{M}_{g,n} .	\]
+As a result, its degree is an expectation for $\dim \mathcal{M}_{g,n}- \dim \mathcal{M}_{g,n}(X,\beta)$. 
+We know that $\dim \mathcal{M}_{g,n} = 2(3g-3+n)$. By deformation theory we also compute	$\vdim \mathcal{M}_{g,n}(X,\beta)$,
+called the \textbf{virtual dimension}, the expected dimension whenever first-order deformations are unobstructed.
+
+The tangent space to $\mathcal{M}_{g,n}(X, \beta)$ at a point $(C,p_1, \dots, p_n, \mu)$ is:
+\[	H^1(C,T_C(-p_1-\dots-p_n)) \oplus H^0(C,\mu^*T_X).	\]
+By Serre duality this is:
+\[	H^0(C,\Omega^{\otimes 2}_C(p_1+\dots+p_n))^{\vee} \oplus H^0(C,\mu^*T_X).	\]
+Approximating the dimensions with the Euler characteristic, we get via Riemann-Roch:
+\begin{equation}
+\label{eq:vdim}
+	\vdim \mathcal{M}_{g,n}(X, \beta) = 2(\dim X - 3)(1-g) + 2\int_{\beta} c_1(T_X) + 2n .
+\end{equation}
+Substracting these we get what the grading axiom requires:
+\[	\dim \mathcal{M}_{g,n}- \dim \mathcal{M}_{g,n}(X,\beta) = 2 \int_{\beta} c_1(X) - (2-2g) \dim X.	\]
+\item Assume that $I_{g,n,\beta}^X(\gamma_1, \dots, \gamma_m)$ is of \textbf{codimension zero}, i.e. that:
+\begin{equation}
+\label{eq:codimension_zero}
+\sum_{j=1}^n |\gamma_j| = 2 \int_{\beta} c_1(X) - (2-2g) \dim X.
+\end{equation}
+Then $\left| I_{g,n,\beta}^X(\gamma_1, \dots, \gamma_m)\right| = \dim \overline{\mathcal{M}}_{g,n}$.
+We can integrate this against the fundamental class of $\overline{\mathcal{M}}_{g,n}$, which is a proper smooth
+Deligne-Mumford stack. \todo{reference?} We obtain a finite number, which we take as the result of the curve count.
+\end{itemize}
+
+\item \textbf{Fundamental class.} We introduce some more terminology. Call a class \textbf{basic} if it has the smallest
+$n$ which makes sense, namely:
+\[	I_{0,3,\beta}^X(\gamma_1, \gamma_2, \gamma_3) \hspace{2cm} I_{1,1,\beta}^X(\gamma_1) \hspace{2cm} I_{g,0,\beta}^X
+\text{ for } g\geq 2.	\]
+Let $\pi: \overline{\mathcal{M}}_{g,n} \to \overline{\mathcal{M}}_{g,n-1}$ be the projection that forgets the last marked point.
+Let $e_X^0 \in H^0(X,\Q)$ be the identity of the cohomology ring.
+Unless the class on the LHS is basic, we require that:
+\[	I^X_{g,n,\beta}(\gamma_1, \dots, \gamma_{n-1}, e_X^0) = \pi^* I^X_{g,n-1,\beta}(\gamma_1, \dots, \gamma_{n-1}).	\]
+In addition, we set:
+\[	I^X_{0,3,\beta}(\gamma_1, \gamma_2, e_X^0) = \left\{ \begin{array} {ll} \int_X \gamma_1 \wedge \gamma_2, & \text{if } \beta = 0, \\
+0, & \text{if } \beta \neq 0. \end{array} \right.	\]
+
+\item \textbf{Divisor.} In the case $|\gamma_n| = 2$, i.e. $\gamma_n$ is the Poincar\'e dual class of a divisor,
+and if the LHS is a non-basic class, we require:
+\[	\pi_{n*}I_{g,n,\beta}^X(\gamma_1, \dots, \gamma_n) = \int_{\beta}\gamma_n I_{g,n-1,\beta}^X(\gamma_1, \dots, \gamma_{n-1}).	\]
+
+\item \textbf{Splitting.} This axiom and the next are very important: they postulate a manageable structure of the boundary
+of the compactification $\overline{\mathcal{M}}_{g,n}(X,\beta)$, compatible with that of the boundary of $\overline{\mathcal{M}}_{g,n}$.
+One way to get boundary maps is to let the curves have 2 irreducible components, with genera $g_1, g_2$ and marked points
+$n_1 +1, n_2+1$ such that $g = g_1 + g_2$, $n = n_1+n_2$. The extra marked point on each irreducible component is where we glue them;
+they become one singular point in the resulting reducible curve. For $S$ some partition of the $n$ marked points into 2 sets of
+cardinality $n_1$ and $n_2$, we let $\phi_S : \overline{\mathcal{M}}_{g_1,n_1+1} \times \overline{\mathcal{M}}_{g_2,n_2+1} \to
+\overline{\mathcal{M}}_{g,n}$ be the gluing map. Choose a basis $\{\Delta_a\}$ of $H^*(X,\Q)$ and define $g_{ab} = \int_V
+\Delta_a \wedge \Delta_b$; let $(g^{ab}) = (g_{ab})^{-1}$ denote the entries of the inverse matrix. Then:
+\[	\phi_S^* I^X_{g,n,\beta}(\gamma_1, \dots, \gamma_n) = (-1)^S \sum_{\beta_1 + \beta_2 = \beta} \sum_{a,b}
+I^X_{g_1,n_1+1,\beta_1}(\otimes_{j\in S_1} \gamma_j \otimes \Delta_a) g^{ab} \otimes I^X_{g_2,n_2+1,\beta_2}(\Delta_b
+\otimes \otimes_{j\in S_2} \gamma_j). 	\]
+Roughly speaking, we need to introduce $\sum_{a,b}(\Delta_a \otimes \Delta_b)$ to account for the position of the extra marked points.
+Integrating over these produces a factor $g_{a,b}$ that wasn't there on the LHS, so we need to multiply by $g^{ab}$ to
+compensate for it.
+
+\item \textbf{Genus reduction.} Let $\psi : \overline{\mathcal{M}}_{g-1,n+2}\to \overline{\mathcal{M}}_{g,n}$ be the map
+which glues together the last 2 marked points. Then:
+\[	\psi^*	I^X_{g,n,\beta}(\gamma_1, \dots, \gamma_n) = \sum_{a,b} 
+I^X_{g-1,n+2,\beta}(\gamma_1, \dots, \gamma_n, \Delta_a,\Delta_b) g^{ab}.\]
+
+The splitting and genus reduction axioms motivate the choice of stable maps compactification, see \ref{rem:boundary}.
+
+\item \textbf{Motivic axiom.} The maps $I^X_{g,n,\beta}$ are induced by correspondences in the Chow rings:
+\[	C^X_{g,n,\beta} \in C^*(X^n \times \overline{\mathcal{M}}_{g,n}).	\]
+Namely, consider the two projection maps:
+\[
+\begin{tikzcd}
+\; & X^n \times \overline{\mathcal{M}}_{g,n}\arrow{dl}{p}\arrow{dr}{q} & \\ X^n & & \overline{\mathcal{M}}_{g,n}.
+\end{tikzcd}
+\]
+We require that:
+\[	I^X_{g,n,\beta}(\gamma_1, \dots, \gamma_n) = q_*\big(C^X_{g,n,\beta} \wedge p^* (\gamma_1\otimes \dots \otimes \gamma_n)\big).\]
+This axiom is motivated as follows in \cite{km_gw}, 2.3.8.
+Suppose we construct a good compactification $\overline{\mathcal{M}}_{0,n}(X,\beta)$,
+together with a virtual fundamental class $[\overline{\mathcal{M}}_{0,n}(X,\beta)]$. Consider then the map:
+\begin{align*}
+\alpha :\overline{\mathcal{M}}_{0,n}(X,\beta) &\to X^n \times \overline{\mathcal{M}}_{0,n} \\
+(C, x_1, \dots, x_n, f) &\mapsto \big(f(x_1), \dots, f(x_n), (\bar C, x_1, \dots, x_n)\big).
+\end{align*}
+We would like $\bar C$ to be $C$, but we may need to contract certain components to get a stable curve from a stable map.
+Compare definitions \ref{def:stable_curve} and \ref{def:stable_map}. 
+Ignoring this for now, we set $C^X_(g,n,\beta) = \alpha_*\big( [\overline{\mathcal{M}}_{0,n}(X,\beta)]\big)$. This
+means, roughly speaking, we're integrating over $\overline{\mathcal{M}}_{0,n}(X,\beta)$, like the naive definition
+\ref{eq:gw_naive_def} suggests.
+\end{enumerate}
+\end{defin}
+
+We are mostly interested in codimension zero invariants, which informally are those where we imposed enough constraints
+to get a finite number of curves. For example, if we want to count degree $d$ rational curves in $\bbP^2$,
+the relevant codimension zero condition says:
+\[	\sum_{i=1}^n |\gamma_i| = 2 \int_{d[H]} c_1(\bbP^2) - 2 \dim \bbP^2 = 6d - 4.	\]
+For example, we could ask that the curves pass through $n$ given points in $\bbP^2$, then $|\gamma_i| = 4$, so we obtain
+$4n = 6d-4$. If the computation were done right, this would be $12d-4$, so that we get $n=3d-1$. So the relevant thing
+to count are degree $d$ rational curves passing through $3d-1$ points.\todo{fix this}
+
+
+
+
+
+
+
+
+\section{Stable Map Compactification}
+\label{sect:stable_map}
+To give a naive compactification of
+$\overline{\mathcal{M}}_{0,0}(\bbP^r,d)$, we could just look at the space $W(r,d)$ of $r+1$-tuples of degree $d$ polynomials
+in 2 variables, up to scaling, and take the subset of tuples which don't vanish simultaneously. We get a subset of a projective space:
+\[	W(r,d) \subset \bbP\left( \bigoplus_{i=0}^r H^0(\bbP^1,\mathcal{O}(d)) \right).	\]
+We need to quotient by $\Aut(\bbP^1)$ to identify maps that differ by a reparametrization; ignoring this for the moment,
+one hopes to take the closure of $W(r,d)$ in $\bbP\left( \bigoplus_{i=0}^r H^0(\bbP^1,\mathcal{O}(d)) \right)$ to obtain
+a compactification. However, for $g\neq 0$ and $X \neq \bbP^r$, this doesn't work and we need a less ad-hoc approach.
+
+The choice of compactification matters; different choice leads to different numbers. That's
+because the numbers now count things in the boundary as well. 
+
+\begin{eg}
+In the stable maps compactification that we introduce shortly, which produces Gromov-Witten invariants,
+we keep the domain curves well-behaved:
+they acquire nodal singularities, but no non-reduced structure. However, the maps themselves can be highly non-injective.
+A different choice is the Donaldson-Thomas compactification via Hilbert schemes: here we work with ideal sheaves, which
+always represent embeddings, however the domain curve can now be non-reduced or have singularities worse than nodal.
+Section $3\frac{1}{2}$ of \cite{PT_counting_curves} illustrates the differences with the following example.
+We work locally and consider the family of conics:
+\[	C_t = \{ x^2 + ty = 0 \} \subset \C^2,	\]
+which becomes singular as $t\to 0$. In the DT compactification, we take the limit in the defining
+equation, and get $x^2 = 0$, which is a thickened $y$-axis. In the stable map compactification, we parametrize
+the conics:
+\[	C_t \longleftrightarrow \xi \mapsto (-\sqrt{t} \xi, \xi^2) . 	\]
+This is a parametrization modulo automorphisms of the curve, namely $\xi \leftrightarrow -\xi$. Now as $t\to 0$,
+the limiting map is $\xi \mapsto (0, \xi^2)$, which is a double cover of the $y$-axis.
+You can't see from this example, but the different choices of compactification actually give different answers
+for the counting problem.
+\end{eg}
+
+With that in mind, let's finally define stable maps. For reference and comparison we include the definition of stable
+curves:
+
+\begin{defin}
+\label{def:stable_curve}
+\todo{write this up}
+\end{defin}
+
+Think about graphs of curves, such that each ``twig'' has no infinitesimal automorphisms. This means that twigs of
+genus $g$ must have at least $3 - 2g$ special points, which means either marked points or singular ones.
+
+\todo{figure out an easy way to include the pictures of graphs}
+
+\begin{defin}[2.4.1 in \cite{km_gw}]
+A \textbf{stable map} to $X$ is a structure $\big(C, x_1, \dots, x_n, f\big)$ where:
+\begin{itemize}
+\item $\big(C, x_1, \dots, x_n\big)$ is a connected reduced curve with $n$ pairwise distinct marked non-singular points,
+and at worst additional singular double points.
+\item $f:C \to X$ is a map with no non-trivial infinitesimal automorphisms. This means that every irreducible component of
+$C$ of genus $g$ which is contracted to a point (of degree 0) must have at least $3-2g$ special points.
+\end{itemize}
+\end{defin}
+
+\begin{rem}
+Note that, in the definition of stable maps $\big(C, x_1, \dots, x_n, f\big)$, the underlying curve
+$\big(C, x_1, \dots, x_n\big)$ need not be stable. Therefore the forgetful map $\overline{\mathcal{M}}_{g,n}(X,\beta)
+\to \overline{\mathcal{M}}_{g,n}$ must contract components of $\big(C, x_1, \dots, x_n\big)$ which have infinitesimal
+automorphisms.
+\end{rem}
+
+In his talk notes, Mauro provides the following construction of the moduli stacks of stable maps
+$\overline{\mathcal{M}}_{g,n}(X,\beta)$. Start from $\overline{\mathcal{M}}_{g,n}$, which are fine moduli spaces of
+curves, and therefore admit a universal family $\mathcal{C}_{g,n}$. Then define:
+\begin{equation}
+\label{underived_moduli_stack}
+	\overline{\mathcal{M}}_{g,n}(X) = 
+\Map_{\St / \overline{\mathcal{M}}_{g,n}}(\mathcal{C}_{g,n},  X \times \overline{\mathcal{M}}_{g,n}).
+\end{equation}
+To obtain $\overline{\mathcal{M}}_{g,n}(X, \beta)$, we must take maps $\alpha$ with the additional constraint that
+$\alpha_*[\mathcal{C}_{g,n}] = [\beta] \times [\overline{\mathcal{M}}_{g,n}]$. \todo{figure out the actual condition}
+
+\begin{rem}
+When we introduce a derived structure on $\overline{\mathcal{M}}_{g,n}(X, \beta)$, we follow the same approach, but take
+maps in $\dSt$ instead of $\St$.
+\end{rem}
+
+\begin{thm}[3.14 in \cite{bm_stacks}]
+$\overline{\mathcal{M}}_{g,n}(X,\beta)$ are proper, algebraic Deligne-Mumford stacks.
+\end{thm}
+\todo{we should say something about the proof, but the paper is very techinical}
+
+\begin{defin}
+A smooth projective scheme $X$ is \textbf{convex} if for every $f:\bbP^1 \to X$, $H^1(\bbP^1, f^*T_X) = 0$.
+\footnote{We may want to restrict $f$ to be stable, but we haven't defined this yet, so we'll ignore it for now.}
+\end{defin}
+
+For example, $\bbP^r$ is convex for every $r$. This notion is relevant due to:
+
+\begin{prop}
+If $X$ is convex, then $\overline{\mathcal{M}}_{0,n}(X,\beta)$ is a smooth, proper Deligne-Mumford stack.
+\footnote{Here we are using the compactification by stable maps; this is defined in \ref{def:stable_map}.}
+\todo{what's a reference for this? \cite{km_gw} say it's an expectation in 2.4.2, but Mauro's notes imply that it's proved.}
+\end{prop}
+
+Thus, in the situation of convex $X$, $[\mathcal{M}_{g,n}(X,\beta)]$ can be taken to be the fundamental class. Otherwise we will
+need to build a virtual fundamental class.
+
+One of the most important properties of $\overline{\mathcal{M}}_{g,n}(X,\beta)$ is the recursive structure of the boundary;
+this leads to a proof of the splitting and genus lowering axioms. We first do the case $g=0$, which is formula
+2.7.3.1 in \cite{invitation}.
+
+Choose a partition $S_1 \cup S_2$ of the marked points, and classes $\beta_1, \beta_2$ such that $\beta_1 + \beta_2 = \beta$.
+Let $D(S_1,S_2;\beta_1, \beta_2) \subset \overline{\mathcal{M}}_{0,n}(X,\beta)$ be the boundary divisor consisting of
+curves of genus 0 with 2 irreducible components, with marked points $S_i$ and mapping to $\beta_i$ respectively.
+
+\begin{lem}
+\label{lem:recursive_structure}
+The boundary divisors are given by:
+\[	D(S_1,S_2;\beta_1, \beta_2) =  \mathcal{M}_{0,S_1\cup\{x\}}(X,\beta_1) \otimes_{X}  \mathcal{M}_{0,S_2\cup\{x\}}(X,\beta_2).	\]
+Inducting on this formula, we obtain the structure of the lower dimensional strata as well; we don't write this down though.
+\end{lem}
+
+\begin{rem}
+The straight up generalization for curves of any genus would be:
+\[\coprod_{g_1 + g_2 = g} \mathcal{M}_{g_1,S_1\cup\{x\}}(X,\beta_1) \otimes_{X}  \mathcal{M}_{g_2,S_2\cup\{x\}}(X,\beta_2).	\]
+where $g_1 + g_2 = g$, and $[\beta_1] + [\beta_2] = [\beta]$. I haven't computed the dimensions, though, to see for what values
+of $g_1, g_2$ we get codimension 1 strata. Moreover, we have extra contributions from cycles of lower genus curves.
+\todo{finish this}
+\end{rem}
+
+To illustrate the need for virtual fundamental classes, we look at an example where $\overline{\mathcal{M}}_{g,n}(X,\beta)$
+contains strata of higher dimension than $\vdim$; in this case, taking the straight up fundamental class would break
+the grading dimension of Kontsevich-Manin.
+The following example is worked out in full detail Section 4 of \cite{nabijou}.
+
+\begin{eg}
+We compute the dimension and virtual dimension of $\overline{ \mathcal{M}_{0,0}}(X, 3\pi^*H)$,
+where $X = \Bl_p \bbP^2$, $\pi: X \to \bbP^2$ is the blowup map, and $[H] \in H_2(\bbP^2,\Z)$ is the hyperplane class.
+Using equation \ref{eq:vdim}, we have:
+\[	\vdim \overline{ \mathcal{M}_{0,0}}(X, 3\pi^*H) = \int_{3\pi^*H} c_1(T_X) - 1 = 8.	\]
+One could look, for example, at rational curves of degree 3 in $\bbP^2$ which avoid $p$, i.e.
+$\overline{ \mathcal{M}_{0,0}}(\bbP^2, 3H)$. This is a stratum in $\overline{ \mathcal{M}_{0,0}}(X, 3\pi^*H)$ of the correct dimension 8
+(the space of cubics in $\bbP^2$ is 9-dimensional, and we substract 1 for reparametrizations of the domain $\bbP^1$.)
+More strata are given by rational cubics in $\bbP^2$ which pass through $p$ with multiplicity $k$, and therefore 
+lift to a curve in $X$ of class $3\pi^*H - rE$, where $E \subset X$ is the exceptional divisor. To obtain
+a stable map in the appropriate class $3\pi^*H$, we add $r$ components isomorphic to $\bbP^1$ which map to $E$.
+The dimension of this stratum is:
+\[	\dim \overline{ \mathcal{M}_{0,0}}(X,3\pi^*H - rE) + \dim \overline{ \mathcal{M}_{0,0}}(\bbP^1,r) = (8-r) + (2r-2) = 6+r.	\]
+The farthest we can go while keeping $[\beta]$ effective (that is, $\beta . K_X \leq 0$) is $r=3$. This gives a stratum
+(supposedly a boundary stratum!) of dimension $9>8$.
+\end{eg}
+

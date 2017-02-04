@@ -1,0 +1,260 @@
+\chapter{Obstruction Theories and Virtual Fundamental Classes}
+\label{ch2:obs}
+Talk by Benedict Morrissey.
+
+Given a stack $X$, our objective is to construct a virtual fundamental class $[X]$ for it, motivated by the discussion in
+\ref{ch:gw}. We will see two ways in which a derived enhancement of $X$ helps achieve this.
+We would like $[X]$ to come from an algebraic cycle, i.e. an element of the Chow group.
+In this case, given $f: X\to Y$ proper,
+there is a well-defined pushforward  $f_*[X] \to [Y]$, which induces a pushforward
+$f_*[X]^H \to [Y]^H$ on the images $[X]^H, [Y]^H$ of the VFCs in any Weil cohomology theory $H$.
+
+However, derived Chow groups have yet to be defined, so we start with a piecemeal approach, by
+defining a class in G-theory only.
+
+
+\section{Construction from G-Theory}
+\begin{defin}
+The \textbf{G-theory} $G_0(X)$ of a classical stack $X$ is defined as the K-theory of the category of coherent sheaves on $X$:
+\footnote{One can also define higher G-theory $G_i$, but we won't need this.}
+\[	G_0(X) := K_0(\Coh(X)) .	\]
+If $\tilde X$ is a derived stack, we set $G_0(\tilde X) = K_0((\Coh \tilde X)^{\heartsuit})$.
+\end{defin}
+
+\begin{defin}
+A \textbf{derived enhancement} of a stack $X$ is a derived stack $\tilde X$ such that $t_0(\tilde X) = X$.
+\end{defin}
+
+There is a natural inclusion, left-adjoint to the truncation, which we denote $j: X \to \tilde X$.
+Using the fact that pushforwards of coherent sheaves by proper maps are coherent,
+\todo{check if there are other conditions, and whether $\tilde X$ derived changes anything}
+we obtain $j_* : G_0(X) \to G_0(\tilde X)$.
+
+\begin{prop}
+If $X$ is quasi-compact, then $j_* : G_0(X) \to G_0(\tilde X)$ is a bijection. In this case we define:
+\[	 [X]^{\vir} := j_*^{-1}[\mathcal{O}_{\tilde X}].	\]
+\end{prop}
+
+\begin{proof}
+The identification actually works on the full spectrum of $G$-theory. We're using the theorem of 
+the heart for $K$-theory. The identification is done as follows.
+\begin{enumerate}
+\item Theorem of the heart for $K$-theory. (Due to Quillen, and Batwick in the DG category setting.) If you have $\cC$ a stable
+$\infty$-category, idempotent complete, with $t$-structure, and every object in the heart is bounded, then $K(\cC) = K(\cC^{\heartsuit})$.
+\item $\Coh(\tilde X)^{\heartsuit} \simeq \Coh(X)^{\heartsuit}$, which follows from descent and the analogous result for
+derived affines, which was proved during the first semester, in the talk on Stable $\infty$-categories.
+\footnote{Throughout when we write $\Coh$ we mean $\Coh^b$.}
+\end{enumerate}
+\end{proof}
+
+\begin{thm}
+\label{thm:ox_bounded}
+For $\tilde X$ quasi-compact,\footnote{Note that we don't need to assume that $X$ is quasi-compact.}
+$\mathcal{O}_{\tilde X}$ is bounded. It follows that the following sum is finite:
+\[	j_*^{-1}[\mathcal{O}_{\tilde X}] = \sum_{i=0}^{\infty} (-1)^i [H^i(\mathcal{O}_{\tilde X})],	\]
+so it defines an element in $G_0(X)$.
+\end{thm}
+
+\begin{rem}
+Note that the cohomology in Theorem \ref{thm:ox_bounded} is just the cohomology of the complex, NOT sheaf cohomology. 
+Moreover it wouldn't make sense to
+use $K$ theory instead of $G$ theory, because even if $\mathcal{O}_{\tilde X}$ is perfect, the kernels and cokernels 
+of the various differentials don't need to be.
+\end{rem}
+
+\begin{proof}
+We start with a vague understanding of why the theorem may be true. The counterexample is $\Spec (\Sym k[2])$, 
+where the cotangent complex is unbounded. But if it's in amplitude [-1,0], it's like an exterior algebra and it works.
+
+We work locally, $\Spec B \to \Spec A$, $\supp \bbL_{B/A} \subset[-1,0]$. $B$ is a derived lci over $A$, so the cotangent complex
+is perfect, so there's a theorem that says that $B$ is homotopically of finite type over $A$. These can be constructed by attaching
+finitely many cells:
+\[	A = B_0 \to B_1 \to B_2 \to \dots \to B_k = B.	\]
+Attaching the $i+1^{th}$ cells of $B$ looks like:
+\[
+\begin{tikzcd}
+B_i \arrow{r} & B_{i+1} \\
+\bigotimes A[\p \Delta^{i+1}]\arrow{u}\arrow{r} & A[\Delta^{i+1}]\arrow{u} .
+\end{tikzcd}
+\]
+$B_1$ is obtained by attaching cells in degree 1. The map $B_1 \to B$ is an isomorphism on $\pi_0$. \todo{review this proof}
+
+There's another proof by Lowrey and Sch\"urg, in \cite{derived_GRR}, which is more intuitive. Having a quasi-smooth structure 
+allows one to describe
+the derived space locally as the derived zero locus of a section of a vector bundle. Then the derived intersection can be computed
+as a Koszul resolution, so $\mathcal{O}_{\tilde X}$ behaves like an exterior algebra, which means it's bounded. Here the quasi-compactness
+is used in order to reduce to finitely many local charts, which means that the bound on $\mathcal{O}_{\tilde X}$ is uniform.
+\end{proof}
+
+\begin{rem}
+The idea behind the proof of Lowrey and Sch\"urg is also that of
+\textbf{Kuranishi structures}. These are essentially a machinery for working with derived stacks which remembers the 
+local description as zero locus, in order to avoid using the machinery of derived geometry.
+In DAG quasi-smoothness is an intrinsic property that one can check at the level of the cotangent complex, so that one doesn't
+need to remember the local descriptions, which are cumbersome and don't glue well.
+\end{rem}
+
+The VFC in ordinary cohomology is defined by Konstevich to be:
+\begin{equation}
+\label{eq:G_definition_VFC}
+	[X]^{\vir} = \Ch([X]_G^{\vir}) \Td(j^* \bbT_{\tilde X}).
+\end{equation}
+
+\begin{conj}
+Definition \ref{eq:G_definition_VFC} agrees with the construction of Behrend-Fantechi, \ref{}. \todo{ref this}
+\end{conj}
+
+The conjecture has been verified for schemes (not stacks) by Ciocan-Fontanine and Kapranov, in
+\cite{ciocan_fontanine_kapranov}, using the additional 
+assumption (which is made in Behrend Fantechi anyway) that the cotangent complex admits a global resolution by vector bundles.
+
+
+
+
+\section{Obstruction Theories}
+We introduce the alternative construction of VFCs, following \cite{Behrend_Intrinsic_normal_cone_1997}. In the words of
+Mauro, we want to use this as a black box which achieves:
+\[	\text{Obstruction Theory} \Longrightarrow \text{VFC}.	\]
+
+Throughout we will use $X,Y$ for underived stacks, and $\tilde X, \tilde Y$ for their derived enhancements.
+
+\begin{defin}
+An \textbf{obstruction theory} for $X$ is a morphism $\phi : E \to \bbL_X$ in $D(\Coh(X))$, such that:
+\begin{align*}
+&h^0(\phi) : H^0(E) \to H^0(\bbL_X) \text{ is an isomorphism,} \\
+&h^{-1}(\phi) : H^{-1}(E) \to H^{-1}(\bbL_X) \text{ is surjective,} \\
+&H^i(E) = 0 \text{ for } i \neq -1,0.
+\end{align*} 
+\end{defin}
+
+\begin{defin}
+A \textbf{perfect obstruction theory} is an obstruction theory such that $E$ is in perfect amplitude [-1,0], which means that
+locally $E$ is isomorphic to a 2-term complex of vector bundles $[E^{-1} \to E^0]$.
+\end{defin}
+
+The link to derived geometry is as follows. 
+\begin{prop}
+Given a derived enhancement $j:X \to \tilde X$, with $\tilde X$ a quasi-smooth DM stack, there is a perfect obstruction theory:
+\[	j^* \bbL_{\tilde X} \to \bbL_X.	\]
+\end{prop}
+\begin{proof}
+By descent we reduce this to the case of affines, and we need only consider $A \to t_0(A)$. We have the fiber sequence:
+\[	j\bbL_A \to \bbL_{\pi_0(A)} \to \bbL_{\pi_0(A)/A}.	\]
+Due to the connectivity estimates, which we introduced last semester in the talk about the cotangent complex,
+$\bbL_{\pi_0(A)/A}$ is 2-connective. Indeed, the fiber of $A \to \pi_0(A)$ is 1-connective,
+so the cofiber, which is the shift of the fiber by 1, is 2-connective.\footnote{In order to relate the fiber and cofiber of the
+morphism $A \to \pi_0(A)$, we use the fact that we are working in the stable $\infty$-category $\pi_0(A)\Mod$, and not 
+in $\pi_0(A)-\Alg$.}
+\end{proof}
+
+Throughout the rest of the talk, the goal is to describe how to construct a VFC, starting with an obstruction theory. In the
+smooth case, if you take the $G$-construction we did earlier, you'd get the same answer. 
+
+We also want to describe functoriality properties for the VFC, and to that effect we introduce compatibility data
+between obstruction theories. 
+During the check that Kontsevich-Manin axioms are satisfied, we will need to use functoriality a lot.
+The following is Definition 5.8
+in \cite{Behrend_Intrinsic_normal_cone_1997}.
+
+
+\begin{defin}
+\label{defin:compatibility_datum}
+Let $u:X' \to X$ be a morphism.
+A \textbf{compatibility datum between obstruction theories} $E$ for $X$ and $ F$ for $X'$ is a choice of embeddings
+$f: X \to Y$, $g: X' \to Y'$ into smooth stacks, such that the following diagrams commute:
+\[
+\begin{tikzcd}
+X'\arrow{r}{u} \arrow[swap]{d}{g} & X\arrow{d}{f} \\ Y'\arrow{r}{v} & Y,
+\end{tikzcd}
+\]
+\[
+\begin{tikzcd}
+u^* E \arrow{d}\arrow{r}{\phi} & F \arrow{r}{\psi}\arrow{d} & g^* \bbL_{Y'/Y}\arrow{d} \\
+u^* \bbL_X \arrow{r} & \bbL_{X'} \arrow{r} & \bbL_{X'/X} .
+\end{tikzcd}
+\]
+Moreover, we require the two rows to be fibration sequences in $D(\Coh(X'))$.
+\end{defin}
+
+Behrend and Fantechi prove:
+
+\begin{prop}
+Given compatibility data between obstruction theories $E$ for $X$ and $F$ for $X'$, it follows that 
+$u^*[X]^{\vir, E} = [X']^{\vir, F}$.
+\end{prop}
+
+For us obstruction theories come from derived enhancements $\tilde X, \tilde X'$.
+In this case, we obtain the functoriality of VFCs in a cleaner way, by giving a morphism between derived
+enhancements $w: \tilde X' \to \tilde X$, fitting in the commutative diagram:
+\[
+\begin{tikzcd}
+\; & \tilde X'\arrow{rr}{w}\arrow{ddl}{\tilde g} & & \tilde X\arrow{ddl}{\tilde f} \\
+X'\arrow{rr}{u}\arrow[swap]{d}{g}\arrow{ur}{j} & & X\arrow[swap]{d}{f}\arrow{ur}{i} & \\
+Y'\arrow{rr}{v} & & Y &
+\end{tikzcd}
+\]
+Moreover, we require that the top and back square are homotopy pullbacks.
+
+\begin{rem}
+I was hoping that the top square would be enough. Unfortunately, we still need the choice of ambient 
+spaces $Y, Y'$, as well as morphisms $\tilde g$, $\tilde f$, and the data for the homotopy commutativity of the back square.
+However Mauro says:
+\begin{enumerate}
+\item In the applications we care about (stable maps), the entire back square will be there naturally.
+\item Working with the derived compatibility data is still easier, in practice, than with the fibration sequences in
+Definition \ref{defin:compatibility_datum}.
+\end{enumerate}
+\end{rem}
+
+Let us see why the derived compatibility data implies the diagram between fibration sequences in 
+Definition \ref{defin:compatibility_datum}.
+The assumption is that $E = i^* \bbL_{\tilde X}$ and $F = j^*\bbL_{\tilde X'}$. We first need the map:
+\[		\phi	: u^* i^* \bbL_{\tilde X} \to j^* \bbL_{\tilde X'} .	\] 
+This is just given by $w$. More precisely, the commutativity of the top square gives the map on the left 
+in the following diagram, and we define the top map as the composition:
+\[
+\begin{tikzcd}
+u^*i^*\bbL_{\tilde X}\arrow{r}\arrow{d} & j^* \bbL_{\tilde X'} \\
+j^*w^*\bbL_{\tilde X}\arrow{ur} &
+\end{tikzcd}
+\]
+To get $\psi$, which must be such that the row is a fiber sequence, we make use of the maps $\tilde g, \tilde f$.
+Question: how to identify $j^*\bbL_{\tilde X'/\tilde X} $ with $g^* \bbL_{Y'/Y}$? Since the back square is a pullback, we have
+a canonical identification $\bbL_{\tilde X'/\tilde X}  \simeq \tilde g^* \bbL_{Y'/Y}$, and this gives:
+\begin{equation}
+\label{eq:get_psi}
+	j^*\bbL_{\tilde X'/\tilde X} \simeq j^*	\tilde g^* \bbL_{Y'/Y} \simeq  g^* \bbL_{Y'/Y} .
+\end{equation}
+We take this composition to be $\psi$. Note that this chain of equivalences depends very much on the extra data of
+the homotopy commutative back square.
+
+\begin{rem}
+Throughout, we want $Y', Y$ to be smooth, and $\tilde f, \tilde g$ to be quasi-smooth. Therefore, if $X, X'$ are not
+smooth, we cannot expect $f, g$ to be just identity maps. In fact, the point that Behrend-Fantechi make is that $Y$ and $Y'$ 
+should only be expected to exist locally.
+\end{rem}
+
+\begin{defin}
+A \textbf{local embedding} $(U,M)$ of $X$ is the data of $U\to X$ an \'etale map and $U\to M$ a local immersion, 
+where $M$ smooth affine $k$-scheme of finite type.
+Given a local embedding, the associated \textbf{normal bundle} is $N_{U|M} := \Spec_M(\Sym (I/I^2))$. Inside this 
+we have the \textbf{normal cone} $C_{U/M} = \Spec_M(\oplus_{n\geq 0} I^n/I^{n+1})$.
+The ring homomorphism $\Sym (I/I^2) \to \oplus_{n\geq 0} I^n/I^{n+1}$ is surjective, so the map
+$C_{U/M}	\to N_{U|M}$ is a closed embedding.
+\end{defin}
+
+Given an obstruction theory $E \to \bbL_X$, if we can write $E = [F_{-1} \to F_0]$ globally, and define $F^1 := F_{-1}^*$, 
+then we get the pullback diagram:
+\[
+\begin{tikzcd}
+C(F^{\bullet})\arrow{r}\arrow{d} & F_1\arrow{d} \\ C_X \arrow{r} & N_X .
+\end{tikzcd}
+\]
+
+\begin{defin}
+Let $0: X \to F_1$ be the zero section.
+The \textbf{virtual fundamental class} of $X$ induced by the obstruction theory $E$ is the intersection of
+$[C(F^{\bullet})] \in \Chow(F_1)$ with the zero section, i.e. $[X]^{\vir, E} := o^{!}[C(F^{\bullet})]$.
+\todo{why is this shriek and not star?}
+\end{defin}
+
