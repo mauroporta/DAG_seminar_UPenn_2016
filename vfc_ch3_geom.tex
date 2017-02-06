@@ -1,0 +1,205 @@
+\chapter{Geometricity of Mapping Stacks}
+\label{ch3:geom}
+
+This chapter is somewhat tangential to our concrete goals for the semester. However we thought that $\R\Map_{g,n}(X,\beta)$
+provides a good opportunity to understand Artin-Lurie representability and how it can be used to prove that certain
+mapping stacks are geometric.
+
+
+\section{Using Artin-Lurie representability for Mapping Stacks}
+The representability theorem says:
+
+\begin{thm}[Artin-Lurie representability]
+\todo{write this}
+\end{thm}
+
+As an application of this, we want to prove the geometricity of mapping stacks.
+
+\begin{thm}
+\label{thm:mapping_stack_geometric}
+Let $g: X \to Z$ be a morphism of derived stacks which is geometric and of finite type. Let $f:X\to Z$ be a morphism of stacks
+which is representable by proper flat schemes. \footnote{We could replace the condition on $f$ with something slightly more
+general, such as representable by algebraic spaces of finite tor amplitude.} Then the mapping stack $\Map_{/Z}(Y,X)$ is geometric
+over $Z$, i.e. the morphism $\Map_{/Z}(Y,X) \to Z$ is geometric.
+\end{thm}
+\begin{proof}
+Recall that the mapping stack is defined by the functor of points:
+\[	 \Map_{/Z}(Y,X) (T) = \Map_{\dSt}(T\times_Z Y, X). 	\]
+The most important issue is the existence of a relative cotangent complex for $\Map_{/Z}(Y,X) \to Z$. We prove this in the case
+$Z = \Spec k$ for simplicity, but to obtain the proof for general $Z$ one just needs to add decorations.\footnote{I think.}
+Recalling the definition, we need to construct cotangent complexes $\bbL_{\Map_{/Z}(Y,X),x}$ at each point 
+$x: \Spec A \to \Map_{/Z}(Y,X)$, and then make sure that they glue; this will be diagram \ref{} below.
+
+$\bbL_{\Map_{/Z}(Y,X),x}$ is supposed to be an object that represents the functor of derivations over $\Map_{/Z}(Y,X)$:
+\[	\Map_{A\Mod}(\bbL_{\Map_{/Z}(Y,X),x}, M) = \Der_{\Map_{/Z}(Y,X)}(A,M) .	\]
+The latter is defined as the homotopy pullback:
+\[
+\begin{tikzcd}
+\Der_{\Map_{/Z}(Y,X)}(A,M)\arrow{r}\arrow{d} & \Map(\Spec(A\oplus M) \times_Z Y, X)\arrow{d} \\
+\Spec k\arrow{r} & \Map(\Spec A \times_Z Y, X).
+\end{tikzcd}
+\]
+Let $q: \Spec A \times_Z Y \to \Spec A$ denote the projection. Then $\Spec(A\oplus M) \times_Z Y$ coincides with the extension
+$(\Spec A \times_Z Y)[q^*M]$ by the pullback $q^*M$.\footnote{Work locally, take 
+$\Spec(A \otimes_{\mathcal{O}_Z} \mathcal{O}(Y) \oplus M\otimes_{\mathcal{O}_Z} \mathcal{O}(Y)$ over each affine piece and glue.}
+Therefore the pullback diagram becomes:
+\[
+\begin{tikzcd}
+\Der_{X}(A,q^*M)\arrow{r}\arrow{d} & \Map((\Spec A \times_Z Y) [q^*M], X)\arrow{d} \\
+\Spec k\arrow{r} & \Map(\Spec A \times_Z Y, X).
+\end{tikzcd}
+\]
+Now the top left is equivalent to $\Map_{\Spec A \times_Z Y}(f_x^*\bbL_X, q^*M)$. So the existence of a cotangent complex at the
+point $x$ is reduced to:
+\[	\Map_{A\Mod}(\bbL_{\Map_{/Z}(Y,X),x}, M) \simeq \Map_{\Spec A \times_Z Y}(f_x^*\bbL_X, q^*M).	\]
+Thus, we need a left adjoint for $q^*$; this is the map $q_+$ introduced in \ref{} below. Then we can define:
+\[	\bbL_{\Map_{/Z}(Y,X),x} := q_+ f_x^*\bbL_X.	\]
+
+Finally, we address the gluing of these cotangent complexes. Assume that we have a morphism $g: \Spec B \to \Spec A$. We define
+a point $y: \Spec B \to \Map_{/Z}(Y,X)$ by requiring the following diagram to commute:
+\[
+\begin{tikzcd}
+\; & & X \\
+Y \times_Z \Spec B \arrow{r} \arrow{d}{q_B} \arrow{urr}{f_y} & Y\times_Z \Spec A \arrow{d}{q_A}\arrow[swap]{ur}{f_x} & \\
+\Spec B\arrow{r}{g} & \Spec A &
+\end{tikzcd}
+\]
+From the commutativity of the upper triangle we obtain $f_y = f_x \circ 1\times g$, so that:
+\[	q_{B+} f_y^* \bbL_X \simeq q_{B+}(1\times g)^*f_x^*\bbL_X .	\]
+Our goal is to show that gluing works, which means:
+\[	q_{B+} f_y^* \bbL_X \simeq g^* q_{A*} f_x^* \bbL_X.	\]
+Therefore it suffices to prove that $q_+$ has the base change property $q_{B+}(1\times g)^* \simeq g^* q_{A+}$. This
+is the object of Lemma \ref{lem:q+_base}, while the construction of $q_+$ is Lemma \ref{lem:q+}.
+\end{proof}
+
+\todo{explain how this applies to stable maps, and prove it's quasi-smooth}
+
+
+
+\section{The + Pushforward Functor}
+
+\begin{lem}[3.3.22 and 3.3.23 in \cite{DAG-XII}]
+\label{lem:q+}
+Suppose that $q: Y \to S$ is perfect, i.e. $q_*$ preserves perfect complexes. Then $q^* : \QCoh(S) \to \QCoh(Y)$ has a left
+adjoint $q_+$.
+\end{lem}
+\begin{proof}
+Let $F \in \Perf(Y)$ and $G \in \QCoh(S)$. Then:
+\begin{align*}
+	&\Map_{\QCoh(S)} \big( (q_*F^{\vee})^{\vee}, G\big) \simeq \Map_{\QCoh(S)} \big( \mathcal{O}_S, q_*F^{\vee} \otimes G\big) \\
+\simeq& \Map_{\QCoh(S)} \big(\mathcal{O}_S, q_*(F^{\vee} \otimes q^* G)  \big) \simeq \Map_{\QCoh(Y)}(\mathcal{O}_Y,F^{\vee} \otimes q^*G)
+ \simeq \Map_{\QCoh(Y)}(F,q^*G).
+\end{align*}
+We have used the fact that perfect complexes are dualizable and the projection formula $q_*(F^{\vee} \otimes q^* G)
+\simeq q_*F^{\vee} \otimes G$. This means that, for $F$ perfect, we can use $q_+F = (q_*F^{\vee})^{\vee}$. Now if $S$ and $q$
+are quasi-compact and quasi-separated, $\QCoh(Y) = \Ind \Perf(Y)$. Remarking that $q_+ : \Perf(Y) \to \QCoh(S)$ is a left
+adjoint, it commutes with colimits, and so there exists a unique extension $q_+ : \Ind \Perf(Y) \to \QCoh(S)$ which commutes with
+colimits. It also follows that the extension is a left adjoint.
+\end{proof}
+
+\begin{lem}[3.3.23 in \cite{DAG-XII}]
+\label{lem:q+_base}
+Suppose given a pullback diagram of DM stacks, \todo{can we do better?} with $f, f'$ perfect.
+\[
+\begin{tikzcd}
+X'\arrow{r}{g'}\arrow{d}{f'} & X\arrow{d}{f} \\ Y' \arrow{r}{g} & Y
+\end{tikzcd}
+\]
+Then the canonical map $\lambda: f'_+ \circ g'^* \to g^* f_+$ is an equivalence. 
+(We say that the + pushforward satisfies base change.)
+\end{lem}
+\begin{proof}
+On perfect objects $F$, $\lambda_F$ is the dual of:
+\[	g^*f_* F \to f'_*g'^* F.	\]
+We have used the fact that pullbacks preserve duals. This is an isomorphism due to base change for the pusforward $f_*$.
+To conclude, both $f_+$ and $g^*$ are now left adjoints, which means they preserve all colimits. It follows that
+$f'_+ \circ g'^* \simeq g^* f_+$ extends to $\QCoh \simeq \Ind \Perf$.
+\end{proof}
+
+Note that we have used the assumption that $q: Y \to S$ is perfect. It remains, then, to prove that the map $q : \Spec A \times_Z Y
+\to \Spec A$ from the proof of Theorem \ref{thm:mapping_stack_geometric} is perfect. We do this in Lemma \ref{lem:q_perfect}
+below, after introducing some terminology.
+
+\begin{defin}
+A map $q:Y \to S$ is \textbf{categorically proper}, also called \textbf{of finite cohomological dimension}, if
+$q_* : \QCoh(Y) \to \QCoh(S)$ increases cohomological dimension by a uniform finite amount.
+\end{defin}
+
+\begin{defin}
+A map $q:Y \to S$ is \textbf{of finite tor amplitude} if locally $q:\Spec B \to \Spec A$ and $B$ is of finite tor amplitude
+as an object of $A\Mod$.
+\end{defin}
+
+Note that in our example $q: \Spec A \times_Z Y \to \Spec A$, $q$ is:
+\begin{itemize}
+\item proper, because we assumed that $Y \to Z$ is proper, and this is stable under base change;
+\item categorically proper, because we can compute $q_*$ by a (uniformly) finite \v{C}ech resolution, due to the assumption
+that $Y \to Z$ is representable by proper schemes.
+\item of finite tor amplitude, because this is a consequence of flatness. We have assumed that $Y\to Z$ is flat,
+and flatness is stable under base change.
+\end{itemize}
+
+\begin{lem}
+\label{lem:q_perfect}
+Let $q: Y \to S$ be a map which is proper, categorically proper and of finite tor amplitude. Then $q$ is perfect.
+\end{lem}
+\begin{proof}
+First, we claim that the first two assumptions imply that $q_* \Coh^-(X) \to \Coh^-(S)$. This argument uses the Leray spectral
+sequence. \todo{fill this in} Next, note that $\Perf(X) \subset \Coh^-(X)$ is characterized as the full subcategory of complexes
+with finite tor amplitude. So it remains to prove that, if $F \in \Coh^-(X)$ has finite tor amplitude, then so does $q_*F$.
+
+Take a Zariski affine cover for $X$; due to the quasi-compactness assumption this can be taken finite. Then the \v{C}ech nerve
+$U^{\bullet}$ is a finite complex. Since $q_*$ is a right adjoint, it commutes with limits, and we have:
+\[	q_* F = \varprojlim q|_{U^{\bullet}*} F|_{U^{\bullet}}.	\]
+Note that the maps $U_i \to X$ are not, in general, proper, so $q|_{U^{\bullet}*} F|_{U^{\bullet}}$ needn't be coherent. However,
+on affines $q_*$ is just a forgetful functor on modules. Therefore the coherence of $q|_{U^{\bullet}*} F|_{U^{\bullet}}$
+follows from the fact that $F|_{U^{\bullet}}$ is coherent and the map on rings is finitely generated. \todo{explain more}
+
+For finite tor amplitude, it suffices to check that, for every $M$ discrete, $q_*F \otimes_{\mathcal{O}_S} M$ is cohomologically
+supported in $[-m,\infty)$ for some $m$. (We already know that $q_*F$ is bounded above.) Since the \v{C}ech nerve is finite,
+we have:
+\[	q_*F \otimes_{\mathcal{O}_S} M = \varprojlim q|_{U^{\bullet}*} F|_{U^{\bullet}} \otimes_{\mathcal{O}_S} M.	\]
+The inclusion $\Coh^{-,[-m,\infty)}(S) \subset \Coh^-(S)$ commutes with limits, which gives the result.
+\end{proof}
+
+
+
+
+\section{Application: Weil Restriction}
+Weil restriction is, roughly speaking, an adjoint for base change. We sketch the treatment that Lurie gives in \cite{DAG-XIV}.
+
+\begin{defin}
+Let $\phi : Y \to Z$ and $X \to Y$ be maps of derived stacks. A \textbf{Weil restriction} for $X$ along $\phi$ is a
+stack $\Res_{Y/Z}X \to Z$, equipped with a morphism $\rho_X : \Res_{Y/Z}X \times_Z Y \to X$ over $Y$, such that composition
+with $\rho$ determines a homotopy equivalence:
+\begin{equation}
+\label{eq:weil_restriction}
+	\Map_{\dSt/Z}( - , \Res_{Y/Z}X) \simeq \Map_{\dSt/Y}(- \times_Z Y, X).
+\end{equation}
+\end{defin}
+
+\begin{eg}
+In arithmetic geometry $\phi: Y \to Z$ is taken to be a field extension $\phi : \Spec L \to \Spec k$; then the adjunction
+\ref{eq:weil_restriction} gives a bijection between $L$-points of $X$ and $k$-points of $\Res_{\Spec L/\Spec k}X$. To illustrate
+this without getting too much out of our comfort zone, we take $k = \R$, $L = \C$, and start with $X$ an affine variety over $\C$,
+given as a subset of $\C^n$ by equations $f_i(z_1, \dots, z_n) = 0$. Then $\Res{\Spec L/\Spec k}X$ is an affine variety over $\R$,
+given as a subset of $\R^{2n}$ by equations $\Re f_i(x_1 + i y_1, \dots, x_n + i y_n) = 0$, 
+$\Im f_i(x_1 + i y_1, \dots, x_n + i y_n) = 0$.
+\end{eg}
+
+Lurie proves the following existence result.
+
+\begin{thm}
+
+\end{thm}
+\begin{proof}
+The basic idea is to define $\Res_{Y/Z}X$ as the homotopy pullback:
+\[
+\begin{tikzcd}
+\Res_{Y/Z}X\arrow{r}\arrow{d} & \Map_{/Z}(Y,X)\arrow{d} \\
+Z\arrow{r} & \Map_{/Z}(Y,Y)
+\end{tikzcd}
+\]
+\end{proof}
+
+
