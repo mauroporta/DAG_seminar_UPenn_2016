@@ -258,3 +258,113 @@ $[C(F^{\bullet})] \in \Chow(F_1)$ with the zero section, i.e. $[X]^{\vir, E} := 
 \todo{why is this shriek and not star?}
 \end{defin}
 
+\subsection{Picard stacks}
+
+We follow and generalize \cite[Expos\'e XVIII, \S 1.4]{SGA4}.
+Recalling the equivalence (up to homotopy) between groupoids and $1$-homotopy type, we can rephrase Definition 1.4.5 in loc.\ cit.\ as follows:
+
+\begin{defin}
+	Let $\cX$ be an $\infty$-topos.
+	A \emph{Picard stack} over $X$ is a sheaf
+	\[ \cF \colon \cX^{\mathrm{op}} \to \mathrm{sAb}^{\le 1} , \]
+	where $\mathrm{sAb}^{\le 1}$ denotes the $\infty$-category of simplicial abelian groups whose underlying space is a $1$-homotopy type.
+	We let $\mathrm{Pic}(\cX)$ denote the $\infty$-category of Picard stacks on $\cX$.
+\end{defin}
+
+The main result in loc.\ cit.\ can then be summarized as follows:
+
+\begin{prop}[{Proposition 1.4.15 \& Corollary 1.4.17 in loc.\ cit.\ }]
+	Let $\cX$ be an $\infty$-topos.
+	There is an equivalence of $\infty$-categories
+	\[ \mathrm{Pic}(\cX) \simeq \Sh_{\mathcal D^{[-1,0]}(\Ab)}(\cX) , \]
+	where $\mathcal D^{[-1,0]}(\Ab)$ denotes the full $\infty$-subcategory of $\mathcal D(\Ab)$ (the $\infty$-derived category of abelian groups) spanned by objects in cohomological amplitude $[-1,0]$.
+\end{prop}
+
+From a modern point of view, the proof is a direct consequence of the Dold-Kan equivalence
+\[ \mathrm{sAb} \simeq \mathcal D^{\le 0}(\Ab) , \]
+combined with the remark that objects in cohomological degree $[-1,0]$ in $\mathcal D^{\le 0}(\Ab)$ correspond to $1$-homotopy types.
+Actually, the language of higher stacks, allows us to generalize the above proposition:
+
+\begin{prop}
+	Let $\cX$ be an $\infty$-topos.
+	There is an equivalence of $\infty$-categories
+	\[ \Sh_{\mathrm{sAb}}(\cX) \simeq \Sh_{\mathcal D^{\le 0}(\Ab)}(\cX) . \]
+\end{prop}
+
+\begin{rem}
+	From the $\infty$-categorical point of view, it is actually very unnatural to distinguish the two categories.
+	In other words, the above proposition, should be perceived as \emph{tautological} (at least from the reader used to higher categorical reasoning).
+	Indeed, the more natural way of seeing this question is to identify $\mathcal D(\Ab)$ with $\Sp(\mathrm{sAb})$. The Dold-Kan equivalence is then induced by the forgetful functor $\Omega^\infty \colon \Sp(\mathrm{sAb}) \to \mathrm{sAb}$.
+\end{rem}
+
+We now consider a special case of interest: namely, we will suppose that $\cX$ is the smooth-\'etale site of some derived Artin stack $X$.
+In this case, we have a forgetful functor
+\[ U \colon \QCoh(X)^{\le 0} \to \Sh_{\mathcal D^{\le 0}(\Ab)}(\cX) , \]
+that allows to see a quasi-coherent sheaf $\cF$ on $X$ as a (higher) Picard stack on $X$.
+
+On the other hand, suppose that $\cE \in \QCoh(X)$.
+We can associate to $\cE$ a (higher) Picard stack in the following way:
+
+\begin{defin}
+	Let $\cE \in \QCoh(X)$.
+	We set
+	\[ \mathbb V(\cE) \coloneqq \Spec_X(\Sym_{\cO_X}(\cE)) . \]
+\end{defin}
+
+\begin{rem}
+	In other words, for any $u \colon \Spec(A) \to X$, one has
+	\begin{align*}
+		\Map_{/X}(\Spec(A), \mathbb V(\cE)) & \simeq \Map_{\CAlg(\cO_X)}(\Sym_{\cO_X}(\cE), u_* \cO_A) \\
+		& \simeq \Map_{\QCoh(X)}(\cE, u_* \cO_A) \simeq \Map_{\QCoh(A)}(u^*(\cE), \cO_A) .
+	\end{align*}
+\end{rem}
+
+As $\QCoh(A)$ is naturally enriched in $\mathcal D(\Ab)$ and since for any $\cF, \cG \in \QCoh(A)$ we have
+\[ \Map_{\QCoh(A)}(\cF, \cG) \simeq \tau_{\le 0} \Map_{\QCoh(A)}^{\mathcal D(\Ab)}(\cF, \cG) , \]
+it is then clear that $\mathbb V(E)$ defines a (higher) Picard stack on $X$.
+
+\begin{rem}
+	Suppose that $\cE \in \QCoh(X)^{\le n}$, with $n \ge 0$.
+	Then $\mathbb V(\cE)$ is $n$-truncated in the sense that $\trunc(\mathbb V(\cE))$ takes values in $n$-homotopy types.
+\end{rem}
+
+In view of the above considerations, the following question is a natural one:
+
+\begin{question}
+	Is there a reasonable full subcategory $\cC$ of $\QCoh(X)$ and a functor $F \colon \cC \to \QCoh(X)^{\le 0}$ such that the diagram
+	\[ \begin{tikzcd}
+		{} & & \QCoh(X)^{\le 0} \arrow{d}{U} \\
+		\cC \arrow[dashed, bend left = 20]{urr}{F} \arrow[hook]{r} & \QCoh(X) \arrow{r}{\mathbb V(-)} & \Sh_{\cD^{\le 0}(\Ab)}(X)
+	\end{tikzcd} \]
+	commutes?
+\end{question}
+
+The answer is positive:
+
+\begin{prop}
+	Let $\cC = \Perf(X)^{\ge 0}$ be the category of perfect complexes on $X$ that are in positive cohomological amplitude.
+	Let $F \coloneqq (-)^\vee \colon \Perf(X)^{\ge 0} \to \QCoh(A)^{\le 0}$ be the duality functor:
+	\[ \cE^\vee \coloneqq \Hom_{\cO_X}(\cE, \cO_X) . \]
+	Then the above diagram commutes.
+\end{prop}
+
+\begin{proof}
+	Let $u \colon \Spec(A) \to X$ be a fixed map and let $\cE \in \Perf(X)^{\ge 0}$.
+	Then, since $\cE$ is perfect, we have:
+	\[ \Map_{/X}(\Spec(A), \mathbb V(\cE)) \simeq \Map_{\QCoh(A)}(u^*(\cE), \cO_A) \simeq \Map_{\QCoh(A)}(\cO_A, u^*(\cE^\vee)) . \]
+	Observe now that we can identify $\Map_{\QCoh(A)}(\cO_A, u^*(\cE^\vee))$ with the underlying complex of abelian groups of $u^*(\cE^\vee)$.
+	In other words, it coincides by definition with $U(\cE^\vee)(\Spec(A))$.
+\end{proof}
+
+Let now $\cF \in \Perf^{[-1,0]}(X)$ be a perfect complex in tor-amplitude $[-1,0]$.
+Then $\cF[-1] \in \Perf^{\ge 0}(X)$ and therefore the above proposition supplies us with an equivalence
+\[ \mathbb V(\cF[-1]) \simeq U(\cF^\vee[1]) . \]
+
+\begin{prop}
+	The stack $U(\cF^\vee [1])$ coincides with the stack $(h^1 / h^0)(\cF^\vee)$ of \cite{Behrend_Intrinsic_normal_cone_1997}.
+\end{prop}
+
+\begin{proof}
+	This follows tautologically if one believes to the claim at the beginning of \cite[\S 2]{Behrend_Intrinsic_normal_cone_1997} that $(h^1 / h^0)(\cF^\vee)$ coincides with the construction $\mathrm{ch}(-)$ performed in \cite[Expos\'e XVIII, \S 1.4]{SGA4}.
+	\todo{Understand why this claim is true.}
+\end{proof}
