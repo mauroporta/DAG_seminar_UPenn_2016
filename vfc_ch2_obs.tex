@@ -255,6 +255,74 @@ C(F^{\bullet})\arrow{r}\arrow{d} & F_1\arrow{d} \\ C_X \arrow{r} & N_X .
 Let $0: X \to F_1$ be the zero section.
 The \textbf{virtual fundamental class} of $X$ induced by the obstruction theory $E$ is the intersection of
 $[C(F^{\bullet})] \in \Chow(F_1)$ with the zero section, i.e. $[X]^{\vir, E} := o^{!}[C(F^{\bullet})]$.
-\todo{why is this shriek and not star?}
+\todo{why is this shriek and not star? zero section is not flat}
 \end{defin}
+
+
+
+
+Recall from last time that we were in the situation where we had a perfect obstruction theory $E^{\bullet} \to \bbL_X$.
+We will define today the normal cone $C_X \to N_X$. 
+
+If we had Chow groups for Artin stacks, we could take the intersection with the zero section directly at the level 
+of $C_X \to N_X$. The obstruction theory brings us to the level of DM stacks, where we use the theory of Vistoli for
+Chow groups. \todo{reference}
+
+Behrend and Fantechi have a way of associating a cone stack to a complex. Instead we use a slightly different version from
+some unpublished notes of Marco Robalo. Let $E \in \QCoh^b(X)$. Define $\bbV(E)$ as follows. For a map $\mu:\Spec A \to X$,
+\[	\Map_{/X}(\Spec A, \bbV(E)) = \Map_{QCoh(A)}(\mu^*(E), \mathcal{O}_A) \simeq \Map_{QCoh(A)}(\mathcal{O}_A,\mu^*(E^{\vee})).	\]
+$E$ is perfect for the last thing to make sense. Marci: this is the vector bundle corresponding to $E$. The idea is that,
+for $E = [E_0 \to E_1]$, we want $\bbV(E^{\vee}) \simeq E_1/E_0$. For example, if $E_1 = 0$, then $E_1/E_0 = BE_0$, which has for each
+fiber the classifying space of the corresponding abelian group.
+
+The first claim is that:
+\[	\bbV(E) = \Spec_X(\Sym_X(E)) .	\]
+This is because:
+\[	\Map_{/X}(\Spec(A), \Spec_X \Sym_X(E)) = \Map_{\QCoh(A)}(\Sym_A(\mu^*(E)), \mathcal{O}_A)	= \Map_{\QCoh(A)} (\mu^*E,\mathcal{O}_A).\]
+
+Next claim: if $E$ is of perfect amplitude $[-1,0]$ over $X$, then $\bbV(E[-1]) = h^1/h^0(E^{\vee})$.
+\[	\Map_{/X}\big(\Spec A, h^1/h^0(E^{\vee})\big) = \Map_{/A}\big(\Spec A, \mu^*(h^1/h^0(E^{\vee}))\big)
+= \Map_{\QCoh(A)}\big(\mu^*(E_0^{\vee}\to E_{-1}^{\vee}) , \mathcal{O}_A\big).	\]
+In BF, their definition is $N_X = h^1/h_0(\bbL_X^{\vee}) = h^1/h^0(\tau^{\leq 1}\bbL_X^{\vee}) = \bbV(\tau^{\geq -1} \bbL_X)$.
+
+\begin{rem}
+We need a global presentation in order to define the VFC, but not to define $N_X$.
+\end{rem}
+
+Recall that last time we defined immersions $U\to X$, $ U \to M$, an associated to them $C_{U/M} \to N_{U/M}$. Now pulling back
+$N_X$ to $U$ agrees with $N_{U/M}$. Moreover the $C_{U/M} \to N_{U/M}$ glue nicely, which gives an immersed substack
+$C_X \to N_X$.  We actually have:
+\[	[N_{U/M} / f^* T_M] \overset{\sim}{\to} i^*N_X.	\]
+We want to get an embedding $C_X \to N_X$, so we need to quotient the $C_{U/M}$ by $f^*T_M$ as well!
+
+
+\section{Stable maps}
+Recall $\mathcal{M}(V,\tau,\beta)$ the moduli space of maps from a Riemann sueface of type $\tau$ to an algebraic variety $V$,
+such that $\mu^*[C] \cong \beta$. $\tau$ is a graph with edges labeled by $g,n$. Each edge corresponds to a RS with genus $g$ 
+and number of makred points $n$, while nodes correspond to intersections of these.
+
+\todo{diagram from paper}
+
+We claim that $\R\pi_*(f^*T_V)^{\vee} \to \bbL_{\mathcal{M}(\tau,V,\beta)}$ is an obstruction theory. Note that if we take
+$V$ a point, then $\mathcal{M}(\tau,V,\beta) = \mathcal{M}(\tau)$, and we obtain $0 \to \bbL_{\mathcal{M}(\tau)}$.
+\todo{an obstruction theory is supposed to be an isomorphism in degree 0: does this hold here?}
+We have the following sequence of maps:
+\[	f^*\bbL_V \to \bbL_C \to \pi^* \bbL_{\mathcal{M}(\tau,V,\beta)}.	\]
+Upon tensoring with the canonical sheaf of $C$, this becomes:
+\[	f^*\bbL_V \otimes \omega_C \to	\]
+\todo{finish this argument}
+
+Behrend proves that these satisfy a bunch of axioms, and then Behrend-Manin prove that a family of VFCs with said axioms
+give a system of GW invariants a la Konstsevich-Manin.
+
+
+
+
+
+
+
+
+
+
+
 
