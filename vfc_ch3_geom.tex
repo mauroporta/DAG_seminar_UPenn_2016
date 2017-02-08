@@ -9,24 +9,58 @@ mapping stacks are geometric.
 \section{Using Artin-Lurie representability for Mapping Stacks}
 The representability theorem says:
 
-\begin{thm}[Artin-Lurie representability]
-\todo{write this}
+\begin{thm}[Artin-Lurie representability, Theorem 3.2.1 in \cite{DAG-XIV}]
+\cite{thm:lurie_representability}
+Let $X: \cdga_k^{\leq 0}\to \cS$ be a functor, and suppose we are given a natural transformation $f:X \to \Spec R$.
+ Then $X$ is representable by a derived Deligne-Mumford $n$-stack locally almost of finite
+presentation over $R$ if and only if the following are satisfied:
+\begin{enumerate}
+\item For every discrete commutative ring $A$, the space $X(A)$ is n-truncated.
+\item $X$ is a sheaf for the \'etale topology.
+\item $X$ is nilcomplete, infinitesimally cohesive and integrable. These mean:
+\begin{itemize}
+\item $X$ commutes with Postnikov towers;
+\item $X$ commutes with pullback squares $B \times_A C$, under the assumption that $\pi_0(B) \to \pi_0(A)$ and $\pi_0(C) \to \pi_0(A)$
+are surjective with nilpotent kernel;
+\item for $A$ a complete local ring, $X(A) \simeq \varprojlim X(A/\fr m^n)$; loosely speaking, every formal $A$-point of $X$
+integrates to give a point of $X$.
+\end{itemize}
+\item $f:X \to R$ admits a connective relative cotangent complex $\bbL_{X/R}$.
+\item $f:X \to R$ is locally almost of finite presentation.
+\end{enumerate}
 \end{thm}
+
+\begin{rem}
+(2) is obvious, (5) ensures that the DM stack is locally almost of finite presentation. (3) and (4) ensure that $X$ has good
+local behavior, in particular a good deformation theory. The existence of the relative cotangent complex is conceptually
+the most important condition, and the one we will put the most effort into verifying. Finally, (1) encodes the geometricity
+of the representing DM stack. $n$-stacks are defined to be those for which condition (1) holds; it is then true that: \todo{Mauro
+said so; maybe also find a reference}
+\begin{itemize}
+\item $n$-geometric implies $n+1$-stack;
+\item $m$-geometric for some $m$ and $n$-stack implies that, at worst, $m=n+1$.
+\end{itemize}
+\todo{this is not completely satisfactory: does Lurie representability guarantee that we get $m$-geometric for some $m$?}
+\end{rem}
 
 As an application of this, we want to prove the geometricity of mapping stacks.
 
 \begin{thm}
 \label{thm:mapping_stack_geometric}
-Let $g: X \to Z$ be a morphism of derived stacks which is geometric and of finite type. Let $f:X\to Z$ be a morphism of stacks
+Let $g: X \to Z$ be a morphism of derived stacks which is geometric and of finite type. Let $f:Y\to Z$ be a morphism of stacks
 which is representable by proper flat schemes. \footnote{We could replace the condition on $f$ with something slightly more
-general, such as representable by algebraic spaces of finite tor amplitude.} Then the mapping stack $\Map_{/Z}(Y,X)$ is geometric
+general, such as representable by quasi-compact quasi-separated algebraic spaces of finite tor amplitude.} Then 
+the mapping stack $\Map_{/Z}(Y,X)$ is geometric
 over $Z$, i.e. the morphism $\Map_{/Z}(Y,X) \to Z$ is geometric.
 \end{thm}
 \begin{proof}
 Recall that the mapping stack is defined by the functor of points:
 \[	 \Map_{/Z}(Y,X) (T) = \Map_{\dSt}(T\times_Z Y, X). 	\]
-The most important issue is the existence of a relative cotangent complex for $\Map_{/Z}(Y,X) \to Z$. We prove this in the case
-$Z = \Spec k$ for simplicity, but to obtain the proof for general $Z$ one just needs to add decorations.\footnote{I think.}
+We first reduce to $Z$ affine, so that Theorem \ref{thm:lurie_representability} applies.
+Then, since $g$ is assumed geometric, it satisfies conditions (3) of the Theorem \ref{thm:lurie_representability}. 
+It follows by elementary manipulation
+of the diagrams that $\Map_{/Z}(Y,X) \to Z$ also has these properties; see Proposition 3.3.6 in \cite{DAG-XIV}.
+The most important issue is the existence of a relative cotangent complex for $\Map_{/Z}(Y,X) \to Z$. 
 Recalling the definition, we need to construct cotangent complexes $\bbL_{\Map_{/Z}(Y,X),x}$ at each point 
 $x: \Spec A \to \Map_{/Z}(Y,X)$, and then make sure that they glue; this will be diagram \ref{} below.
 
@@ -49,11 +83,14 @@ Therefore the pullback diagram becomes:
 \Spec k\arrow{r} & \Map(\Spec A \times_Z Y, X).
 \end{tikzcd}
 \]
-Now the top left is equivalent to $\Map_{\Spec A \times_Z Y}(f_x^*\bbL_X, q^*M)$. So the existence of a cotangent complex at the
+Now the top left is equivalent to $\Map_{\Spec A \times_Z Y}(f_x^*\bbL_{X/Z}, q^*M)$. So the existence of a cotangent complex at the
 point $x$ is reduced to:
-\[	\Map_{A\Mod}(\bbL_{\Map_{/Z}(Y,X),x}, M) \simeq \Map_{\Spec A \times_Z Y}(f_x^*\bbL_X, q^*M).	\]
+\[	\Map_{A\Mod}(\bbL_{\Map_{/Z}(Y,X),x}, M) \simeq \Map_{\Spec A \times_Z Y}(f_x^*\bbL_{X/Z}, q^*M).	\]
 Thus, we need a left adjoint for $q^*$; this is the map $q_+$ introduced in \ref{} below. Then we can define:
-\[	\bbL_{\Map_{/Z}(Y,X),x} := q_+ f_x^*\bbL_X.	\]
+\begin{equation}
+\label{eq:mapping_local_cotangent}
+	\bbL_{\Map_{/Z}(Y,X)/Z,x} := q_+ f_x^*\bbL_{X/Z}.
+\end{equation}
 
 Finally, we address the gluing of these cotangent complexes. Assume that we have a morphism $g: \Spec B \to \Spec A$. We define
 a point $y: \Spec B \to \Map_{/Z}(Y,X)$ by requiring the following diagram to commute:
@@ -72,7 +109,86 @@ Therefore it suffices to prove that $q_+$ has the base change property $q_{B+}(1
 is the object of Lemma \ref{lem:q+_base}, while the construction of $q_+$ is Lemma \ref{lem:q+}.
 \end{proof}
 
-\todo{explain how this applies to stable maps, and prove it's quasi-smooth}
+\begin{rem}
+\label{rem:mapping_global_cotangent}
+The tangent complex of the mapping stack, when it exists, can be obtained more easily from the diagram:
+\[
+\begin{tikzcd}
+\Map_{/Z}(Y,X) \times_Z Y \arrow{d}{\pi}\arrow{dr}{ev} & \\ \Map_{/Z}(Y,X) & X.
+\end{tikzcd}
+\]
+Then:
+\[	\bbT_{\Map_{/Z}(Y,X)/Z} = \pi_* \ev^* \bbT_{X/Z}.	\]
+We would like to dualize and obtain:
+\begin{equation}
+\label{eq:mapping_global_cotangent}
+	\bbL_{\Map_{/Z}(Y,X)/Z} = (\pi_* \ev^* \bbL_{X/Z}^{\vee})^{\vee} = \pi_+ \ev^* \bbL_{X/Z}.
+\end{equation}
+In Theorem \ref{thm:mapping_stack_geometric}, we actually prove that $\bbL_{\Map_{/Z}(Y,X)/Z}$ exists, by constructing
+it locally and then showing that the construction glues. The result of the gluing must then be \ref{eq:mapping_global_cotangent},
+as can be seen from the extended diagram:
+\[
+\begin{tikzcd}
+\Spec A \times_Z Y\arrow{r}{x\times 1}\arrow{d}{q} &\Map_{/Z}(Y,X) \times_Z Y \arrow{d}{\pi}\arrow{dr}{ev} & \\
+\Spec A\arrow{r}{x} & \Map_{/Z}(Y,X) & X.
+\end{tikzcd}
+\]
+Since the square is a homotopy pullback, we apply base change for $q_+$ (see Lemma \ref{lem:q+_base}):
+\[	x^* \pi_+ \ev^* \bbL_{X/Z} \simeq q_+ (x\times 1)^* \ev^* \bbL_{X/Z} \simeq q_+ f_x^*\bbL_{X/Z},	\]
+which agrees with what we called $\bbL_{\Map_{/Z}(Y,X)/Z,x}$ in \ref{eq:mapping_local_cotangent}. It follows that
+$\bbL_{\Map_{/Z}(Y,X)/Z} \simeq \pi_+ \ev^* \bbL_{X/Z}$.
+\end{rem}
+
+
+\section{Stable Maps}
+We apply Theorem \ref{thm:mapping_stack_geometric} and Remark \ref{rem:mapping_global_cotangent} to the derived 
+moduli space of stable maps on a smooth projective
+variety $X$:
+\[	\R\mathcal{M}_{g,k}(X) = \Map_{dSt/\mathcal{M}_{g,k}}(\mathcal{C}_{g,k},X\times \mathcal{M}_{g,k}).	\]
+According to Remark \ref{rem:mapping_global_cotangent}, and using the notation therein:
+\begin{equation}
+\label{eq:cotangent_stable_prelim}
+	\bbL_{\R\mathcal{M}_{g,k}(X)/\mathcal{M}_{g,k}} = \pi_+ \ev^* \bbL_{X\times \mathcal{M}_{g,k}/\mathcal{M}_{g,k}}.
+\end{equation}
+We can simplify this expression using the pullback diagram:
+\[
+\begin{tikzcd}
+X \times \mathcal{M}_{g,k}\arrow{r}{p}\arrow{d} & X\arrow{d} \\ \mathcal{M}_{g,k}\arrow{r} & \Spec k .
+\end{tikzcd}
+\]
+The diagram implies $\bbL_{X\times \mathcal{M}_{g,k}/\mathcal{M}_{g,k}} \simeq p^* \bbL_X$, so \ref{eq:cotangent_stable_prelim}
+reduces to:
+\begin{equation}
+\label{eq:cotangent_stable}
+	\bbL_{\R\mathcal{M}_{g,k}(X)/\mathcal{M}_{g,k}} = \pi_+ \ev^* p^* \bbL_{X}.
+\end{equation}
+
+\begin{prop}
+The natural map $\R \mathcal{M}_{g,k}(X) \to \mathcal{M}_{g,k}$ is quasi-smooth.
+\end{prop}
+\begin{proof}
+We need to show that $\bbL_{\R\mathcal{M}_{g,k}(X)/\mathcal{M}_{g,k}} = \pi_+ \ev^* p^* \bbL_{X}$ has cohomological amplitude
+$[-1,0]$. $X$ is a smooth variety, so $\bbL_X$ is in amplitude $[0,0]$. Pullbacks preserve cohomological amplitude, because
+they only involve tensoring with locally free sheaves. \todo{Need any assumption on the maps?} $\pi_*$ may increase cohomological
+amplitude, because of higher direct image sheaves. However, that the fibers of $\pi : \R\mathcal{M}_{g,k}(X) 
+\times_{\mathcal{M}_{g,k}} \mathcal{C}_{g,k} \to \mathcal{M}_{g,k}$ are curves, so the cohomological amplitude of
+$\pi_* (\ev^* p^* \bbL_{X})^{\vee}$ is at most $[0,1]$. Dualizing again brings $\bbL_{\R\mathcal{M}_{g,k}(X)/\mathcal{M}_{g,k}}$
+to amplitude $[-1,0]$.
+\end{proof}
+
+Together with the fact that $\mathcal{M}_{g,k}$ is smooth, this implies that $\R\mathcal{M}_{g,k}(X)$ is quasi-smooth.
+Proposition \ref{prop:derived_obstruction_theory} implies the following.
+
+\begin{cor}
+The derived enhancement $j: \mathcal{M}_{g,k}(X) \to \R\mathcal{M}_{g,k}(X)$ determines a perfect obstruction theory
+on $\mathcal{M}_{g,k}(X)$:
+\[	j^* \bbL_{\R\mathcal{M}_{g,k}(X)} \to \bbL_{\mathcal{M}_{g,k}(X)}.	\]
+\end{cor}
+
+Expression \ref{eq:cotangent_stable} for the cotangent complex of $\R\mathcal{M}_{g,k}(X)$ shows that the obstruction theory
+is the same as that considered by \cite{Behrend_Intrinsic_normal_cone_1997} and introduced in 
+\todo{reference once the chapter is edited}.
+
 
 
 
