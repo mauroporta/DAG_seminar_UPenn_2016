@@ -1,9 +1,16 @@
 \chapter{Reduced Gromov Witten Invariants for K3 Surfaces}
 \label{ch4:k3}
 
-(Talk by Benedict Morrissey)  In chapter \ref{ch3:geom}, we constructed a quasismooth derived enhancement of the moduli stack of stable maps.  The machiner of chapter \ref{ch2:obs} can then be used to construct virtual fundamental classes, and from there Gromov--Witten invariants.  In this chapter we consider the case where the target varietry $X$ is a K3 surface.  In this case Gromov--Witten invariants defined in this fashion vanish.  In this chapter following \cite{schurg2015derived} provide an alternative quasismooth derived enhancement.  The virtual fundamental classes obtained were earlier described in \cite{maulik2007gromov, maulik2010curves, okounkov2010quantum} (henceforth referred to as OMPT).
+(Talk by Benedict Morrissey)  In chapter \ref{ch3:geom}, we constructed a quasismooth derived enhancement of the moduli stack of stable maps. The machinery of chapter \ref{ch2:obs} can then be used to construct virtual fundamental classes, and from there Gromov--Witten invariants. In this chapter we consider the case where the target varietry $X$ is a K3 surface.  In this case Gromov--Witten invariants defined in this fashion vanish. In this chapter, following \cite{schurg2015derived}, we provide an alternative quasismooth derived enhancement. The virtual fundamental classes obtained were earlier described in \cite{maulik2007gromov, maulik2010curves, okounkov2010quantum} (henceforth referred to as OMPT).
 
 \section{Non Reduced Gromov--Witten Invariants for K3 Surfaces}
+Note that GW invariants are deformation invariant, but in the moduli space of K3 surfaces there's a dense locus of non-algebraic
+K3s. These don't admit any (1,1) classes in $H_2$. It follows that the deformation of the class $[\beta]$ is not effective,
+and the corresponding invariants must vanish.
+
+Somehow, passing to the reduced obstruction theory restricts to algebraic deformations only, and this problem disappears.
+\todo{understand why this happens}
+
 
 \todo{Work out where I can find a proof that all these invariants disappear!}
 
@@ -13,13 +20,13 @@ The point of this section is to give a canonical identification $\R Pic(X)\xrigh
 
 \begin{thm}[Prop. 4.5 in \cite{schurg2015derived}]
 \label{thm:derivedgroup}
-A locally of finite presentation group stack $G$ over a field $k$, with identity $e: Spec k\rightarrow G$, and Lie algebra $\mathfrak{g}=T_{e}G$, has a canonical map
-\[\gamma(G):t_{0}(G)\times \R Spec(A)\rightarrow G,\]
+A locally of finite presentation group stack $G$ over a field $k$, with identity $e: \Spec k\rightarrow G$, and Lie algebra $\mathfrak{g}=T_{e}G$,\footnote{This is the tangent space at the identity, so it's a dg Lie algebra.} has a canonical map
+\[\gamma(G):t_{0}(G)\times \R \Spec(A)\rightarrow G,\]
 where $A=k\oplus (\mathfrak{g}^{\vee})_{<0}$.
 \end{thm}
 
 \begin{proof}
-The projection map $A\rightarrow k$ gives a $k$-point $x_{0}:Spec(k)\rightarrow \R Spec(A)$.
+The projection map $A\rightarrow k$ gives a $k$-point $x_{0}:\Spec(k)\rightarrow \R \Spec(A)$.
 
 We wish to find a commuting diagram 
 \[
@@ -28,31 +35,31 @@ B \arrow{rr}{a} && C\\
  & A \arrow{ur}{d} \arrow{ul}{x_{0}}
 \end{tikzcd}
 \]
-this is equivalent to giving a morphism $a':\L_{G,e} \cong \mathfrak{g}^{\vee}\rightarrow (\mathfrak{g}^{\vee})_{<0}$ (due to our choice of $A$), hence taking the truncation map $\tau_{< 0}$ (using the standard t-structure on the stable category of (dg) vector spaces) gives 
+this is equivalent to giving a morphism $a':\bbL_{G,e} \cong \mathfrak{g}^{\vee}\rightarrow (\mathfrak{g}^{\vee})_{<0}$ (due to our choice of $A$), hence taking the truncation map $\tau_{< 0}$ (using the standard t-structure on the stable category of (dg) vector spaces) gives 
 this map.
 
 We then take the composition
-\[t_{0}(G)\times \R Spec(A)\xrightarrow{j\times a}G\times G\xrightarrow{\times}G,\]
+\[t_{0}(G)\times \R \Spec(A)\xrightarrow{j\times a}G\times G\xrightarrow{\times}G,\]
 where the final map uses the group product in $G$.
 \end{proof}
 
-We now apply Theorem \ref{thm:derivedgroup} to the group stack $\R Pic(X)$ for a K3 surface $X$.
+We now apply Theorem \ref{thm:derivedgroup} to the group stack $\R \Pic(X)$ for a K3 surface $X$.
 
 \begin{thm}
-The map $\gamma_{\R Pic(X)}$ for $X$ a K3 surface gives an isomorphism of derived stacks
-\[\R Pic(X)\xrightarrow{cong} Pic(X)\times \R Spec(Sym(H^{0}(X,K_{X})[1])).\]
+The map $\gamma_{\R \Pic(X)}$ for $X$ a K3 surface gives an isomorphism of derived stacks
+\[\R \Pic(X)\xrightarrow{cong} \Pic(X)\times \R \Spec(\Sym(H^{0}(X,K_{X})[1])).\]
 \end{thm}
 
 \begin{proof}
 We note first that this map clearly provides an isomorphism on truncations.  Hence as $\R Pic(X)$ is a derived group stack, we need only show that it is \'{e}tale at $e$, that is to say 
-\[T_{t_{0}(e),x_{0}}(\gamma_{\R Pic(X)}):T_{t_{0}(e),x_{0}}(Pic(X)\times \R Spec(Sym(H^{0}(X,K_{X})[1])))\rightarrow T_{e}G\]
+\[\bbT_{t_{0}(e),x_{0}}(\gamma_{\R \Pic(X)}):\bbT_{t_{0}(e),x_{0}}(\Pic(X)\times \R \Spec(\Sym(H^{0}(X,K_{X})[1])))\rightarrow T_{e}G\]
 is an isomorphism of dg k-vector spaces.
 
-Note that 
-\[T_{e}G=\mathfrak{g}=\R \Gamma(X,\mathcal{O}_{X})[1]\cong H^{0}(X,\mathcal{O}_{X})[1]\oplus H^{2}(X,\mathcal{O}_{X})[-1].\] \todo{why? is the cohomology of a K3 like this?}
+Note that, since $H^1(X,\mathcal{O}_X) = 0$: 
+\[T_{e}G=\mathfrak{g}=\R \Gamma(X,\mathcal{O}_{X})[1]\cong H^{0}(X,\mathcal{O}_{X})[1]\oplus H^{2}(X,\mathcal{O}_{X})[-1].\] 
 
 Hence 
-\[A=\C\oplus (\mathfrak{g}^{\vee})_{<0}=\C\oplus H^{2}(X,\mathcal{O}_{X})[1]\cong H^{0}(X,K_{X})[1]\cong Sym(H^{0}(X,K_{X})[1]\]
+\[A=\C\oplus (\mathfrak{g}^{\vee})_{<0}=\C\oplus H^{2}(X,\mathcal{O}_{X})[1]\cong \C \oplus H^{0}(X,K_{X})[1]\cong Sym(H^{0}(X,K_{X})[1]\]
 where the final step follows because $H^{0}(X,K_{X})$ is free of dimension 1.
 
 Clearly $T_{t_{0}(e),x_{0}}(\gamma_{\R Pic(X)})$ is an isomoprhism.
@@ -89,7 +96,32 @@ The derived stack $\R M_{g,n}^{red}(X,\beta)$ is quasismooth.
 \end{prop}
 
 \begin{proof}
-\todo{Write This}
+The cotangent complex relative to $M_{g,n}$ is:
+\[ \bbT_{\R M_{g,n}(X,\beta)/M_{g,n}, f:C \to X} = \R \Gamma(C,f^*\bbT_X) . \]
+The absolute one is:
+\[	\bbT_{\R M_{g,n}(X,\beta), f:C \to X} = \R \Gamma\big(C,\text{Cone}(\bbT_C(-\sum x_i) \to f^*\bbT_X)\big) .	\]
+We use the pullback square:
+\[
+\begin{tikzcd}
+\R M_{g,n}^{red}(X,\beta) \arrow{r}\arrow{d} & \R M_{g,n}(X,\beta)\arrow{d} \\
+\Spec \C \arrow{r} & \R \Spec (\Sym H^0(X,K_X)[1]) .
+\end{tikzcd}
+\]
+This gives the following distinguished triangle of complexes:
+\[	\bbT^{red} := \bbT(\R M_{g,n}^{red}(X,\beta)) \to \R \Gamma \big(C,\text{Cone}(\bbT_C(-\sum x_i) \to f^*\bbT_X)\big)
+\to H^2(X,\mathcal{O}_X)[-1] .	\]
+Looking at the associated long exact sequence of cohomology, it suffices to show that:
+\[	H^1 \R \Gamma \big(C,\text{Cone}(\bbT_C(-\sum x_i) \to f^*\bbT_X)\big) \to H^2(X,\mathcal{O}_X)	\]
+is surjective. We do this by precomposing with the map:
+\[	H^1(C,f^*\bbT_X) \to  H^1 \R \Gamma \big(C,\text{Cone}(\bbT_C(-\sum x_i) \to f^*\bbT_X)\big) ,	\]
+and proving that the resulting map is surjective. For the latter, we use the commutative diagram:
+\[
+\begin{tikzcd}
+H^1(X,\bbT_X)\arrow{d}\arrow{r} & \Ext^2_X(\R f_*\mathcal{O}_C, \R f_*\mathcal{O}_C) \arrow{r} & H^2(X,\mathcal{O}_X)[-1] \\
+H^1(C,f^*\bbT_X) \arrow{r} & H^1(X,\text{Cone}(\bbT_C(-\sum x_i) \to f^*\bbT_X)) \arrow{u} & 
+\end{tikzcd}
+\]
+\todo{Finish This}
 \end{proof}
 
 \section{The Resultant Obstruction Theories}
@@ -100,9 +132,47 @@ In this section we compare the obstruction theories obtained from the reduced de
 
 \todo{Write an explicit description}
 
+The explicit description is as follows.
+\begin{align*}
+	H^0(\bbT^{red}_f) &\cong H^0\big(C,\text{Cone}(\bbT_C \to f^*\bbT_X)\big)	\\
+	H^1(\bbT^{red}_f) &\cong \Ker\big(H^1(\Theta_f) : H^1\big(C,\text{Cone}(\bbT_C \to f^*\bbT_X)\big) \to H^2(X,\mathcal{O}_X)\big)
+\end{align*}
+
+
 \section{The Link to Donaldson--Thomas Theory}
 
 Recall that in section \ref{sec: reduced moduli space} we made use of a map $\R Map (X,\beta)\rightarrow Perf(X) $.  Recall that the stack $Perf(X)$ is used in Donaldson--Thomas theory, a curve counting theory that uses a different compactification of the space of curves in $X$ that the stable curves used in Gromov--Witten invariants.  There are conjectured to be various relationships between Gromov--Witten and Donaldson--Thomas invariants as developed in \cite{maulik2006gromovI, maulik2006gromovII}.
+
+The compactification for DT is as follows. For $C\subset X$ an embedded curve, $f_*\mathcal{O}_C \in \Perf(X)$. More precisely,
+$f_*\mathcal{O}_C$ lands in a component (or union thereof) $\Perf^{si, \geq 0, \beta}$. The latter is the DT stack, and we want to
+have a theory of integration over it.
+
+For a start, fix $\mathcal{L}$ a line bundle on $X$, corresponding to a map $\Spec \C \to \R \Pic(X)$. Then we define the stack
+of perfect complexes with fixed determinant:
+\[
+\begin{tikzcd}
+\Perf(X)_{\mathcal{L}} \arrow{r}\arrow{d} & \Perf(X)\arrow{d}{\det} \\
+\Spec \C \arrow{r} & \R\Pic(X).
+\end{tikzcd}
+\]
+We have another constraint:
+\[	\Ext^i(F,F) = 0, \forall i<0,	\]
+and moreover $\Ext^0(F,F) \simeq H^0(X,\mathcal{O}_X)$, which gives $\Perf(X)^{si \geq 0}$.
+
+For a K3 surface, we can consider again the reduced theory:
+\[
+\begin{tikzcd}
+\Perf(X)^{red} \arrow{r}\arrow{d} & \Perf(X)\arrow{d} \\
+\Spec \C \arrow{r} & \R \Spec (\Sym H^0(X,K_X)[1]) .
+\end{tikzcd}
+\]
+
+In the end we put all of these constraints together to form $\Perf(X)^{si \geq 0, \mathcal{L}, red}$.
+
+\todo{sb draw big diagram, I got lazy}
+
+These triangles are precisely the diagram necessary for functoriality of obstruction theories. Of course, this is rather silly:
+we showed that if you restrict to the open subset, the choice of compactification doesn't influence the computation.
 
 \todo{talk about all of S5}
 
