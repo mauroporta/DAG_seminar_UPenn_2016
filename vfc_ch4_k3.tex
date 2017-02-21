@@ -1,0 +1,108 @@
+\chapter{Reduced Gromov Witten Invariants for K3 Surfaces}
+\label{ch4:k3}
+
+(Talk by Benedict Morrissey)  In chapter \ref{ch3:geom}, we constructed a quasismooth derived enhancement of the moduli stack of stable maps.  The machiner of chapter \ref{ch2:obs} can then be used to construct virtual fundamental classes, and from there Gromov--Witten invariants.  In this chapter we consider the case where the target varietry $X$ is a K3 surface.  In this case Gromov--Witten invariants defined in this fashion vanish.  In this chapter following \cite{schurg2015derived} provide an alternative quasismooth derived enhancement.  The virtual fundamental classes obtained were earlier described in \cite{maulik2007gromov, maulik2010curves, okounkov2010quantum} (henceforth referred to as OMPT).
+
+\section{Non Reduced Gromov--Witten Invariants for K3 Surfaces}
+
+\todo{Work out where I can find a proof that all these invariants disappear!}
+
+\section{$\R Pic$ for K3 Surfaces}
+
+The point of this section is to give a canonical identification $\R Pic(X)\xrightarrow{\cong}Pic(X)\times \R Spec(Sym(H^{0}(X,K_{X})[1]))$.  Recall that $\R Pic(X)$ is a (locally of finite presentation) derived group stack.
+
+\begin{thm}[Prop. 4.5 in \cite{schurg2015derived}]
+\label{thm:derivedgroup}
+A locally of finite presentation group stack $G$ over a field $k$, with identity $e: Spec k\rightarrow G$, and Lie algebra $\mathfrak{g}=T_{e}G$, has a canonical map
+\[\gamma(G):t_{0}(G)\times \R Spec(A)\rightarrow G,\]
+where $A=k\oplus (\mathfrak{g}^{\vee})_{<0}$.
+\end{thm}
+
+\begin{proof}
+The projection map $A\rightarrow k$ gives a $k$-point $x_{0}:Spec(k)\rightarrow \R Spec(A)$.
+
+We wish to find a commuting diagram 
+\[
+\begin{tikzcd}
+B \arrow{rr}{a} && C\\
+ & A \arrow{ur}{d} \arrow{ul}{x_{0}}
+\end{tikzcd}
+\]
+this is equivalent to giving a morphism $a':\L_{G,e} \cong \mathfrak{g}^{\vee}\rightarrow (\mathfrak{g}^{\vee})_{<0}$ (due to our choice of $A$), hence taking the truncation map $\tau_{< 0}$ (using the standard t-structure on the stable category of (dg) vector spaces) gives 
+this map.
+
+We then take the composition
+\[t_{0}(G)\times \R Spec(A)\xrightarrow{j\times a}G\times G\xrightarrow{\times}G,\]
+where the final map uses the group product in $G$.
+\end{proof}
+
+We now apply Theorem \ref{thm:derivedgroup} to the group stack $\R Pic(X)$ for a K3 surface $X$.
+
+\begin{thm}
+The map $\gamma_{\R Pic(X)}$ for $X$ a K3 surface gives an isomorphism of derived stacks
+\[\R Pic(X)\xrightarrow{cong} Pic(X)\times \R Spec(Sym(H^{0}(X,K_{X})[1])).\]
+\end{thm}
+
+\begin{proof}
+We note first that this map clearly provides an isomorphism on truncations.  Hence as $\R Pic(X)$ is a derived group stack, we need only show that it is \'{e}tale at $e$, that is to say 
+\[T_{t_{0}(e),x_{0}}(\gamma_{\R Pic(X)}):T_{t_{0}(e),x_{0}}(Pic(X)\times \R Spec(Sym(H^{0}(X,K_{X})[1])))\rightarrow T_{e}G\]
+is an isomorphism of dg k-vector spaces.
+
+Note that 
+\[T_{e}G=\mathfrak{g}=\R \Gamma(X,\mathcal{O}_{X})[1]\cong H^{0}(X,\mathcal{O}_{X})[1]\oplus H^{2}(X,\mathcal{O}_{X})[-1].\] \todo{why? is the cohomology of a K3 like this?}
+
+Hence 
+\[A=\C\oplus (\mathfrak{g}^{\vee})_{<0}=\C\oplus H^{2}(X,\mathcal{O}_{X})[1]\cong H^{0}(X,K_{X})[1]\cong Sym(H^{0}(X,K_{X})[1]\]
+where the final step follows because $H^{0}(X,K_{X})$ is free of dimension 1.
+
+Clearly $T_{t_{0}(e),x_{0}}(\gamma_{\R Pic(X)})$ is an isomoprhism.
+\end{proof}
+
+This identification allows the definition of a projection $pr_{der}:\R Pic(X)\rightarrow \R Spec(Sym(H^{0}(X,K_{X})[1])$.
+
+\section{The reduced Moduli Space $\R M_{g,n}(X,\beta)^{red}$.}
+\label{sec:reduced moduli space}
+
+Recall the map $x_{0}:Spec(\C)\rightarrow  \R Spec(Sym(H^{0}(X,K_{X})[1])$.
+
+We defined the reduced derived enhancement as follows:
+\begin{defin}
+The \textbf{reduced stack of $n$-pointed stable maps} of genus $g$, class $\beta$ to a K3 surface $X$ is given by the pullback
+\[
+\begin{tikzcd}
+\R M_{g,n}^{red}(X,\beta)\arrow{r}\arrow{d} & \R M_{g,n}(X,\beta)\arrow{d}{\delta_{1}^{der}(X,\beta)} \\
+Spec(\C)\arrow{r}{x_{0}} & \R Spec(Sym(H^{0}(X,K_{X})[1])
+\end{tikzcd}
+\]
+where we define the map $\delta_{1}^{der}(X,\beta)$ by the composition
+\[\R M_{g,n}(X,\beta)\rightarrow \R M_{g,n}(X)\xrightarrow{a} Perf(X)\xrightarrow{det} \R Pic(X)\xrightarrow{pr_{det}} \R Spec(Sym(H^{0}(X,K_{X})[1]),\]
+
+where the map $a$ is induced by the perfect complex $\R \pi_{*}(\mathcal{O}_{\R \mathcal{C}_{g,X}})$, (that is this specifies a perfect complex over $X\times M_{g,n}(X,\beta)$, and hence a map  $M_{g,n}(X,\beta)\rightarrow Perf(X)$).
+\end{defin}
+
+\begin{rem}
+This derived enhancement is quasismooth, and we will show that the induced obstruction theory on $M_{g,n}(X,\beta)$ agrees with that of OMPT.
+\end{rem}
+
+\begin{prop}
+The derived stack $\R M_{g,n}^{red}(X,\beta)$ is quasismooth.
+\end{prop}
+
+\begin{proof}
+\todo{Write This}
+\end{proof}
+
+\section{The Resultant Obstruction Theories}
+
+In this section we compare the obstruction theories obtained from the reduced derived enhancement with those obtained in OMPT.
+
+\todo{Want THM 4.8 from STV}
+
+\todo{Write an explicit description}
+
+\section{The Link to Donaldson--Thomas Theory}
+
+Recall that in section \ref{sec: reduced moduli space} we made use of a map $\R Map (X,\beta)\rightarrow Perf(X) $.  Recall that the stack $Perf(X)$ is used in Donaldson--Thomas theory, a curve counting theory that uses a different compactification of the space of curves in $X$ that the stable curves used in Gromov--Witten invariants.  There are conjectured to be various relationships between Gromov--Witten and Donaldson--Thomas invariants as developed in \cite{maulik2006gromovI, maulik2006gromovII}.
+
+\todo{talk about all of S5}
+
