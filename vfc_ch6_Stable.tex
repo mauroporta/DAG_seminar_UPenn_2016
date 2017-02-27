@@ -1,0 +1,267 @@
+\chapter{DT-Theory and stable pairs}
+In this chapter, we introduce two other ways of curve counting, especially in projective 3-fold, called Donaldson-Thomas theory and Pandharipande-Thomas theory(Stable pairs). Comparison of these invariants with GW-invariants is mainstream of enumerative geometry and we explain several conjectures and results. Next, we formalize it in the derived setting. More generally, we introduce compactly supported integration along the fiber with which we could define shifted symplectic structure on the derived mapping stack with non-proper source.
+
+\section{Donaldson-Thomas Theory}
+The idea of Donaldson-Thomas theory is to count curves "embedded" in $X$, instead of counting stable maps from curve to $X$. One might be able to take Hilbert scheme to compactify such embedded curves as follows. Let $n \in \Z, \beta \in H_2(X;\Z)$. There exists a projective scheme $Hilb_n(X,\beta)$ compactifying the moduli space of embedded curves in $X$. 
+\begin{equation*}
+    Hilb_n(X, \beta) = \{C \hookrightarrow X | dimC \leq 1, \chi(\mathcal{O}_C)=n, [C]=\beta \}
+\end{equation*}
+However, it does not admit perfect obstruction theory because deformation and obstruction space don't behave nicely enough. In order to remedy this, we should interpret it as a moduli of (stable) sheaves on $X$. 
+\begin{lem}
+     Let $I_n(X, \beta)$ be a moduli space of rank 1 torsion free sheaf $I$ in $X$ with chern character $ch(I)=(1,0,-\beta, -n) \in H^*(X;\Z)$ and trivial determinant. Then, $Hilb_n(X;\beta) \simeq I_n(X, \beta)$
+\end{lem}
+\begin{proof}
+    The map $Hilb_n(X;\beta) \to I_n(X,\beta)$ is given by $Z \mapsto I_Z$ where $I_Z$ is an ideal sheaf of the subscheme $Z$. $I_Z$ is torsion-free because it is a subsheaf of coherent locally free sheaf $\mathcal{O}_X$. The Chern character part is trivial. Conversely, any element $I \in I_n(X,\beta)$ gives an ideal sheaf of $\mathcal{O}_X$ from a natural map to reflexive hull $I^{\vee\vee} \simeq \mathcal{O}_X$. Since $I$ is torsion-free, $det(I) \simeq I^{\vee\vee} \simeq \mathcal{O}_X$.
+\end{proof}
+\begin{rem}
+    This is a special case of a moduli of stable sheaves. If we choose polarization $\omega$ on $X$, then we can put ($\omega$)-stability condition on the category of coherent sheaves on $X$. To be specific, $E \in \Coh(X)$ is $\omega$-(semi)stable if 
+    \begin{itemize}
+        \item $E$ is pure
+        \item For any subsheaf $0 \neq F \subsetneq E$, $P_F(m)<(\leq)P_E(m)$ where $P_E(m)=\chi(E \otimes \mathcal{O}_X(m))$ modulo a leading coefficent. 
+    \end{itemize} 
+    Hence, for fixed Chern character $\mu \in H^*(X;\Q)$, $\mathfrak{M}^{s(s)}_{\omega}(\mu)$ is defined to be a moduli stack of $\omega$-(semi)stable sheaf with fixed Chern character. Clearly, $\mathfrak{M}^s_{\omega}(\mu) \subset \mathfrak{M}^{ss}_{\omega}(\mu)$ and there exists a quasi-projective scheme $M_{\omega}(\mu)$ with a $\C^*$-gerbe $\mathfrak{M}^s_{\omega}(\mu)$ because automorphism in $\mathfrak{M}^s_{\omega}(\mu)$ is just $\C^*$. In particular, \\
+    if $\mathfrak{M}^s_{\omega}(\mu)=\mathfrak{M}^{ss}_{\omega}(\mu)$, then $M_{\omega}(\mu)$ is a projective scheme. In our case, for $\mu=(1, 0, -\beta, -n)$, this condition holds and $M_{\omega}(\mu)$ is isomorphic to $Hilb_n(X,\beta)$.
+\end{rem}
+The moduli space of sheaves $I_n(X,\beta)$ admits a virtual class. The main point is that deformations and obstructions are governed by $\text{Ext}^1(I_C, I_C)_0, \text{Ext}^2(I_C, I_C)_0$ respectively, where the subscript 0 denotes the trace-free part governing deformations with fixed determinant $\mathcal{O}_X$. Since $\text{Hom}(I_C, I_C)=\C$ consists of only the scalars, the trace-free part vanishes. By Serre duality, 
+\begin{equation*}
+    \Ext^3(I_C, I_C) \cong \Hom(I_C, I_C \otimes K_X)^* \cong H^0(K_X) \cong H^3(\mathcal{O}_X)
+\end{equation*}
+It vanishes when we take trace-free parts. Hence, there is no higher obstruction spaces except\\ $\text{Ext}^1(I_C, I_C)_0, \text{Ext}^2(I_C, I_C)_0$ and they govern a perfect obstruction theory of virtual dimension equals to 
+\begin{equation*}
+    ext^1(I_C, I_C)_0-ext^2(I_C, I_C)_0= \int_{\beta}c_1(X)
+\end{equation*}
+In CY-case, we get the following definition.
+\begin{defin}
+    Let $X$ be a projective Calabi-Yau 3-fold. Donaldson-Thomas invariant $I_{n, \beta}$ is defined to be
+    \begin{equation*}
+        I_{n,\beta}=\int_{[I_n(X,\beta)]^{vir}}1
+    \end{equation*}
+\end{defin}
+\begin{rem}
+    By Serre duality, we can see that it indeed admits a symmetric obstruction theory. By Berhend, when the moduli space is equipped with symmetric obstruction theory, we can construct a function $\nu:I_n(X,\beta) \to \Z$ which is called Berhend function. Then 
+    \begin{equation*}
+        I_{n,\beta} = \int_{[I_n(X,\beta)]}\nu de =\sum_{m\in \Z} me(\nu^{-1}(m))
+    \end{equation*}
+    In particular, if $I_n(X,\beta)$ is non-singular and connected, then it is just the topological Euler characteristic of $I_{n,\beta}$
+\end{rem}
+
+\begin{eg}\label{DTex}
+    Consider $C_t=\{x=z=0\} \cup \{y=0,z=t\} \subset \C^3$. As a subscheme, the limit goes to $C_0$ whose ideal sheaf is generated by $(x,z)(y,z)=(xy,xz,yz,z^2) \varsubsetneq (xy,z)$. This limit ideal does not contain $(z)$, so as a scheme, the limit curve $C_0$ is given by $\{xy=0=z\}$ with a scheme-theoretic point added at the origin. Moreover, this embedded point can break off as follows. Consider the flat family $C_{\epsilon}=\{xy=\epsilon, z=0\}$. $C_0$ can be smoothed to $C_\epsilon$ with higher genus. In this case, the origin is not an embedded point anymore, but free point not on the curve. 
+\end{eg}
+This example reveals some disadvantages of DT-invariant in counting curves. Free and embedded points distract us from counting curves. 
+\begin{defin}
+    For fixed curve class $\beta \in H_2(X, \Z)$, the DT partition function is
+    \begin{equation*}
+        \mathsf{Z}^{DT}_{\beta}(q)=\sum_n I_{n,\beta}q^n.
+    \end{equation*}
+\end{defin}
+Since $I_n(X, \beta)$ is easily seen to be empty for sufficiently negative $n$, the partition function is a Laurent series in $q$. In order to count just curves, not points and curves, we define the reduced generating function by dividing by contribution of just points:
+\begin{equation*}
+    \mathsf{Z}^{red}_{\beta}(q)=\frac{\mathsf{Z}^{DT}_{\beta}(q)}{\mathsf{Z}^{DT}_0(q)}
+\end{equation*}
+Note that $I_n(X, 0)$ is a moduli space of points with length $n$. Here, we gather some properties of partition functions which is not obvious at all.
+\begin{prop}
+    \begin{enumerate}
+        \item $\mathsf{Z}^{DT}_{0}(q)=M(-q)^{e(x)}$ where $M$ is the MacMahon function, \\
+        $M(q)= \prod_{n \geq 1}(1-q^n)^{-n}$ the generating function for 3d partitions. 
+        \item $\mathsf{Z}^{red}_{\beta}(q)$ is the Laurent expansion of a rational function in $q$, invariant under $q \leftrightarrow q^{-1}$. 
+    \end{enumerate}
+\end{prop}
+Therefore, we can substitute $q=-e^{iu}$ to get a real-valued function of $u$. The main conjecture of MNOP in the CY-case is the following,
+
+\begin{conj}
+    $\mathsf{Z}^{GW}_{\beta}(u)=\mathsf{Z}^{red}_{\beta}(-e^{iu})$
+\end{conj}
+
+\section{Stable Pairs}
+Let's start with an example.
+\begin{eg}\label{PDex}
+    Unlike \ref{DTex}, we take different a limit of $C_t$ as follows. Denote each component by $C^1_t, C^2_t$. Consider the sheaf map $s_t:\mathcal{O}_{\C^3} \to \mathcal{O}_{C^1_t} \oplus \mathcal{O}_{C^2_t}$ and take the limit $t \to 0$ of this map. Then we get the following exact sequence of sheaves.
+    \begin{equation*}
+        0 \to \Ker(s) \to \mathcal{O}_{\C^3} \xrightarrow{s} \mathcal{O}_{C^1} \oplus \mathcal{O}_{C^2} \to \Coker(s) \to 0
+    \end{equation*}
+    In this case, $\Ker(s)$ is ideal of subscheme without an embedded point and $Im(s)$ is indeed a structure sheaf of $C_0=\{xy=0=z\}$. The lost data of intersection is encoded in $\Coker(s)$ which is a skyscraper sheaf at the origin. As you can see, the difference from \ref{DTex} is the surjectivity of $s$. 
+\end{eg}
+In \ref{PDex}, $Im(s)$ is a pure sheaf of rank 1 which means that any subsheaf of $Im(s)$ has 1-dimensional support(i.e. no embedded points). Also, the origin can not break off the curve because it is constrolled by the sheaf map. (different limit determines different choice of point.) It justifies the following definition.
+\begin{defin}
+    A stable pair on $X$ is $(F, s)$ such that 
+    \begin{enumerate}
+        \item $F$ is a pure sheaf of rank 1
+        \item $s:\mathcal{O}_X \to F$ has 0-dimensional cokernel.
+    \end{enumerate}
+\end{defin}
+\begin{eg}
+Consider a divisor $D \subset C$ where $C$ is a curve embedded in $X$. Then, the natural map 
+\begin{equation*}
+    \mathcal{O}_X \hookrightarrow i_*\mathcal{O}_C \hookrightarrow i_*\mathcal{O}_C(D)
+\end{equation*}
+is a stable pair.
+\end{eg}
+\begin{lem}
+    Giving a stable pair $(F,s)$ is equivalent to choosing 1-dimensional subscheme $C$ of $X$ with a maximal ideal $m \subset \mathcal{O}_C$
+\end{lem}
+\begin{proof}
+    Given a stable pair $(F,s)$, $\ker(s)$ determines ideal sheaf associated a certain 1-dimensional subscheme $C$ whose struture sheaf is given by $Im(s)$. The support $\Coker(s)$ corresponds to a set of points on $C$, hence determining a maximal ideal $m \subset \mathcal{O}_C$ associated to these points. The converse also holds. \todo{reference}
+\end{proof}
+
+\begin{rem}
+   Similar to moduli space of sheaves, we can put stability condition to justify the word "stable" in the definition.
+\end{rem}
+As before, we can define the moduli space of stable pairs on $X$, denoted by $P_n(X,\beta)$. However, again, it does not admit virtual class. The way to remedy this is to consider a pair as an object $I^{\bullet}=[\mathcal{O}_X \xrightarrow{s} F]$ in derived category $D^b(X)$. Deformation and obstruction spaces with fixed determinant is given by $\text{Ext}^1(I^{\bullet}, I^{\bullet})_0, \text{Ext}^2(I^{\bullet}, I^{\bullet})_0$ governing a perfect obstruction theory of virtual dimension equals to 
+\begin{equation*}
+    ext^1(I^{\bullet}, I^{\bullet})_0-ext^2(I^{\bullet}, I^{\bullet})_0= \int_{\beta}c_1(X)
+\end{equation*}
+\begin{defin}
+Let $X$ be a projective Calabi-Yau 3-fold. Pandharipande-Thomas invariant $P_{n, \beta}$ is given by
+    \begin{equation*}
+        P_{n,\beta}=\int_{[P_n(X,\beta)]^{vir}}1
+    \end{equation*}
+    Also, for fixed curve class $\beta \in H_2(X,\Z)$, the stable pairs partition function is defined to be 
+    \begin{equation*}
+        \mathsf{Z}^{PD}_{\beta}(q)=\sum_n P_{n,\beta}q^n
+    \end{equation*}
+\end{defin}
+\begin{thm}
+    \[\mathsf{Z}^{PD}_{\beta}(q)= \mathsf{Z}^{red}_{\beta}(q)\]
+\end{thm}
+
+\section{Derived Version}
+    In this section, we introduce derived variants of $I_n(X,\beta), P_n(X, \beta)$ and prove that they admit $(-1)$-shifted symplectic structure. More generally, we construct shifted symplectic structure on the mapping stack with non-proper source and apply this to the case $X$ is non-proper CY variety.
+\begin{defin}
+    Let $X$ be a variety and $\mathcal{L}=\mathcal{O}_X[+d] \in \Pic^{gr}X$ be the trivial line in grading $d \neq 0$. The stack of perfect complexes on $X$ with fixed determinant $\mathcal{L}$, is $\Perf^{\mathcal{L}}(X)=\Perf(X) \times _{\Pic^{gr}(X)}\{\mathcal{L}\}$.
+\end{defin}
+In particular, if $X$ is a CY 3-fold and $d=1$, then we can define derived analogue of $I_n(X,\beta), P_n(X, \beta)$. For simplicity, we ignore $n, \beta$ and denote them by $I(X), P(X)$, respectively. 
+\begin{enumerate}
+    \item $I(X)$ is a derived stack of torsion free sheaves of rank 1 with fixed determinant. It is open substack of $\Perf^{\mathcal{O}_X[+1]}$.
+    \item $P(X)$ is a derived stack of stable pairs. It is open substack of $\Perf^{\mathcal{O}_X[+1]}$ as well.
+\end{enumerate}
+\todo{There must be concrete ways to define both stacks, but I don't know at this point.} For grading, we can think it as follows. Consider a vector bundle $E$ of rank $d$ on $X$. The associated determinant bundle of $E$ is $\det(E) \cong \bigwedge^d E$. In the derived setting, taking wedge product is the same as taking symmetric product followed by shifting the degree by 1. So, $\det(E) \cong \Sym^d(E[1])$ which is place at degree $-d$. In order to compare with $\mathcal{O}_X$ we should take shifting by $d$. 
+
+If $X$ is compact, then $(-1)$ shifted symplectic structure $\omega$ on $\Perf(X)$ can be restricted to a closed 2-form on $\Perf^{\mathcal{O}_X[+1]}$ which is still non-degenerate. The proof is similar to our main theorem\ref{mainthm}. Now, we are interested in the case $X$ is not proper. The first ingredient we need is the notion of compactly supported integration along the fiber.
+\begin{defin}
+    Suppose that $\mathcal{X}$ is a derived pre-stack and $K \subset \mathcal{X}$ a closed subset. 
+    \begin{enumerate}
+    \item Define the (filtered) chain complex of relative de Rham cochains to be 
+    \begin{equation*}
+        F^k\textbf{DR}(\mathcal{X}, \mathcal{X} \setminus K ) := fib\{i^*: F^k\textbf{DR}(\mathcal{X}) \to F^k\textbf{DR}(\mathcal{X} \setminus K )\}
+    \end{equation*}
+    \item The compactly supported de Rham cochains are defined as the directed colimit
+    \begin{equation*}
+        F^k\textbf{DR}_c(\mathcal{X})=\varinjlim_{K \subset  \mathcal{X}} F^k\textbf{DR}(\mathcal{X}, \mathcal{X} \setminus K )
+    \end{equation*}
+    over all closed subsets $K \subset \mathcal{X}$ which are proper over the base.
+    \item If $\mathcal{X}$ is an $S$-prestack, then a relative variant is defined to be 
+    \begin{equation*}
+        F^k\textbf{DR}_{c/S}(\mathcal{X})=\varinjlim_{K \subset  \mathcal{X}} F^k\textbf{DR}(\mathcal{X}, \mathcal{X} \setminus K )
+    \end{equation*}
+    \end{enumerate}
+\end{defin}
+
+\begin{thm}\label{intalongfiber}
+    Suppose that $X$ is a smooth $d$-dimensional scheme, and that $\mathcal{F}$ is a derived pre-stack almost of finite presentation over $k$. A choice of volume form $\text{vol}_X: \mathcal{O}_X \to \Omega^d_X$ gives rise to an integration map of filtered complexes
+    \begin{equation*}
+        \int_{X}\text{vol}_X \wedge-:F^{\bullet}\textbf{DR}_{c/\mathcal{F}}(X \times \mathcal{F}) \to F^{\bullet}\textbf{DR}(\mathcal{F})[-d]
+    \end{equation*}
+    such that the induced map on associated graded pieces is the Grothendieck-Serre trace map.
+\end{thm}
+\todo{proof, mention Grothendieck trace map}
+This map comes from the composition of the following maps:
+\begin{equation*}
+    F^{\bullet}\textbf{DR}_{c/\mathcal{F}}(X \times \mathcal{F}) \to F^{\bullet}\textbf{DR}(\mathcal{F}) \otimes \Gamma(X,\mathcal{O}_X) \to F^{\bullet}\textbf{DR}(\mathcal{F}) \otimes \Gamma(X, \Omega^d_X) \to F^{\bullet}\textbf{DR}(\mathcal{F}) \otimes k[-d]
+\end{equation*}
+By assumption this map factors through the space of global sections with compact support, denoted by $F^{\bullet}\textbf{DR}(\mathcal{F}) \otimes \Gamma_c(X, \mathcal{O}_X)$. Now the issue is the existence of relative version of Grothendieck-Serre trace map. \todo{reference}
+\begin{thm}\label{mainthm}
+    Suppose that $X$ is a variety and that $\mathcal{L}=\mathcal{O}_X[+d] \in \Pic^{gr}X$ is trivial line in grading $d \neq 0$. Let $\mathfrak{U} \subset \Perf^{\mathcal{L}}(X)$ be an oper sub-stack statisfying the following properness condition:
+    \begin{center}
+    For any ring $R$ and $R$-point $\eta: \Spec R \to \mathfrak{U}$, let $\mathcal{F} \in \Perf(X_R)$ be the perfect complex classified by $\eta$. Then, we require that the cone of the trace map of sheaves on $X_R:=X \times \Spec R$
+    \begin{equation*}
+        \mathcal{RH}om_{X_R}(\mathcal{F}, \mathcal{F}) \xrightarrow{tr} \mathcal{O}_{X_R}
+    \end{equation*}
+    have support proper over $\Spec R$. 
+    \end{center}
+    Then, $\mathfrak{U} \subset \Perf^{\mathcal{L}}(X)$ carries a $(2-d)$ shifted symplectic structure. Furthermore, this is natural for open inclusion of substacks satisfying the above condition.
+\end{thm}
+Now we get our motivating examples.
+\begin{cor}
+    Suppose that $X$ is a (not necessarily compact) 3-CY variety and $\mathcal{L}=\mathcal{O}_X[1+]$. Let $\mathfrak{U} \subset \Perf^{\mathcal{L}}(X)$ be the locus classifying ideal sheaves of proper subvarieties. In our case $\mathfrak{U}=I(X)$. Then, $\mathfrak{U}$ admits $(-1)$ shifted symplectic structure.
+\end{cor}
+\begin{proof}
+    It is enough to show that the condition holds. Take $\mathcal{E} \in \Perf(X_R)$ with an identification $\det(\mathcal{E}) \cong \mathcal{O}_X[+1]$ corresponding to a point $\eta: \Spec R \to \mathfrak{U}$. The natural map 
+    \begin{equation*}
+        \mathcal{E} \to \mathcal{E}^{\vee\vee} \cong (\det(\mathcal{E})[-1] \cong \mathcal{O}_X
+    \end{equation*}
+    exhibits it as an ideal sheaf with the cone having proper support by assumption. Since this map is the same with the trace map 
+    \begin{equation*}
+        tr: \RHom(\mathcal{E}, \mathcal{E}) \to \mathcal{O}_X
+    \end{equation*}
+    is isomorphism away from this proper support as well.
+\end{proof}
+\begin{cor}
+    Under the same assumption, consider a derived moduli of stable pairs $P(X) \subset \Perf^{\mathcal{L}}(X)$. It admits $(-1)$ shifted symplectic structure as well. 
+\end{cor}
+\begin{proof}
+    In this case, the trace map is an isomorphism.\todo{finish}
+    Let $I^{\bullet}=[\mathcal{O}_X \xrightarrow{s} F]$ be a stable pair in $\Perf^{\mathcal{L}}$. We have the following exact triangles associated to $I^{\bullet}$:
+    \begin{equation}\label{exacttriangle}
+        F[-1] \to I^{\bullet} \to \mathcal{O}_X \xrightarrow{s} F \to \cdots
+    \end{equation}
+    Applying $\mathcal{H}om(-,\mathcal{O}_X)$ to \ref{exacttriangle} yields 
+    \begin{equation*}
+        \mathcal{H}om(F,\mathcal{O}_X) \to \mathcal{H}om(\mathcal{O}_X,\mathcal{O}_X) \to \mathcal{H}om(I^{\bullet},\mathcal{O}_X) \to \mathcal{E}xt^1(F,\mathcal{O}_X)
+    \end{equation*}
+    The first and last term vanish because $F$ has support of codimension 2. The canonical map $I^{\bullet} \to \mathcal{O}_X$ generates the third term, so we get $\mathcal{H}om(I^{\bullet},\mathcal{O}_X) \cong \mathcal{O}_X$. In fact, it is the image of the identity in the exact sequence 
+    \begin{equation*}
+        \mathcal{E}xt^{-1}(I^{\bullet},F) \to \mathcal{H}om(I^{\bullet},I^{\bullet}) \to \mathcal{H}om(I^{\bullet},\mathcal{O}_X)
+    \end{equation*}
+    obtained from \ref{exacttriangle} by applying $\mathcal{H}om(I^{\bullet},-)$. Therefore, in order to show $\mathcal{H}om(I^{\bullet},I^{\bullet} \cong \mathcal{O}_X$, we need only prove the vanishing of $\mathcal{E}xt^{-1}(I^{\bullet},F)$. But, it turns out to be $\mathcal{H}om(\Coker(s),F)$ which vanishes due to purity of $F$.
+\end{proof}
+\begin{proof}[proof of \ref{mainthm}]
+    We divide this into four steps.
+    \begin{enumerate}
+        \item Pull back the universal form from $\Perf$ to $X \times \mathfrak{U}$\\
+        Consider the followng sequence of derived stacks
+        \begin{equation*}
+            X_{\mathfrak{U}}=X \times \mathfrak{U} \xrightarrow{j} X \times \Perf^{\mathcal{L}}(X) \xrightarrow{i} X \times \Perf(X) \xrightarrow{ev} \Perf
+        \end{equation*}
+        Let $\mathcal{E}$ be the universal perfect complex and 
+        \begin{equation*}
+            \omega_{\Perf} = ch(\mathcal{E})_2 \in H^0(F^2\textbf{DR}(\Perf)[2])
+        \end{equation*}
+        be the 2-shifted symplectic form constructed in PTVV. Since pullback on derived de Rham complexes commutes with filtration, we obtain a class 
+        \begin{equation*}
+            \omega_{X \times \mathfrak{U}}=j^*i^*ev^*(\omega_{\Perf}) =ch(j^*i^*ev^*\mathcal{E})_2 \in H^0(F^2\textbf{DR}(X \times \mathfrak{U})[2])
+        \end{equation*}
+        The last assertion follows from the functoriality of Chern character.
+        \item Lift the form to compactely supported cochain level over $\mathfrak{U}$.\\
+        Let $\mathcal{F}=j^*i^*ev^*\mathcal{E} \in \Perf(X \times \mathfrak{U})$ and $K \subset X \times \mathfrak{U}$ be the support of the cone of the trace map given by
+        \begin{equation*}
+            \mathcal{RH}om_{X \times \mathfrak{U}}(\mathcal{F}, \mathcal{F}) \xrightarrow{tr} \mathcal{O}_{X \times \mathfrak{U}}
+        \end{equation*}The assumption require $K$ to be proper over $\mathfrak{U}$. By setting $V=X \times \mathfrak{U} \setminus K$, we claim that the restriction of the symplectic form $\omega_{X \times \mathfrak{U}}|_V$ vanishes. On $V$, trace map 
+        \begin{equation*}
+            tr: \RHom_V(\mathcal{F}|_V, \mathcal{F}|_V) \xrightarrow{\cong} \mathcal{O}_V
+        \end{equation*}
+        is an isomorphism so that we get the natural isomorphism 
+        \begin{equation*}
+            \mathcal{F}|_V \cong (\det \mathcal{F})|_V \cong \det(\mathcal{F|_V}) \cong \mathcal{O}_V[+d]
+        \end{equation*}
+        Hence, 
+        \begin{equation*}
+            \omega_{X \times \mathfrak{U}}|_V = ch(\mathcal{F}|_V)_2=ch(\mathcal{O}_V[+d])_2=0
+        \end{equation*}
+        \item Integration along the fiber\\
+        Applying \ref{intalongfiber} we can integrate $\omega_{X \times \mathfrak{U}} \in H^0(F^2\textbf{DR}_{c/\mathfrak{U}}(X \times \mathfrak{U})[+2]$ to obtain
+        \begin{equation*}
+          \omega_\mathfrak{U}=\int_{[X]}\omega_{X \times \mathfrak{U}} \in H^0(F^2\textbf{DR}(\mathfrak{U})[2-d])
+        \end{equation*}
+        \item $\omega_{\mathfrak{U}}$ is non-degenerate.\\
+        Fix an $R$-point classifying a perfect complex $\mathcal{E} \in \Perf(X_R)$ with trivial determinant; the tangent space at this point is 
+        \begin{equation*}
+            \RHom_{X_R}(\mathcal{E}, \mathcal{E})_0=\fib\{tr: \RHom_{X_R}(\mathcal{E}, \mathcal{E}) \to \Gamma(X_R, O_{X_R})\}
+        \end{equation*}
+        At a sheaf level, we can define $\mathcal{RH}om_{X_R}(\mathcal{E}, \mathcal{E})_0$ and by assumption, it also admits support proper over $R$. The 2-form $\omega_{\mathcal{U}}$ at this point is nothing but a composition map
+        \begin{equation*}
+            \RHom_{X_R}(\mathcal{E}, \mathcal{E})_0^{\otimes 2} \to \RHom_{X_R}(\mathcal{E}, \mathcal{E})^{\otimes 2} \to \RHom_{X_R}(\mathcal{E}, \mathcal{E}) \to \Gamma(X_R, \mathcal{O}_{X_R})
+        \end{equation*}
+        By assumption, it factors through $\Gamma_c(X_R, \mathcal{O}_{X_R})$. Now non-degeneracy of $\omega_{\mathfrak{U}}$ follows from the property of the relative Grothendieck-Serre trace map.
+    \end{enumerate}
+\end{proof}
