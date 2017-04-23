@@ -1,0 +1,165 @@
+\chapter{VFC in Derived Differential/Algebraic Geometry}
+\label{ch:infinity}
+
+Talk by Benedict Morrissey.
+
+\section{Big Picture}
+We construct a functor $\dMan \to \Cat_{\infty}$, which associates to every derived manifold $M$ its category of Kuranishi
+neighborhoods, i.e. pullback diagrams of the form:
+\[
+\begin{tikzcd}
+U \arrow{r}\arrow{d} & \bbA^n \arrow{d}{f} \\
+\pt \arrow{r} & \bbA^m .
+\end{tikzcd}
+\]
+Here $U$ is an open chart of $M$ which can be locally written as $f^{-1}(0)$.
+
+Then we construct the following chain of functors:
+\[
+\begin{tikzcd}
+\KurNbd_M\arrow{r}\arrow[bend left]{rr}{F} & \LocTopInf\arrow{r} & \Map ( I, \dgVect ) .
+\end{tikzcd}
+\]
+We define:
+\[	\{C^{\vir}_{\bullet}(M) \to C^{\loc}_{\bullet}(M)\} := \colim F .\]
+$I = \Delta^1$ is the $\infty$-category with 2 objects and 1 non-trivial 1-morphism.
+\todo{Wasn't sure how to write the construction in a way that's manifestly functorial in $M$. Benedict's formulation uses diagrams
+in $\LocTopInf$, $\Map(I,\dgVect)$. However the shape of the diagram depends on $M$, so I don't know how to write
+this as a functor from $\dMan$.}
+
+Now there's a map $C^{\loc}_{\bullet}(M) \to \Z$ \todo{is it a quasi-isomorphism?}. We define the virtual
+fundamental class $[M]^{\vir}$ as the composition $C^{\vir}_{\bullet}(M)\to \Z$. (But see Remark \ref{rem:poincare}.)
+
+
+
+\section{Construction}
+\begin{defin}
+The category of \textbf{Kuranishi neighborhoods} of $M$ is:
+\[	\KurNbd_M = \dMan_{/M} \times_{\dMan} \Map(\Box, \dMan) \times_{\Map(\_, \dMan)} \Map(\pt, \Tdisc) 
+\times_{\Map(\cdot, \dMan)} \Tdisc .	\]
+\end{defin}
+
+\todo{We need to define these squares and intervals precisely, with direction of arrows. Also, we need to quote the relevant
+strictification results which give the higher homotopies for free once we specify data for the vertices and edges of the squares.}
+
+Note that $M$ only appears in the leftmost factor, $\dMan_{/M}$.
+Therefore the assignment $M \mapsto \KurNbd_M$ is an $\infty$-functor,
+which follows from the fact that $M \mapsto \dMan_{/M}$ and fiber product are $\infty$-functors.
+
+\begin{defin}
+The category of \textbf{local topological information} $\LocTopInf$ is actually $\Map(\Box, \cS)$, which morally speaking
+consists of maps between pairs of topological spaces $(A,B) \to (C,D)$. Here ``pairs'' is used in the sense of algebraic
+topology, i.e. $B\to A$ and $D \to C$ are cofibrations.
+\end{defin}
+
+We construct a functor $\KurNbd_M \to \LocTopInf$ by sending each Kuranishi atlas to the map of pairs:
+\[
+\begin{tikzcd}
+\big( U(\bbA^n), U(\bbA^n \setminus f^{-1}(0))\big)\arrow{r}{f} & \big( U(\bbA^m), U(\bbA^m \setminus \{0\})\big).
+\end{tikzcd}
+\]
+Here $U: \dMan \to \cS$ is the forgetful functor; this will exist in whatever category we end up working in.
+
+Finally, we construct a functor $\LocTopInf \to \Hom(I, \dgVect)$ by sending the map of pairs $f: (A,B) \to (C,D)$
+to the induced morphism on singular chains:
+\[
+\begin{tikzcd}
+C_{\bullet}(A,B) \arrow{r}{f_*} & C_{\bullet}(C,D) .
+\end{tikzcd}
+\]
+\todo{We actually want $n-\bullet$ in the first factor and $m-\bullet$ in the second. How do we obtain the shifts by different
+amounts? Look at how Pardon does it.}
+
+\begin{lem}
+This is an $\infty$-functor, which moreover preserves all colimits.
+\end{lem}
+\begin{proof}
+In brief, $C_{\bullet}$ is the unique functor $\cS \to \dgVect$ which preserves colimits and sends $\pt \mapsto k$. That's
+because $\cS$ is generated under colimits by $\pt$. In the case of pairs of spaces, the functor of relative singular
+chains is defined by:
+\[
+\begin{tikzcd}
+\Fun(I, \cS) \arrow{r}{C_{\bullet}} & \Fun(I, \dgVect) \arrow{r}{\text{cone}} & \dgVect .
+\end{tikzcd}
+\]
+Here $C_{\bullet}$ is computed pointwise. Since $C_{\bullet}$ and $\text{cone}$ are $\infty$-functors, so are relative chains.
+Moreover, colimits of presheaves can be computed pointwise, so relative chains also preserve colimits.
+\end{proof}
+
+\begin{rem}
+This construction actually gives a cosheaf on $M$. That's because, for $V \to M$ a chart, $C_{\bullet}^{\vir}(V)$ will be computed
+by a colimit over the category of Kuranishi neighborhoods which factor through $V$. This colimit maps naturally to the
+colimit over $\KurNbd_M$, which computes $C_{\bullet}^{\vir}(M)$.
+\end{rem}
+\todo{Actually we need to prove that it satisfies descent.}
+
+
+\section{Recovery of the colimit from finite atlas}
+\begin{conj}
+Assume that $M \in \dMan$ admits a Kuranishi atlas consisting of a single chart:
+\[
+\begin{tikzcd}
+M\arrow{r}{i_M}\arrow{d} & \bbA^n\arrow{d}{f} \\ \pt \arrow{r} & \bbA^m .
+\end{tikzcd}
+\]
+This chart is a final object in $\KurNbd_M$, and as such we have $C^{\vir}_{\bullet}(M) = C_{\bullet}\big(U(\bbA^n), 
+U(\bbA^n \setminus f^{-1}(0)) \big)$ and $C^{\loc}_{\bullet}(M) = C_{\bullet}\big(U(\bbA^m), 
+U(\bbA^m \setminus \{0\}) \big)$.
+\end{conj}
+\begin{proof}[Attempt at Proof -- Does not work]
+Consider any other chart, given by $p: U \to M$ and:
+\[
+\begin{tikzcd}
+U\arrow{r}{i_U}\arrow{d} & \bbA^{n_U}\arrow{d}{f_U} \\ \pt \arrow{r} & \bbA^{m_U} .
+\end{tikzcd}
+\]
+We need to produce a map between the two charts. The idea should be to consider:
+\[
+\begin{tikzcd}
+U\arrow{r}{(i_U,i_M \circ p)}\arrow{d} & \bbA^{n_U+n}\arrow{d}{f_U,f} \\ \pt \arrow{r} & \bbA^{m_U+m} ,
+\end{tikzcd}
+\]
+and then project to the $\bbA^n$ and $\bbA^m$ factors. Unfortunately the composition is 0 on the rightmost column.
+\todo{Work this out.}
+\end{proof}
+
+In general, $\KurNbd_M$ is a category which doesn't admit a final object. However, there exists a final system of objects
+ - i.e. finitely many charts $U_i$ which cover the entire $M$. We should prove that the colimit of $F$ over the entire $\KurNbd_M$
+can be recovered from the value of $F$ on these objects.
+
+
+
+\section{To do}
+To do ASAP:
+\begin{enumerate}
+\item In the Big picture section, understand how to write the VFC as a functor from $\dMan$.
+\item Prove that we can recover the colimit over $\KurNbd_M$ from a finite atlas.
+\item Fill in more details, as outlined in the to do notes. What else needs to be filled in?
+\end{enumerate}
+
+Then:
+
+\begin{rem}
+\label{rem:poincare}
+So far we only defined $[M]^{\vir}$ as a map $C^{\vir}_{\bullet}(M)\to \Z$. We would like it to be an element in a
+homology group of $M$, so that we can use it to integrate cohomology classes. John Pardon achieves this via
+a Poincar\'e duality type quasi-isomorphism $H^{\vir}_{\bullet}(M) \simeq \big(\check{H}^{\bullet}(M)\big)^{\vee}$.
+See the results of Section 4.3 in \cite{Pardon_An_algebraic_approach_2016}.
+Can we prove this in our setting?
+\end{rem}
+
+Finally, the medium-term things which are more or less logically independent from the material of this chapter:
+\begin{enumerate}
+\item Define the appropriate category to replace $\dMan$ in all the above. This should:
+\begin{itemize}
+\item be small enough so that every object is quasi-smooth;
+\item be large enough to accomodate certain mapping stacks, such as the moduli space of stable maps.
+\end{itemize}
+It suffices to construct a theory of derived DM stacks in smooth manifolds. We don't need Artin stacks, or indeed want them
+- it's not clear that they admit VFCs, since nobody has come up with a theory that achieves this.
+\item In this context, we need some version of Artin-Lurie representability to hold. This would guarantee the geometricity of
+the mapping stacks we define.
+\item Generalize to manifolds with boundary, maybe even corners.
+\item Now we should be able to define Floer moduli spaces as objects in this category.
+\item World peace?
+\end{enumerate}

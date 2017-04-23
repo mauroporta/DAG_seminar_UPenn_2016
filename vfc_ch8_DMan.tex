@@ -1,0 +1,136 @@
+\chapter{Derived Manifold}
+In this chapter, we introduce a notion of derived smooth manifold by Spivak. Since moduli spaces with Floer theoretic origins forms a smooth manifold or orbifold, it is inevitable to use a derived smooth manifold(more precisely, derived smooth stack if possible) to give a natural derived enhancement of such moduli spaces. \\
+
+Like DAG, one of the crucial motivation is the intersection theory in the smooth manifolds. Classically, for a smooth manifold $M$ and submanifolds $A, B \subset M$, $A \cap B$ becomes a submanifold if they intersect transversally. This transversality condition can be ignored once we have a bigger category, which we will call $\textbf{dMan}$ where the intersection is well defined. 
+
+\section{Construction of $\textbf{dMan}$}
+Here, we use Lawvere Theory to construct $\textbf{dMan}$. The idea is to follow the analogue construction in Classical Algebraic Geometry. It would be helpful to keep the following correspendence.
+
+\begin{align*}
+    Ring &
+    \Longleftrightarrow C^{\infty}-Ring \\
+    Ringed space &
+    \Longleftrightarrow  C^{\infty}-Ringed space \\
+    Locally ringed space &
+    \Longleftrightarrow 
+    Locally C^{\infty}-ringed space \\
+    (Affine) Scheme &
+    \Longleftrightarrow 
+    (Affine) Derived scheme
+\end{align*}
+
+We first recall the Lawvere Theory. Take a category of affine spaces with products $T^{disc}=\{\mathbb{A}^i_k | \text{with products}, i \in \N\}$ where $k$ is a field(of characteristic 0). We can identify a category of rings with product preserving functor from $T^{disc}$ to a category of sets. Similarly, we can describe a category of simplicial rings $sRing$ by replacing lax functor to $sSet$. Then, we get a category of locally ringed space $LRS$ whose object is of form $(X, \mathcal{O_X}$ where $\mathcal{O_X} \in Shv(X, sRing)$.
+
+\begin{defin}
+    Let $E \subset Man$ be a subcategory whose objects are Euclidean spaces and morphisms are smooth maps. 
+    \begin{enumerate}
+        \item We define a category of $C^{\infty}$ rings,  $C^{\infty}-Rings$ to be $\Fun^{\times}(E, Set)$
+        \item Similarly, $sC^{\infty} := \Fun^{\otimes}(E, sSet)$ a category of lax monoidal functor from $E$ to $sSet$. 
+        \item Let $E^{alg} \subset E$ be a full-subcategory whose morphisms are algebraic maps. Then, there exists a natural functor $U:sC^{\infty} \to \Fun^{\otimes}(E^{alg}, sSet)$. We say $C^{\infty}$ is a local if its underlying discrete $\R$-algebra $\pi_0(U(F))$ is local in usual sense. 
+        \item We also construct a $\infty$ category of sheaf of $C^{\infty})$-rings over $X$, $shv(X,sC^{\infty})$ where $X$ is compactly generated topological space. $F \in shv(X,sC^{\infty})$ is called sheaf of $\textbf{local} C^{\infty}$-ring if for every point $p:* \to X$, the stalk $p^*F$ is local $C^{\infty}$-ring.
+    \end{enumerate}
+\end{defin}
+
+Let's denote $C^{\infty}LRS$ by a $\inf$-category of pairs whose object is $(X, \cO_X)$ where $X$ is (compactly generated Hausdorff)topological space and $\cO_X$ is a sheaf of local $C^{\infty}$-ring over $X$. Morphism between $(X, \cO_X), (Y, \cO_Y)$ is given as follows.
+\begin{equation*}
+    Map_{C^{\infty}LRS}((X, \cO_X),(Y, \cO_Y)):= \coprod_{f \in Hom(X,Y)}Map_{sC^{\infty}}(f^*\cO_Y, \cO_X)
+\end{equation*}
+
+\begin{prop}\label{emb}
+    There exists a fully faithful embedding $i:Man \to C^{\infty}LRS$ which sends $M$ to $(M, C^{\infty}_M)$ where $C^{\infty}_M(U)(\R^n):=Hom_{Man}(U, \R^n) \in sSet$
+\end{prop}
+
+\begin{rem}
+    Gluing is possible in $C^{\infty}LRS$ as is in $LRS$. 
+\end{rem}
+
+The following proposition gives a notion of global section in $C^{\infty}LRS$.
+
+\begin{prop}
+    Let $(X, \cO_X)$ be a local $C^{\infty}$-ringed space. There exists an isomorphism between simplicial sets; 
+    \begin{equation*}
+        Map_{C^{\infty}LRS}((X, \cO_X), (\R, C^{\infty}_{\R})) \cong |\cO_X(X)|:=\cO_X(X)(\R)
+    \end{equation*}
+\end{prop}
+
+\begin{defin}
+    \begin{enumerate}
+    \item $\mathcal{X}=(X, \cO_X)$ is an affine derived maniofld if it is given by vanishing locus of a smooth map.
+    \item $\mathcal{X}$ is a derived (smooth) scheme if there exists open cover $\{U_i\}$ of $X$ such that $(U_i, \cO_X|_{U_i})$ is an affine derived manifold.
+    \item We define $\textbf{dMan}$ a $\infty$ category of derived manifold as a subcategory of $C^{\infty}LRS$
+    \end{enumerate}
+\end{defin}
+
+\begin{thm}
+    The canonical embedding $i$ in \ref{emb} factors through $dMan$.
+\end{thm}
+
+\section{Properties of $\textbf{dMan}$}
+Here, we collect some of properties $\textbf{dMan}$ satisfies. The full lists are in Spivak's paper.\\
+As mentioned in the introduction, the main goal for constructing $\textbf{dMan}$ is to do intersection theory without transversality condition. Since $\textbf{dMan}$ have a (homotopy)pullback, we can define $A \cap B$ to be a homotopy pullback of $i(A)$ and $i(B)$ where $A, B$ are submanifolds of a given manifold, say $M$ and $i$ is a canonical embedding in \ref{emb}. Moreover, we require it to have a notion of "derived" cobordism ring $\Omega^{der}$ associated to each objects which is isomorphic to ordinary cobordism ring$\Omega$ of underlying object. The motivation is that we need address where virutal fundamental class lives. Precisely, For each manifold $T$, there exists a ring $\Omega^{der}(T)$ where $i:Man \to \textbf{dMan}$ induces a homomorphism of cobordism rings over $T$, $i_*\Omega(T) \to \Omega^{der}(T)$. In particular, it is an isomorphism.\\
+
+We first give some notation. Let $\Top$ be a ($\infty$)-category of compactly generated Hausdorff spaces. There exists a natural forgetful functor $U:\textbf{dMan} \to \Top$.
+
+\begin{defin}
+    \begin{enumerate}
+        \item Suppose that $\mathcal{X} \in \textbf{dMan}$ is an object with underlying space $X=U(\mathcal{X})$ and $j:V \to X$ is an open inclusion. We say a map $k:\cV \to \mathcal{X}$ in $\textbf{dMan}$ is an open subobject over $j$ if it is Cartesian over j.
+        \item An object $\cU \in \textbf{dMan}$  is a local model if there exists a smooth function $f:\R^n \to \R^k$ such that $\cU \cong \R^n_{f=0}$. The virtual dimension of $\cU$ is $n-k$. 
+        \item For any map $f:\mathcal{Y} \to \R^n \in \textbf{dMan}$, the canonical inclusion of the zeroset $\mathcal{Y}_{f=0} \to \mathcal{Y}$ is called a model imbedding. 
+        \item A map $g:\mathcal{X} \to \mathcal{Y}$ is called an embedding if there is a cover of $\mathcal{Y}$ by open subobjects $\mathcal{Y}_i$ such that if the induced maps $g|_{\mathcal{X}_i}:\mathcal{X}_i \to \mathcal{Y}_i$ are model embeddings where $\mathcal{X}_i=g^{-1}(0)$. 
+    \end{enumerate}
+\end{defin}
+
+\begin{prop}\label{properties}
+    \begin{enumerate}
+        \item ((Reasonable)Finite limits. Given objects $\mathcal{X}, \mathcal{Y} \in \textbf{dMan}$, a smooth manifold $M$ with $f:\mathcal{X} \to M, g:\mathcal{Y} \to M$, there exists an object $\mathcal{Z} \in \textbf{dMan}$ which is given by homotopy pullback.
+        \todo{need proof. 9.15}
+        \item (Local models) For any object $\mathcal{X} \in \textbf{dMan}$, underlying space $X=U(\mathcal{X})$ can be covered by open subsets in such a way that the corresponding open subobjects are all local models. More generally, any open cover of $U(\mathcal{X})$ can be refined to an open cover whose corresponding open subobjects are local models.
+        \item (Normal bundle) Let $M$ be a smooth manifold and $\mathcal{X} \in \textbf{dMan}$ with underlying space $X=U(\mathcal{X})$. If $g:\mathcal{X} \to M$ is an embedding, then there exists an open neighborhood $U \subset M$ of $\mathcal{X}$, a real vector bundle $E \to U$, and a section $s:U \to E$ such that the following diagram commutes up to homotopy.
+        \[
+    \begin{tikzcd}
+    \mathcal{X} \arrow{r}{g}\arrow{d}{g} & U\arrow{d}{s} \\
+    U \arrow{r}{z} & E.
+    \end{tikzcd}
+    \]
+        where $z$ is a zero section.
+    \end{enumerate}
+\end{prop}
+\begin{rem}
+\begin{itemize}
+    \item This proposition tells us about Kuranishi structure of an derived manifold. For given $\mathcal{X} \in \textbf{dMan}$, we get an open cover which are zero-sets of vector space. This might allows to build $\inf$-categorical formalism of virtual fundamental class by John Parden.
+    \item We intenionally put the word "reasonable" in 1 in \ref{properties}. This is because, there does not exists a finite limit in $\textbf{dMan}$. We can also construct a slightly bigger category which is universal by requiring it to have certain type of limit(e.g. finite limit). We will come back to this point in the next section.
+\end{itemize}
+\end{rem}
+
+Let's switch the gear to cotangent complex and quasi-smoothness of $\textbf{dMan}$. Given $f:\mathcal{X} \to \mathcal{Y}$ in $\textbf{dMan}$, as a morphism of $C^{\inf}$-ringed spaces, we can construct cotangent complex of $f$. On the other hand, we can do the same game by regarding $f$ as a morphism of underlying ringed spaces. These two cotangent complexes are not quite the same. The former one enjoys more natural properties but difficult to compute and we need more set up to define it. However, the latter one, which we call $\mathbb{L}_f$, is easier to compute and be defined. Fortunately, it has all the properties we need. Since definitions and properties of cotangent complexes are rather tautological, we skip this part.\\
+
+\begin{defin}
+    Let $\mathcal{X}=(X, \cO_X)$ be a derived manifold and $\mathbb{L}_{\mathcal{X}}$ its cotangent complex. The pointwise Euler characteristic $e:X \to \Z$ is a function whose value at a point $x \in X$ is the Euler characteristic of $\mathbb{L}_{\mathcal{X}, x}$. We also call it a virtual dimension of $\mathcal{X}$ at $x$, denoted by $dim_x(\mathcal{X})$.
+\end{defin}
+\begin{prop}
+    $e:X \to \Z$ is continuous(i.e. locally constant), and for all $i \geq 2$, we have $H^i(\mathbb{L}_{\mathcal{X}})=0$. 
+\end{prop}
+\begin{proof}
+    Without loss of generality, we assume that $\mathcal{X}$ is an affine derived manifold: i.e. there is a homotopy limit squre of the form 
+    \[
+    \begin{tikzcd}
+    \mathcal{X} \arrow{r}{t}\arrow{d}{i} & \R^0 \arrow{d}{0} \\
+    \R^n \arrow{r}{f} & \R^k.
+    \end{tikzcd}
+    \]
+    Note that $\mathbb{L}_{\mathcal{X}}:=\mathbb{L}_t$ are $\mathbb{L}_f$ are weak equivalent. It suffices to show that $\mathbb{L}_f$ is constant on $\mathcal{X}$. \\
+    The composable pair of morphisms $\R^n \rightarrow{f} \R^k \rightarrow{0} \R^0$ induces an exact triangle
+    \[ f^* \mathbb{L}_{\R^k} \to \mathbb{L}_{R^n} \to \mathbb{L}_f \]
+    By taking cohomology, we get
+    \[ 0 \to H^{-1}(\mathbb{L}_f) \to \R^k \to \R^n \to H^0(\mathbb{L}_f) \to 0 \]
+    Both assertions follow from this sequence. In particular, $\text{rank}(H^0(\mathbb{L}_f)) - \text{rank}(H^{-1}(\mathbb{L}_f))=n-k$ at all points in $\mathcal{X}$.
+    
+\end{proof}
+
+This proposition tells that every object in $\textbf{dMan}$ is quasi-smooth. However, not every morphism is quasi-smooth in general. 
+
+\begin{rem}
+    As mentioned earlier, $\textbf{dMan}$ does not have finite limit. We can define more general category $\C$ which contains $\textbf{dMan}$ as a full subcategory. One might argue that it is the same as category of quasi-smooth objects in $\C$. 
+\end{rem}
+
+\section{Universal construction of category of derived manifold}
