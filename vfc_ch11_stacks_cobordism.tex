@@ -1,0 +1,115 @@
+\chapter{Derived $C^{\infty}$ DM Stacks and Derived Cobordism}
+\label{chap:cobordism}
+
+
+Sukjoo Lee talked about:
+\begin{enumerate}
+\item Right category of DM stacks.
+\item Derived cobordism and virtual fundamental class.
+\item Follow MT paper to define $\mathcal{O}_X$ modules and Postnikov towers.
+\end{enumerate}
+
+\section{DM stacks}
+In the algebraic case, we defined $\mathcal{T}_{Zar} = N(CRing_k^{Zar})^{\op}$, where the admissible maps are open immersions.
+The local models are roughly hypersurfaces of affine space.
+For DM stacks we introduced $\mathcal{T}_{\'et} = N(CRing_k^{sm})^{\op}$, where objects are commutative rings with \'etale maps.
+Admissible maps are the \'etale ones. In the smooth case \'etale and open immersion are more or less the same. \todo{explain this}
+
+In the analytic framework, following DAG IX and Mauro's thesis, we introduce $\mathcal{T}_{an} = N(\cC)$, where $\cC$ is category
+of complex manifolds. The topology is \'etale, which means we're considering local homeomorphisms. We obtain derived analytic
+geometry. In DAG V, 3.2.5, 3.2.8, we have criteria for when two pre-geometries are Morita equivalent (i.e. have the same sheaf
+theory). So we can also consider $\mathcal{T}_0$, same but with open immersions. Also $\mathcal{T}_1$ has Stein manifolds,
+i.e. complex manifolds with data of embedding $U \to \C^n$. Using each of the criteria mentioned, we can check that these 3
+pregeometries are Morita equivalent. It follows that we can use whichever one we please.
+
+In DAG V, Lurie introduced $T_{disc} = N(Diff)$, nerve of category of smooth manifolds together with embedding in $\R^n$. The
+admissible morphisms are the open immersions. This is the analog of $\mathcal{T}_1$ above. We could also change this to
+smooth manifolds with local diffeomorphisms. This pre-geometry gives Derived $C^{\infty}$ geometry. Then we have:
+\[	\Sch(\mathcal{T}_{diff}) \subset ^L Top(T_{diff}).	\]
+\todo{write table}
+Note that here we get $dMan$ in the sense of Macpherson, not Spivak. We need to impose quasi-smoothness somewhere if we want Spivak's
+definition.
+
+
+\section{Derived Cobordism}
+Following Spivak's two papers, which only consider quasi-smooth manifolds, we give:
+\begin{defin}
+Let $\mathcal{X}$ be a derived manifold, and $f:\mathcal{X} \to \R$ a morphism. Given a point $i\in \R$, we say $f$ is $i$-collared
+if there exists $\epsilon>0$ such that $\mathcal{X}_{|f-i|<\epsilon} \cong \mathcal{X}_{f=i} \times (-\epsilon, \epsilon)$.
+
+$\mathcal{Z}_i, \mathcal{Z}_1$ are derived cobordant if there exists $f: \mathcal{X} \to \R$ proper map and $f$ is $i$-collared
+for $i=0,1$, $\mathcal{X}_{f=i} = \mathcal{Z}_i$.
+\end{defin}
+
+\begin{rem}
+If $T$ is a CW complex, then derived cobordism over $T$ is a pair $(a,f)$ where $a: |\mathcal{X}| \to T$ is a continuous map,
+and $f$ is as before. For us we will take $T = K(\Z_2, n)$.
+\end{rem}
+
+\begin{prop}
+We have a fully faithful functor $Man \to \dMan$. This induces $i_* : \Omega \to \Omega^{der}$, which is
+\begin{enumerate}
+\item well defined;
+\item an isomorphism.
+\end{enumerate}
+\end{prop}
+
+The idea is to take a Whitney embedding $X \to \R^N$ for some large $N$, take the projection $\R^n \to \R$ on the last factor.
+The composition of these 2 is the $f$ we need.
+
+Next, we define the fundamental class of a derived manifold. We start with:
+\begin{defin}
+Cohomology and homology:
+\[ H^n(X;R) = [X,K(R,n)] 	\]
+\[	H_n(X;R) = \Hom(H^n(X;R), R).	\]
+\end{defin}
+
+There are two problems with this definition: only works for $R$ field, and we don't know how to give a chain level definition.
+
+Then we define $[\mathcal{X}]$ by taking $[M]$ for the (unique up to cobordism) smooth manifold $M$ in the derived cobordism class
+of $[\mathcal{X}]$.
+
+If $M$ is a manifold and $E$ is a vector bundle, consider:
+\[
+\begin{tikzcd}
+\mathcal{X}\arrow{d}\arrow{r} & M\arrow{d}{s} \\ M\arrow{r}{z} & E.
+\end{tikzcd}
+\]
+\begin{prop}
+$[\mathcal{X}]$ is the pullback of the Euler class of $E$.
+\end{prop}
+
+In this situation, $X$ admits an implicit atlas with one chart. Pardon
+\[
+\begin{tikzcd}
+\check{C}^{\dim M - \dim E}(X)\arrow{r}{\simeq}\arrow{ddr} & 	C_{\dim E} (M, M \setminus X)\arrow{d}{s_*} \\
+ & C_{\dim E}(E , E \setminus \{0\})\arrow{d}{\simeq} \\
+ & \Z .	
+\end{tikzcd}
+\]
+
+Questions:
+\begin{enumerate}
+\item How to do the oriented case, i.e. $R = \Z$. It's talked about in Chapter 3 of Spivak, also in Pardon.
+\item When we work with DM stacks, for example 1-localic, we only have an underlying 1-topos, or a groupoid presentation. How
+do we define cohomology? Perhaps we can just take $\pi_0\big(\Map(\mathcal{X}, K(R,n))\big)$.
+\item What is cobordism for DM stacks?
+\end{enumerate}
+
+Note that there's a paper by Behrend, called ``Cohomology of stacks''. He defines cohomology from a groupoid presentation. Note that
+Pardon defines the fundamental class for orbifolds by just using a groupoid presentation, and taking invariants under the group
+action.
+
+
+
+\section{Modules}
+We can define derived $C^{\infty}$ spaces, the analogs of Mauro and Tony's derived $k$-analytic spaces. These are 
+$\Sch(\mathcal{T}_{diff})$. We still have some algebraisation functor, to the pre-geometry where we only take polynomials.
+\todo{state this better}
+
+We want to define $C^{\infty}$ square-zero extensions. We want to prove that $t_n(X) \to t_{n+1}(X)$ is a $C^{\infty}$ square
+zero extension.
+
+We also want to investigate the behavior under closed immersions. In the analytic case, if $A \to B$ is a closed immersion, then
+$(\bbL_{B/A}^{an})^{alg} = \bbL_{B^{alg}/A^{alg}}$. This is very important, since otherwise we can't do computations. We don't know
+if any of this is true in the $C^{\infty}$ world.
