@@ -109,7 +109,60 @@ This is a draft and errors should be expected.
 \input{vfc_ch11_stacks_cobordism}
 
 
+\chapter{Benedict on comparing VFCs}
+Recall the definition of derived cobordism, in particular the relative version over $K(\pi, n)$. Working over a derived manifold
+$X$ which admits a presentation with a single quasi-smooth chart, we know that both approaches to VFC give the Euler class of
+$E^1 \to E^2$. The next case is a hypercover of the form:
+\[
+\begin{tikzcd}
+\; & U_{12}\arrow{dr}\arrow{dl} & \\
+U_1\arrow{dr} & & U_2\arrow{dl} \\
+ & X & 
+\end{tikzcd}
+\]
+Note that cohomology is $\pi_0$ of the following space:
+\[	\Map (X,K(\pi,n)) \cong \lim_I \Map\big(U_I, K(\pi,n)\big) . \]
+We have a class $[U_I] \in \pi_0 \Map\big(U_I,K(\pi,n)\big)$, for any $I \subset S$. We would want to lift this to
+an element $[\tilde U_I] \in \Map\big(U_I,K(\pi,n)\big)$. We would glue these to get $[X] \in \Map\big(X,K(\pi,n)\big)$.
 
+\begin{conj}
+Pick any consistent set of representatives $[\tilde U_i]$ that agree on the maps in the colimit system. Then
+$\pi_0([\tilde X]) \in \pi_0 \Map\big(X,K(\pi,n)\big)$ is independent of the lifts.
+\end{conj}
+
+In other words, we have a topological space ConsLift. We claim that this is contractible and non-empty.
+
+
+
+The big picture should be as follows. We know that for any topological space $X$ we have an isomorphism 
+$\pi_0 \Map (X,K(\Z,n)) \to H^n(X)$. We want to see some chain level version of this, i.e. that the space
+$\Map (X,K(\pi,n))$ determines the dg vector space $C^{\bullet}(X)$. For this, let $\Omega^{\bullet}K$ denote the
+Eilenberg-Maclane spectrum for $\Z$. Write $X = \colim \Delta_i$, where the colimit is indexed over all simplices mapping to $X$
+(i.e. we will be using the singular model for cochains). Then we have the diagram:
+\[
+\begin{tikzcd}
+\Map (X, \Omega^{\bullet}K) \arrow{r}{\simeq} & \lim \Map(\Delta_i, \Omega^{\bullet} K) \arrow{d} \\
+C^{\bullet}(X) \arrow{r}{\simeq} & \lim H^0(\Delta_i)[-\dim \Delta_i] .
+\end{tikzcd}
+\]
+The upper horizontal map is an iso because mapping spaces preserve colimits under appropriate assumptions. \todo{work out}
+The lower horizontal map is an iso by definition of singular homology. The vertical map is obtained by factoring through
+$\Map(\Delta_i, K(\Z, 0))$ and then passing to $\pi_0$ of this space which is $\Z$.
+
+Now, given the VFC constructed via cobordism in Spivak, it is an element $[X] \in \pi_0 \Map (X,\Omega K)$.
+\begin{enumerate}
+\item Choose a lifting $[\tilde X] \in \Map(X,\Omega K)$.
+\item Given an atlas $[U_I]$, this gives elements $[\tilde U_I] \in \Map(U_I,\Omega K)$.
+\item Using the diagram we just constructed, this gives $[\tilde U_I] \in C^{\bullet}(U_I)$.
+\item Using some appropriate chain level quasi-isomorphism \todo{work out}, this gives $[\tilde U_I] \in C^{\bullet}_{\vir}(U_I)$.
+\item Using Pardon's gluing construction, we obtain $[X^P] \in C_{\vir}^{\bullet}(X)$.
+\item We want to compare $[\tilde X]$ with $[X^P]$. They won't agree at chain level, because we made an arbitrary choice
+of lifting $[\tilde X]$ for $[X]$. \todo{can we make a non-arbitrary choice?} But the cohomology classes they define should agree.
+\end{enumerate}
+
+\todo{This outline looks good, but we've been assuming $[X]$ is a cohomology class, when in fact it's a homology class.
+We need to change things appropriately. In particular, the relationship of $[X]$ with the mapping space
+$\Map(X, \Omega^{\bullet}K)$ is more complicated than $[X] \in \pi_0 \Map(X, \Omega^{\bullet}K)$.}
 
 
 
