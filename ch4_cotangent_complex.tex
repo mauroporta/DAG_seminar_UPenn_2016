@@ -141,42 +141,57 @@ is a model for $\bbL$, where the complex $\Omega_{\tilde A}^1$ is build by takin
 \section{Examples and Properties}
 \label{sect:cc_eg}
 
-In this section we compute $\bbL_{k[x]/k}$ and $\bbL_{k/k[x]}$, where $x$ is in degree -1, as opposed to 1, by our 
-cohomological convention. (See remark \ref{rem:degree_convention} for what this implies; $k[x]$ is not what it seems.)
-In the process we go over some of the properties of cotangent complexes.
+In this section we compute $\bbL_{\Sym_k k[n]/k}$ and $\bbL_{k/\Sym_k k[n]}$ In the process we go over some 
+of the properties of cotangent complexes. This example and these properties are the foundations for most computations
+of algebraic cotangent complexes that can be explicitly carried out.
 
 \begin{lem}
 Let $A \in SCR_k$ and $M \in A-\cM od$. The cotangent complex of $f: A \to \Sym_A M$ is:
 \[	\bbL_{\Sym_A M /A}\cong M \otimes^{\bbL}_A \Sym_A M .	\]
 \end{lem}
 \begin{proof}
-For all $\Sym_A M$-module $N$,
+For all $\Sym_A M$-modules $N$,
 \begin{align*}
-	\Map_{\Sym_A M -\cM od}(\bbL_{\Sym_A M/A}, N) &\cong \Map_{A-\cM od}(\Sym, \Sym\oplus N ) \cong \Map_{A-\cM od}(M, f_* N) \\
+	\Map_{\Sym_A M -\cM od}(\bbL_{\Sym_A M/A}, N) &\cong \Map_{\Sym_A M -Alg/Sym_A M}(\Sym_A M, \Sym_A M\oplus N ) 
+	\cong \Map_{A-\cM od}(M, f_* N) \\
 &\cong \Map_{\Sym_A M - \cM od}(M \otimes^{\bbL}_A \Sym_A M ,N).
 \end{align*}
 Here the first equivalence is definitional, the second follows from the universal property of $\Sym_A M$, and the third is
 the adjunction \ref{tikz:adjunction}.
 \end{proof}
 
-For our first example, note that $k[x] \cong \Sym_k(k[1])$. Then the answer is $k[1] \otimes^{\bbL}_k k[x]$, which is just 
-$k[x]$ concentrated in degree $-1$.
+\begin{eg}
+\label{eg:first_cotangent}
+For our first example, note that $k[\epsilon] \cong \Sym_k(k[1])$. Then the answer is $k[1] \otimes^{\bbL}_k k[\epsilon]$, which is just 
+$k[\epsilon]$ shifted in degree by $-1$.
+
+A remark about this example: since $k[1]$ is concentrated in degree $-1$, so $\Sym_k(k[1])$ is concentrated in degrees 0 and -1.
+This is because multiplication in the symmetric algebra is graded commutative:
+\[	x y = (-1)^{|x||y|} yx,	\]
+so in particular for $\epsilon$ of degree -1 we get $\epsilon^2 = -\epsilon^2 = 0$.
+\end{eg}
+
+\begin{eg}
+If we start with $k[n]$ for any odd $n$, $\Sym_k(k[n])$ looks like an alternating algebra, similar to Example \ref{eg:first_cotangent},
+whereas if $n$ is even, we get a symmetric-looking algebra. If $n\neq 0$ even, it is unbounded.
+
+In all these cases, $\bbL_{\Sym_k(k[n])/k} \cong k[n] \otimes^{\bbL}_k \Sym_k(k[n])$, which is just $\Sym_k(k[n])$ shifted by $n$.
+\end{eg}
 
 \begin{rem}
-\label{rem:degree_convention}
-Note that, since $k[1]$ is concentrated in degree $-1$, so is $\Sym_k(k[1])$; it does not have information in all 
-nonnegative degrees, as the notation may mislead one into thinking. We just get a copy of $k$ in degree 0 and one
-in degree -1,
-and this is what we call $k[x]$. This is because multiplication in the symmetric algebra is graded commutative:
-\[	x y = (-1)^{|x||y|} yx,	\]
-so in particular for $x$ of degree 1 we get $x^2 = -x^2 = 0$. If we started with $k[2]$ instead,
-$\Sym_k(k[2])$ would be nontrivial in all negative even degrees and commutative in the classical sense. More generally, 
-$\Sym(k[n])$ gives what we would classically
-call a symmetric algebra if $n$ is even, or an alternating algebra if $n$ is odd.
+A particular case is when $n=0$, and we obtain the absolute cotangent complex of the affine line: $\bbL_{\bbA^1} \cong \Sym_k(k) = k[x]$.
+This cotangent complex is free of rank 1 over $\cO_{\bbA^1} \cong k[x]$, and concentrated in degree 0. Using this example and
+the properties \ref{prop:prop_cotangent}, we are able to boostrap up and compute many other examples of cotangent complexes.
+
+This is different in the case of $C^{\infty}$ or analytic derived geometry, where we do not know (at least a priori) how to 
+compute the cotangent complex of $\bbA^1$. This makes cotangent complexes hard to work with in geometries different than
+the algebraic one. In fact, many results in these other geometries work by relating the analytic or $C^{\infty}$
+ cotangent complex back to the algebraic one. See Theorem 5.20 in \cite{porta_yue_yu}, or Proposition 5.2.3 in \cite{spivak2010}.
 \end{rem}
 
 Some properties of cotangent complex:
 \begin{prop}
+\label{prop:prop_cotangent}
 \;
 \begin{enumerate}
 \item For $A \to B \to C$ in $SCR_k$, there is a homotpy cofiber sequence in $C-Mod$:
